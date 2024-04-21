@@ -33,6 +33,11 @@ export const ROUTES: RouteInfo[] = [{
       title: 'compte-participant',
        type: 'link', 
        icontype: 'nc-icon nc-single-02' },
+       { path: '/companies/list',
+       title: 'companies',
+        type: 'link', 
+        icontype: 'nc-icon nc-single-02' },
+ 
        {
         path: '/task',
         title: 'task',

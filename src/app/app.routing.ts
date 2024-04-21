@@ -8,6 +8,8 @@ import { CompteAdminRoutingModule } from './compte-admin/compte-admin.routing';
 import { ComptePartcipantRoutingModule } from './compte-participant/compte-partcipant.routing';
 import { LoginComponent } from './login/login.component';
 import { TaskRoutes } from './task/task.routing';
+import { CompanyRoutingModule } from './company/company-routing.module';
+
 export const AppRoutes: Routes = [{
         path: '',
         redirectTo: 'dashboard',
@@ -63,6 +65,9 @@ export const AppRoutes: Routes = [{
           }, {
             path: 'compte-participant', // Chemin pour accéder au module du compte administrateur
             loadChildren: () => ComptePartcipantRoutingModule, // Utilisez le module de routage du compte admin
+          },{
+            path: 'companies', // Chemin pour accéder au module du compte administrateur
+            loadChildren: () => CompanyRoutingModule, // Utilisez le module de routage du compte admin
           },]
         },{
             path: '',

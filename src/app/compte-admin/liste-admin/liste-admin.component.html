@@ -1,58 +1,60 @@
 <div class="main-content">
-    <div class="row">
-        <div class="col-md-12">
-
-            <div class="card">
-              <div class="card-header">
-                <div class="d-flex justify-content-between align-items-center">
-                  <h4 class="card-title">Liste des admins</h4>
-                  <!-- Bouton Ajouter Admin -->
-                  <button class="btn btn-sm btn-primary" (click)="ajouterAdmin()">Ajouter Admin</button>
-                </div>
+  <div class="row">
+      <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <div class="d-flex justify-content-between align-items-center">
+                <h4 class="card-title">Liste des admins</h4>
+                <button class="btn btn-sm btn-primary" (click)="ajouterAdmin()">Ajouter Admin</button>
               </div>
-                <div class="card-body">
-                      <table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                            <thead>
-                                <tr>
-                                  <th>{{ dataTable.headerRow[0] }}</th>
-                                  <th>{{ dataTable.headerRow[1] }}</th>
-                                  <th>{{ dataTable.headerRow[2] }}</th>
-                                  <th>{{ dataTable.headerRow[3] }}</th>
-                                  <th>{{ dataTable.headerRow[4] }}</th>
-                                  <th class="disabled-sorting text-right">{{ dataTable.headerRow[5] }}</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                  <th>{{ dataTable.footerRow[0] }}</th>
-                                  <th>{{ dataTable.footerRow[1] }}</th>
-                                  <th>{{ dataTable.footerRow[2] }}</th>
-                                  <th>{{ dataTable.footerRow[3] }}</th>
-                                  <th>{{ dataTable.footerRow[4] }}</th>
-                                  <th>{{ dataTable.footerRow[5] }}</th>
-                                </tr>
-                            </tfoot>
-                            <tbody>
-                                <tr *ngFor="let row of dataTable.dataRows">
-                                    <td>{{row[0]}}</td>
-                                    <td>{{row[1]}}</td>
-                                    <td>{{row[2]}}</td>
-                                    <td>{{row[3]}}</td>
-                                    <td>{{row[4]}}</td>
-                                    <td class="text-right">
-                                      <a href="javascript:void(0)" class="btn btn-warning btn-link btn-icon btn-sm edit"><i class="fa fa-edit"></i></a>
-                                      <a href="javascript:void(0)" class="btn btn-danger btn-link btn-icon btn-sm remove"><i class="fa fa-times"></i></a>
-                                    </td>
-
-                                </tr>
-                            </tbody>
-                        </table>
-                </div>
-                <!-- end content-->
             </div>
-            <!--  end card  -->
-        </div>
-        <!-- end col-md-12 -->
-    </div>
-    <!-- end row -->
+            <div class="card-body">
+              <table id="datatable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Login</th>
+                    <th>Email</th>
+              <th>Créé le</th> 
+                   
+                    <th>ID de la société</th>
+                    <th class="disabled-sorting text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Login</th>
+                    <th>Email</th>
+                    <th>Créé le</th>
+                    
+                    <th>ID de la société</th>
+                    <th>Actions</th>
+                  </tr>
+                </tfoot>
+                <tbody>
+                  <tr *ngFor="let admin of this.admins">
+                    <td>{{ admin.id }}</td>
+                    <td>{{ admin.nom }}</td>
+                    <td>{{ admin.prenom }}</td>
+                    <td>{{ admin.login }}</td>
+                    <td>{{ admin.email }}</td>
+                   <td>{{ admin.created_at }}</td> 
+               
+                    <td>{{ admin.company_id }}</td> 
+                    <td class="text-right">
+                      <a [routerLink]="['/compte-admin/modif', admin.id]" class="btn btn-warning btn-link btn-icon btn-sm edit"><i class="fa fa-edit"></i></a>
+                      <button type="button" (click)="delete($event, admin.id)" class="btn btn-danger btn-link btn-icon btn-sm remove"><i class="fa fa-times"></i></button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+      </div>
+  </div>
 </div>

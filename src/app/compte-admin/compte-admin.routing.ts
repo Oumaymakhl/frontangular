@@ -11,16 +11,12 @@ const compteAdminRoutes: Routes = [
     component: ListeAdminComponent, // Redirection vers la liste des administrateurs
   },
   {
-    path: 'modif',
+    path: 'modif/:id',
     component: ModifAdminComponent,
   },
   {
     path: 'ajout',
     component: AjoutAdminComponent,
-  },
-  {
-    path: 'supprimer',
-    component: SupprimerAdminComponent,
   }
 ];
 

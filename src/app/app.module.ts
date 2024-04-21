@@ -12,10 +12,11 @@ import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 import { AppRoutes } from './app.routing';
 import { LoginComponent } from './login/login.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     imports:[
-        BrowserAnimationsModule,
+        BrowserAnimationsModule,HttpClientModule,
         FormsModule,
         RouterModule.forRoot(AppRoutes,{
           useHash: true

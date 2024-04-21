@@ -1,107 +1,100 @@
 <div class="main-content">
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card">
-                    <form #f="ngForm" novalidate (ngSubmit)="save(f.value, f.valid)">
-
-                        <div class="card-header">
-                            <h4 class="card-title">Register Admin</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="form-group has-label">
-                                <label class="control-label" for="nom">Nom:
-                                    <span class="star">*</span>
-                                </label>
-                                <input type="text" class="form-control" name="nom" [ngModel]="register.nom"
-                                  required  #nom="ngModel">
-                                <small [hidden]="nom.valid || (nom.pristine && !f.submitted)" class="text-danger">
+  <div class="container-fluid">
+      <div class="row justify-content-center">
+          <div class="col-md-6">
+              <div class="card">
+                  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+                      <div class="card-header">
+                          <h4 class="card-title">Register Admin</h4>
+                      </div>
+                      <div class="card-body">
+                          <div class="form-group has-label">
+                              <label class="control-label" for="nom">Nom:
+                                  <span class="star">*</span>
+                              </label>
+                              <input type="text" class="form-control" formControlName="nom">
+                              <small *ngIf="signupForm.get('nom').invalid && signupForm.get('nom').touched" class="text-danger">
                                   Nom is required.
-                                </small>
-                            </div>
-                            <div class="form-group has-label">
-                                <label class="control-label" for="prenom">Prénom:
-                                    <span class="star">*</span>
-                                </label>
-                                <input type="text" class="form-control" name="prenom" [ngModel]="register.prenom"
-                                  required  #prenom="ngModel">
-                                <small [hidden]="prenom.valid || (prenom.pristine && !f.submitted)" class="text-danger">
+                              </small>
+                          </div>
+                          <div class="form-group has-label">
+                              <label class="control-label" for="prenom">Prénom:
+                                  <span class="star">*</span>
+                              </label>
+                              <input type="text" class="form-control" formControlName="prenom">
+                              <small *ngIf="signupForm.get('prenom').invalid && signupForm.get('prenom').touched" class="text-danger">
                                   Prénom is required.
-                                </small>
-                            </div>
-                            <div class="form-group has-label">
-                                <label class="control-label" for="login">Login:
-                                    <span class="star">*</span>
-                                </label>
-                                <input type="text" class="form-control" name="login" [ngModel]="register.login"
-                                  required  #login="ngModel">
-                                <small [hidden]="login.valid || (login.pristine && !f.submitted)" class="text-danger">
+                              </small>
+                          </div>
+                          <div class="form-group has-label">
+                              <label class="control-label" for="login">Login:
+                                  <span class="star">*</span>
+                              </label>
+                              <input type="text" class="form-control" formControlName="login">
+                              <small *ngIf="signupForm.get('login').invalid && signupForm.get('login').touched" class="text-danger">
                                   Login is required.
-                                </small>
-                            </div>
-                            <div class="form-group has-label">
-                                <label class="control-label" for="email">Email Address:
-                                    <span class="star">*</span>
-                                </label>
-                                <input type="email" class="form-control" name="email" [ngModel]="register.email"
-                                  required  #email="ngModel" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$">
-                                <small [hidden]="email.valid || (email.pristine && !f.submitted)" class="text-danger">
+                              </small>
+                          </div>
+                          <div class="form-group has-label">
+                              <label class="control-label" for="email">Email Address:
+                                  <span class="star">*</span>
+                              </label>
+                              <input type="email" class="form-control" formControlName="email">
+                              <small *ngIf="signupForm.get('email').invalid && signupForm.get('email').touched" class="text-danger">
                                   Email is required and format should be <i>john@doe.com</i>.
-                                </small>
-                            </div>
-                            <div class="form-group has-label">
-                                <label class="control-label" for="companyNom">Company Nom:
-                                    <span class="star">*</span>
-                                </label>
-                                <input type="text" class="form-control" name="companyNom" [ngModel]="register.companyNom"
-                                  required  #companyNom="ngModel">
-                                <small [hidden]="companyNom.valid || (companyNom.pristine && !f.submitted)" class="text-danger">
-                                  Company Nom is required.
-                                </small>
-                            </div>
-                            <div class="form-group has-label">
-                                <label class="control-label" for="companyAdresse">Company Adresse:
-                                    <span class="star">*</span>
-                                </label>
-                                <input type="text" class="form-control" name="companyAdresse" [ngModel]="register.companyAdresse"
-                                  required  #companyAdresse="ngModel">
-                                <small [hidden]="companyAdresse.valid || (companyAdresse.pristine && !f.submitted)" class="text-danger">
-                                  Company Adresse is required.
-                                </small>
-                            </div>
-                            <div class="form-group has-label">
-                                <label class="control-label" for="companySubdomaine">Company Subdomaine:
-                                    <span class="star">*</span>
-                                </label>
-                                <input type="text" class="form-control" name="companySubdomaine" [ngModel]="register.companySubdomaine"
-                                  required  #companySubdomaine="ngModel">
-                                <small [hidden]="companySubdomaine.valid || (companySubdomaine.pristine && !f.submitted)" class="text-danger">
-                                  Company Subdomaine is required.
-                                </small>
-                            </div>
-                            <div class="form-group has-label">
-                                <label class="control-label" for="companyLogo">Company Logo:</label>
-                                <input type="file" class="form-control" name="companyLogo" [ngModel]="register.companyLogo"
-                                  required accept="image/*" #companyLogo="ngModel">
-                                <small [hidden]="companyLogo.valid || (companyLogo.pristine && !f.submitted)" class="text-danger">
-                                  Please upload a valid image.
-                                </small>
-                            </div>
-                            <div class="category">    <span class="star">*</span> Required fields</div>
-                        </div>
-                        <div class="card-footer text-right">
+                              </small>
+                          </div>
+                          <div formGroupName="company">
+                              <div class="form-group has-label">
+                                  <label class="control-label" for="companyNom">Company Nom:
+                                      <span class="star">*</span>
+                                  </label>
+                                  <input type="text" class="form-control" formControlName="nom">
+                                  <small *ngIf="signupForm.get('company.nom').invalid && signupForm.get('company.nom').touched" class="text-danger">
+                                      Company Nom is required.
+                                  </small>
+                              </div>
+                              <div class="form-group has-label">
+                                  <label class="control-label" for="companyAdresse">Company Adresse:
+                                      <span class="star">*</span>
+                                  </label>
+                                  <input type="text" class="form-control" formControlName="adresse">
+                                  <small *ngIf="signupForm.get('company.adresse').invalid && signupForm.get('company.adresse').touched" class="text-danger">
+                                      Company Adresse is required.
+                                  </small>
+                              </div>
+                              <div class="form-group has-label">
+                                  <label class="control-label" for="companySubdomaine">Company Subdomaine:
+                                      <span class="star">*</span>
+                                  </label>
+                                  <input type="text" class="form-control" formControlName="subdomaine">
+                                  <small *ngIf="signupForm.get('company.subdomaine').invalid && signupForm.get('company.subdomaine').touched" class="text-danger">
+                                      Company Subdomaine is required.
+                                  </small>
+                              </div>
+                              <div class="form-group has-label">
+                                  <label class="control-label" for="companyLogo">Company Logo:</label>
+                                  <input type="file" class="form-control" formControlName="logo">
+                                  <small *ngIf="signupForm.get('company.logo').invalid && signupForm.get('company.logo').touched" class="text-danger">
+                                      Please upload a valid image.
+                                  </small>
+                              </div>
+                          </div>
+                          <div class="category"><span class="star">*</span> Required fields</div>
+                      </div>
+                      <div class="card-footer text-right">
                           <div class="form-check pull-left">
-                            <label class="form-check-label">
-                              <input class="form-check-input" type="checkbox" name="optionCheckboxes"  [ngModel]>
-                              <span class="form-check-sign"></span>
-                              Subscribe to newsletter
-                            </label>
+                              <label class="form-check-label">
+                                  <input class="form-check-input" type="checkbox" name="optionCheckboxes" [ngModel]>
+                                  <span class="form-check-sign"></span>
+                                  Subscribe to newsletter
+                              </label>
                           </div>
                           <button type="submit" class="btn btn-primary">Register</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
 </div>

@@ -62,7 +62,7 @@ export const AppRoutes: Routes = [{
           }, {
             path: 'compte-participant', // Chemin pour accéder au module du compte administrateur
             loadChildren: () => ComptePartcipantRoutingModule, // Utilisez le module de routage du compte admin
-          },]
+          }]
         },{
             path: '',
             component: AuthLayoutComponent,

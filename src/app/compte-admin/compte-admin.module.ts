@@ -10,6 +10,9 @@ import { FormsModule } from '@angular/forms';
 import { TagInputModule } from 'ngx-chips';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AdminService } from 'app/shared/API_service/admin.service';
+import { AppComponent } from 'app/app.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -26,7 +29,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     TagInputModule,
     NgbModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,HttpClientModule
+  ],providers: [AdminService], 
+  bootstrap: [AppComponent]
 })
 export class CompteAdminModule { }

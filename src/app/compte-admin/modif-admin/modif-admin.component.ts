@@ -1,27 +1,10 @@
 
-
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { PasswordValidation } from './password-validator.component';
+import { ActivatedRoute } from '@angular/router';
+import { AdminService } from 'app/shared/API_service/admin.service';
 
-declare interface User {
-    text?: string;
-    email?: string; //  must be valid email format
-    password?: string; // required, value must be equal to confirm password.
-    confirmPassword?: string; // required, value must be equal to password.
-    number?: number; // required, value must be equal to password.
-    url?: string;
-    idSource?: string;
-    idDestination?: string;
-  
-    nom?: string;
-    prenom?: string;
-    login?: string;
-    companyNom?: string;
-    companyAdresse?: string;
-    companySubdomaine?: string;
-    companyLogo?: File;
-}
 
 @Component({
   selector: 'app-modif-admin',
@@ -30,52 +13,32 @@ declare interface User {
 })
 
 export class ModifAdminComponent{
-
-    public register: User;
-    public login: User;
-    public typeValidation: User;
+    constructor(private route:ActivatedRoute ,private adminservice:AdminService){}
+    admin!:any;
+    adminId:any;
 
     ngOnInit() {
-        this.register = {
-            email: '',
-            password: '',
-            confirmPassword: '',
-            nom: '',
-            prenom: '',
-            login: '',
-            companyNom: '',
-            companyAdresse:'',
-            companySubdomaine: '',
-            companyLogo: null,
-        }
-        this.typeValidation = {
-            text: '',
-            email: '',
-            idSource: '',
-            idDestination: '',
-            url: ''
-        }
+        this.adminId=this.route.snapshot.paramMap.get('id');
+        this.adminservice.getAdmin(this.adminId).subscribe(res =>{
+           console.log(res); 
+           this.admin=res.admin
+        })
+      //  alert(this.adminId);
     }
-
-    save(model: User, isValid: boolean) {
-    // call API to save customer
-        if(isValid){
-            console.log(model, isValid);
-        }
+  
+ updateAdmin(){
+var inputData={
+    nom:this.admin.nom,
+    prenom:this.admin.prenom,
+    login:this.admin.login,
+    email:this.admin.email,
+    company_id:this.admin.company_id,
+}
+this.adminservice.updateadmin(inputData,this.adminId).subscribe({
+    next:(res:any)=>{
+        console.log(res);
+        alert(res.message);
     }
-    save1(model: User, isValid: boolean) {
-    // call API to save customer
-        if(isValid){
-            console.log(model, isValid);
-        }
-    }
-    save2(model: User, isValid: boolean) {
-    // call API to save customer
-        if(isValid){
-            console.log(model, isValid);
-        }
-    }
-    onSubmit(value: any):void{
-        console.log(value);
-    }
+})
+ }
 }

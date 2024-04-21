@@ -13,24 +13,27 @@ import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 import { AppRoutes } from './app.routing';
 import { LoginComponent } from './login/login.component';
 
+
+
 @NgModule({
     imports:[
         BrowserAnimationsModule,
         FormsModule,
         RouterModule.forRoot(AppRoutes,{
-          useHash: true
+          useHash: true,
         }),
         NgbModule,
         SidebarModule,
         NavbarModule,
         FooterModule,
-        FixedPluginModule
+        FixedPluginModule,
     ],
     declarations: [
         AppComponent,
         AdminLayoutComponent,
         AuthLayoutComponent,
         LoginComponent,
+    
     ],
     bootstrap:    [ AppComponent ]
 })

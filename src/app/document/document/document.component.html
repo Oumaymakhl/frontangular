@@ -1,0 +1,47 @@
+<div class="main-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="card-title">Liste des documents</h4>
+                        <!-- Ajout de la barre de recherche -->
+                        <input type="text" [(ngModel)]="termeDeRecherche" placeholder="Rechercher un document" class="form-control w-25">
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table id="documentTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Fichier</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Fichier</th>
+                                <th>Actions</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            <!-- Utilisez filteredDocuments pour afficher uniquement les documents filtrés -->
+                            <tr *ngFor="let document of filteredDocuments">
+                                <td>
+                                    <a [href]="document.fichier" download>{{ document.fichier }}</a>
+                                </td>
+                                <td class="text-right">
+                                    <button class="btn btn-sm btn-success" (click)="importerDocument(document)">Importer</button>
+                                    <button class="btn btn-sm btn-warning" (click)="importerDocumentAvecSign(document)">Importer avec sign</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-end mt-3">
+                        <button class="btn btn-primary mr-2" (click)="exporterDocuments()">Exporter</button>
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

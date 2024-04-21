@@ -1,0 +1,56 @@
+<div class="main-content" style="width: 80%; margin: 20px auto; margin-top: 70px;">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 text-center">
+            <div class="card card-tasks" style="border: 1px solid #ccc; padding: 20px;">
+                <div class="card-header" style="background-color: #f7f7f7; padding: 10px; text-align: center;">
+                    <h4 class="card-title" style="color: #333;">Tasks</h4>
+                    <button style="background-color: #007bff; color: white; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer;" (click)="ajouterTache()">Ajouter tâche</button>
+                </div>
+                <div class="card-body" style="padding: 20px;">
+                    <div class="table-full-width table-responsive">
+                        <table class="table" style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background-color: #f7f7f7;">
+                                    <th></th>
+                                    <th style="color: #333;">Nom de l'utilisateur</th>
+                                    <th style="color: #333;">Nom de la tâche</th>
+                                    <th style="color: #333;">Description</th>
+                                    <th style="color: #333;">Temps estimé (heures)</th>
+                                    <th style="color: #333;">Statut</th>
+                                    <th style="color: #333;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let task of tasks">
+                                    <td>
+                                        <div class="form-check">
+                                            <label class="form-check-label" [style.background-color]="task.isDone ? 'green' : 'red'">
+                                                <input class="form-check-input" type="checkbox" [(ngModel)]="task.isDone">
+                                                <span class="form-check-sign"></span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    
+                                    
+                                    <td>{{ task.nomUtilisateur }}</td>
+                                    <td>{{ task.nom }}</td>
+                                    <td>{{ task.description }}</td>
+                                    <td>{{ task.tempsEstime }}</td>
+                                    <td>{{ task.statut }}</td>
+                                    <td class="td-actions text-right" style="text-align: right;">
+                                        <button type="button" style="background-color: #17a2b8; color: white; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer;" title="Edit Task">
+                                            <i class="nc-icon nc-ruler-pencil" style="color: white;"></i>
+                                        </button>
+                                        <button type="button" style="background-color: #dc3545; color: white; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer;" title="Remove">
+                                            <i class="nc-icon nc-simple-remove" style="color: white;"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

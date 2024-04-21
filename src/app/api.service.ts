@@ -167,3 +167,4 @@ export class ApiService {
     return this.http.get<any>(`${this.apiUrl}/statistics/task-completion-rate-by-user`);
   }
 }
+

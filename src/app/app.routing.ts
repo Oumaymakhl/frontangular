@@ -7,6 +7,7 @@ import { ListeAdminComponent } from './compte-admin/liste-admin/liste-admin.comp
 import { CompteAdminRoutingModule } from './compte-admin/compte-admin.routing';
 import { ComptePartcipantRoutingModule } from './compte-participant/compte-partcipant.routing';
 import { LoginComponent } from './login/login.component';
+import { TaskRoutes } from './task/task.routing';
 export const AppRoutes: Routes = [{
         path: '',
         redirectTo: 'dashboard',
@@ -48,6 +49,15 @@ export const AppRoutes: Routes = [{
             path: '',
             loadChildren:() => import( './widgets/widgets.module').then(x=>x.WidgetsModule)
         }, {
+            path: '',
+            loadChildren:() => import( './task/task.module').then(x=>x.TaskModule)
+        }, {
+            path: 'reunion',
+            loadChildren:() => import( './reunion/reunion.module').then(x=>x.ReunionModule)
+        }, {
+            path: 'document',
+            loadChildren:() => import( './document/document.module').then(x=>x.DocumentModule)
+        },{
             path: 'compte-admin', // Chemin pour accéder au module du compte administrateur
             loadChildren: () => CompteAdminRoutingModule, // Utilisez le module de routage du compte admin
           }, {

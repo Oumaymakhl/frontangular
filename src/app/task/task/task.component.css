@@ -1,0 +1,28 @@
+.custom-height-popup {
+    max-height: 200px; /* Réduisez encore plus la hauteur maximale */
+    overflow-y: auto; /* Activez le défilement vertical si nécessaire */
+}
+
+.custom-swal-input {
+    font-size: 5px; /* Réduisez davantage la taille de la police des champs */
+    padding: 2px; /* Réduisez le padding pour réduire la taille des champs */
+    max-width: 80%; /* Réduisez la largeur maximale des champs */
+}
+
+  @media (min-width: 992px) {
+    .col-lg-6 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+.checkbox-color {
+    width: 18px;
+    height: 18px;
+    background-color: red; /* Vous pouvez changer cela en 'green' si nécessaire */
+    border-radius: 50%; /* Si vous voulez des cases rondes */
+    cursor: pointer;
+}
+
+
+
+

@@ -38,7 +38,26 @@ export const ROUTES: RouteInfo[] = [{
         type: 'link', 
         icontype: 'nc-icon nc-single-02' },
  
-       {
+        {
+            path: '/en-ligne',
+            title: 'reunion en ligne',
+            type: 'link',
+            icontype: 'nc-icon nc-laptop'
+    
+        },
+        {
+            path: '/decision',
+            title: 'decision',
+            type: 'link',
+            icontype: 'nc-icon nc-box'
+    
+        },  {
+            path: '/decision-admin',
+            title: 'decision-admin',
+            type: 'link',
+            icontype: 'nc-icon nc-box'
+    
+        },  {
         path: '/task',
         title: 'task',
         type: 'link',

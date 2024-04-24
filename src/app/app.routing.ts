@@ -56,7 +56,8 @@ export const AppRoutes: Routes = [{
         }, {
             path: 'reunion',
             loadChildren:() => import( './reunion/reunion.module').then(x=>x.ReunionModule)
-        }, {
+        },
+        {
             path: 'document',
             loadChildren:() => import( './document/document.module').then(x=>x.DocumentModule)
         },{
@@ -68,7 +69,16 @@ export const AppRoutes: Routes = [{
           },{
             path: 'companies', // Chemin pour accéder au module du compte administrateur
             loadChildren: () => CompanyRoutingModule, // Utilisez le module de routage du compte admin
-          },]
+          },{
+            path: 'en-ligne',
+            loadChildren:() => import( './reunion2/reunion2.module').then(x=>x.Reunion2Module)
+        },{
+            path: 'decision',
+            loadChildren:() => import( './decision/decision.module').then(x=>x.DecisionModule)
+        },{
+            path: 'decision-admin',
+            loadChildren:() => import( './decision-admin/decision-admin.module').then(x=>x.DecisionAdminModule)
+        },]
         },{
             path: '',
             component: AuthLayoutComponent,

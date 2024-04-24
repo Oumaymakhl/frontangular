@@ -1,0 +1,16 @@
+<div class="container decision-container">
+    <h2 class="decision-title">Liste des Décisions</h2>
+    <ul class="decision-list">
+      <li *ngFor="let decision of decisions" class="decision-item">
+        <p>{{ decision.text }}</p>
+        <div class="decision-btns">
+          <button (click)="likeDecision(decision)" class="decision-btn like-btn">
+            <i class="fas fa-thumbs-up"></i> Like
+          </button>
+          <button (click)="dislikeDecision(decision)" class="decision-btn dislike-btn">
+            <i class="fas fa-thumbs-down"></i> Dislike
+          </button>
+        </div>
+      </li>
+    </ul>
+  </div>

@@ -1,0 +1,66 @@
+.decision-container {
+    padding: 20px;
+    margin-top: 50px;
+  }
+
+  .decision-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .decision-item {
+    width: 250px; /* Largeur */
+    height: 180px; /* Hauteur */
+    margin: 15px; /* Marge */
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: rgba(51, 93, 126, 0.8); /* Bleu marine transparent */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Ombre portée */
+    transition: transform 0.3s ease;
+    display: inline-block; /* Afficher en ligne */
+    position: relative; /* Position relative pour positionner les boutons */
+  }
+
+  .decision-item:hover {
+    transform: translateY(-5px);
+  }
+
+  .decision-item p {
+    margin: 0;
+    padding: 15px;
+    font-size: 16px;
+    color: #ffffff; /* Texte en blanc */
+    text-align: center; /* Centrer le texte */
+  }
+
+  .decision-btns {
+    position: absolute;
+    bottom: 10px; /* Distance du bas */
+    left: 0;
+    width: 100%;
+    text-align: center; /* Centrer les boutons */
+  }
+
+  .decision-btn {
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+  }
+
+  .like-btn {
+    background-color: #28a745; /* Vert pour le bouton Like */
+    color: white;
+  }
+
+  .dislike-btn {
+    background-color: #dc3545; /* Rouge pour le bouton Dislike */
+    color: white;
+  }
+
+  .like-btn:hover, .dislike-btn:hover {
+    background-color: darken(#28a745, 10%);
+  }

@@ -23,7 +23,7 @@ export class ModifAdminComponent{
            console.log(res); 
            this.admin=res.admin
         })
-      //  alert(this.adminId);
+      
     }
   
  updateAdmin(){

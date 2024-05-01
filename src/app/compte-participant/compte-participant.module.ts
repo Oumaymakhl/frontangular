@@ -10,6 +10,12 @@ import { TagInputModule } from 'ngx-chips';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { AdminService } from 'app/shared/API_service/admin.service';
+import { AppComponent } from 'app/app.component';
+import { ParticipantService } from 'app/shared/API_service/participant.service';
+import { ComptePartcipantRoutingModule } from './compte-partcipant.routing';
+import { CompanyService } from 'app/shared/API_service/company.service';
 
 
 @NgModule({
@@ -25,7 +31,9 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     TagInputModule,
     NgbModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,HttpClientModule,ComptePartcipantRoutingModule
+  ],
+  providers: [AdminService,ParticipantService,ComptePartcipantRoutingModule,CompanyService], 
+  bootstrap: [AppComponent]
 })
 export class CompteParticipantModule { }

@@ -10,7 +10,7 @@ const comptePartcipantRoutes: Routes = [
     component: ListeParticipantComponent, // Redirection vers la liste des administrateurs
   },
   {
-    path: 'modif',
+    path: 'modif/:id',
     component: ModifPartcipantComponent,
   },
   {
@@ -24,7 +24,7 @@ const comptePartcipantRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(comptePartcipantRoutes)],
+  imports: [RouterModule.forChild(comptePartcipantRoutes),],
   exports: [RouterModule]
 })
 export class ComptePartcipantRoutingModule { }

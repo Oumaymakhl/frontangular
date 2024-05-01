@@ -66,9 +66,7 @@ export const AppRoutes: Routes = [{
                 loadChildren:() => import( './pages/pages.module').then(x=>x.PagesModule)
             }]
         },
-        {
-            path: 'login', // Chemin pour accéder au composant d'enregistrement
-            component: LoginComponent, // Composant d'enregistrement
-        }
-        
+        { path: '', redirectTo: '/login', pathMatch: 'full' },
+        { path: 'login', component: LoginComponent },
+     
 ];

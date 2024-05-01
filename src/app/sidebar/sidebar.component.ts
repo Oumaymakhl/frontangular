@@ -33,51 +33,7 @@ export const ROUTES: RouteInfo[] = [{
       title: 'compte-participant',
        type: 'link', 
        icontype: 'nc-icon nc-single-02' },
-       { path: '/companies/list',
-       title: 'companies',
-        type: 'link', 
-        icontype: 'nc-icon nc-single-02' },
- 
-        {
-            path: '/en-ligne',
-            title: 'reunion en ligne',
-            type: 'link',
-            icontype: 'nc-icon nc-laptop'
     
-        },
-        
-        {
-            path: '/decision',
-            title: 'decision',
-            type: 'link',
-            icontype: 'nc-icon nc-box'
-    
-        },  {
-            path: '/decision-admin',
-            title: 'decision-admin',
-            type: 'link',
-            icontype: 'nc-icon nc-box'
-    
-        },  {
-        path: '/task',
-        title: 'task',
-        type: 'link',
-        icontype: 'nc-icon nc-chart-bar-32'
-
-    },
-    {
-        path: '/reunion',
-        title: 'reunion',
-        type: 'link',
-        icontype: 'nc-icon nc-calendar-60'
-
-    },{
-        path: '/document',
-        title: 'document',
-        type: 'link',
-        icontype: 'nc-icon nc-paper'
-
-    },
     {
         path: '/components',
         title: 'Components',

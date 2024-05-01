@@ -27,13 +27,13 @@ import { HttpClientModule } from '@angular/common/http';
         SidebarModule,
         NavbarModule,
         FooterModule,
-        FixedPluginModule,
+        FixedPluginModule,ReactiveFormsModule
     ],
     declarations: [
         AppComponent,
         AdminLayoutComponent,
         AuthLayoutComponent,
-        LoginComponent,ReactiveFormsModule
+        LoginComponent,
     
     ],
     bootstrap:    [ AppComponent ]

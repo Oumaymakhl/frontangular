@@ -1,51 +1,82 @@
-import { Component } from '@angular/core';
+
+import { Component, OnInit } from '@angular/core';
+import { DocumentService } from 'app/shared/API_service/document.service';
+import { Document } from 'app/shared/model/document';
 
 @Component({
   selector: 'app-document',
   templateUrl: './document.component.html',
   styleUrls: ['./document.component.css']
 })
-export class DocumentComponent {
-  // Propriété pour le terme de recherche
+export class DocumentComponent implements OnInit {
   termeDeRecherche: string = '';
+  documents: Document[] ;
+  constructor(private documentService: DocumentService) {}
 
-  // Liste des documents
-  documents = [
-    {
-      fichier: 'document1.pdf' // URL du fichier
-    },
-    {
-      fichier: 'document2.pdf' // URL du fichier
-    }
-    // Ajoutez d'autres documents si nécessaire
-  ];
+  ngOnInit() {
+    this.chargerDocuments();
+  }
 
-  // Getter pour les documents filtrés
-  get filteredDocuments() {
-    // Filtrer les documents en fonction du terme de recherche
-    return this.documents.filter(document => 
-      document.fichier.toLowerCase().includes(this.termeDeRecherche.toLowerCase())
+  chargerDocuments() {
+    this.documentService.getDocuments().subscribe(
+      (response) => {
+        this.documents = response.documents;
+        console.log(response);
+      },
+      (error) => {
+        console.error('Erreur lors du chargement des documents :', error);
+      }
+    );
+  }
+  
+
+  importerDocument(file: File) {
+    this.documentService.importDocument(file).subscribe(
+      (response) => {
+        console.log('Document imported successfully:', response);
+        this.chargerDocuments(); 
+      },
+      (error) => {
+        console.error('Error importing document:', error);
+      }
     );
   }
 
-  // Méthode pour importer un document
-  importerDocument(document: any) {
-    // Ajoutez votre logique pour importer un document
-    console.log('Importer document:', document.fichier);
+  importerDocumentAvecSign(documentId: number) {
+    this.documentService.signDocument(documentId).subscribe(
+      (response) => {
+        console.log('Document signed successfully:', response);
+
+      },
+      (error) => {
+        console.error('Error signing document:', error);
+      }
+    );
   }
 
-  // Méthode pour importer un document avec une signature
-  importerDocumentAvecSign(document: any) {
-    // Ajoutez votre logique pour importer un document avec une signature
-    console.log('Importer document avec sign:', document.fichier);
-  }
-
-  // Méthode pour exporter tous les documents
   exporterDocuments() {
-    // Ajoutez votre logique pour exporter tous les documents
-    console.log('Exporter tous les documents');
+    if (this.documents.length === 0) {
+      console.log('Aucun document à exporter.');
+      return;
+    }
+    this.documents.forEach(doc => {
+      this.documentService.exportDocument(doc.id).subscribe(
+        (blob: Blob) => {
+          const url = window.URL.createObjectURL(blob);
+
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = doc.name; 
+          document.body.appendChild(link);
+
+          link.click();
+
+          window.URL.revokeObjectURL(url);
+        },
+        (error) => {
+          console.error('Erreur lors de l\'exportation du document :', error);
+        }
+      );
+    });
   }
-
-  // Méthode pour importer tous les documents
-
 }

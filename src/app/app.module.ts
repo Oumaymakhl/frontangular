@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent }   from './app.component';
 import { SidebarModule } from './sidebar/sidebar.module';
@@ -33,7 +33,7 @@ import { HttpClientModule } from '@angular/common/http';
         AppComponent,
         AdminLayoutComponent,
         AuthLayoutComponent,
-        LoginComponent,
+        LoginComponent,ReactiveFormsModule
     
     ],
     bootstrap:    [ AppComponent ]

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import PerfectScrollbar from 'perfect-scrollbar';
+import { ReunionService, listereunion } from 'app/shared/API_service/reunion.service';
+import { Reunion } from 'app/shared/model/reunion';
 
 declare var $: any;
 
@@ -10,7 +12,23 @@ declare var $: any;
   styleUrls: ['./reunion.component.css']
 })
 export class ReunionComponent implements OnInit {
+  reunions: Reunion[];
+
+  constructor(private reunionService: ReunionService) { }
+
   ngOnInit() {
+    // Appel de la méthode getReunions du service
+    this.reunionService.getReunions().subscribe(
+      (response: listereunion) => { // Adaptation du type de paramètre
+        // Utilisez la liste de réunions retournée par le service ici
+        const reunions: Reunion[] = response.reunions;
+        this.initializeCalendarEvents();
+      },
+      (error) => {
+        console.error('Erreur lors de la récupération des réunions', error);
+      }
+    );
+
     const $calendar = $('#fullCalendar');
     const today = new Date();
     const y = today.getFullYear();
@@ -45,196 +63,175 @@ export class ReunionComponent implements OnInit {
           titleFormat: 'D MMM, YYYY'
         }
       },
-      select: function(start, end) {
-        // Afficher l'alerte SweetAlert2 avec les champs nécessaires pour créer un événement
-        Swal.fire({
-          title: 'Créer une réunion',
-          html: `
-            <div class="form-group">
-              <input class="form-control" placeholder="Titre" id="event-title">
-            </div>
-            <div class="form-group">
-              <textarea class="form-control" placeholder="Description" id="event-description"></textarea>
-            </div>
-          `,
-          showCancelButton: true,
-          confirmButtonText: 'Créer',
-          cancelButtonText: 'Annuler',
-          customClass: {
-            confirmButton: 'btn btn-success',
-            cancelButton: 'btn btn-danger',
-          },
-          buttonsStyling: false,
-          preConfirm: function() {
-            // Récupérer les valeurs saisies dans l'alerte
-            const titleElement = document.getElementById('event-title') as HTMLInputElement;
-            const descriptionElement = document.getElementById('event-description') as HTMLTextAreaElement;
-            const title = titleElement.value;
-            const description = descriptionElement.value;
-
-            // Valider les valeurs saisies
-            if (!title) {
-              Swal.showValidationMessage('Le titre est requis.');
-            }
-
-            // Retourner un objet contenant les valeurs
-            return {
-              title,
-              description
-            };
-          }
-        }).then((result) => {
-          if (result.isConfirmed) {
-            const { title, description } = result.value;
-
-            // Créer un nouvel événement avec le titre et la description
-            const eventData = {
-              title,
-              description,
-              start,
-              end
-            };
-
-            // Ajouter l'événement au calendrier
-            $calendar.fullCalendar('renderEvent', eventData, true);
-          }
-          // Désélectionner après l'ajout de l'événement
-          $calendar.fullCalendar('unselect');
-        });
+      select: (start, end) => {
+        this.createReunionDialog(start, end);
       },
-      eventClick: function(calEvent, jsEvent, view) {
-        // Afficher les détails de la réunion existante avec SweetAlert2
-        Swal.fire({
-            title: calEvent.title,
-            html: `
-                <div class="form-group">
-                    <strong>Description:</strong> ${calEvent.description || 'Aucune description'}
-                </div>
-                <div class="form-group">
-                    <strong>Date et heure:</strong> ${calEvent.start.format('DD/MM/YYYY HH:mm')} - ${calEvent.end ? calEvent.end.format('DD/MM/YYYY HH:mm') : 'Aucune heure de fin'}
-                </div>
-                <div class="form-group" id="reason-section">
-                    <input class="form-control" placeholder="Raison de non disponibilité" id="reason-text">
-                </div>
-            `,
-            showCancelButton: true,
-            confirmButtonText: 'Dispo',
-            cancelButtonText: 'Non dispo',
-            customClass: {
-                confirmButton: 'btn btn-success',
-                cancelButton: 'btn btn-danger',
-            },
-            buttonsStyling: false,
-            preConfirm: function() {
-                // Obtenir le champ d'entrée pour la raison de non disponibilité
-                const reasonElement = document.getElementById('reason-text') as HTMLInputElement;
-                // Obtenir la valeur de l'élément si elle existe
-                const reason = reasonElement ? reasonElement.value : '';
-                return { reason };
-            }
-        }).then((result) => {
-            // Si l'utilisateur a cliqué sur "Dispo"
-            if (result.isConfirmed) {
-                Swal.fire('Vous êtes disponible pour cette réunion.');
-            } else if (result.dismiss === Swal.DismissReason.cancel) {
-                // L'utilisateur a cliqué sur "Non dispo"
-                const reason = result.value.reason;
-                if (reason) {
-                    // Afficher une autre alerte avec la raison fournie
-                    Swal.fire({
-                        title: 'Non disponible',
-                        text: `Raison: ${reason}`,
-                        icon: 'info',
-                        confirmButtonText: 'Fermer'
-                    });
-                } else {
-                    // Si aucune raison n'est fournie, demander une raison
-                    Swal.fire({
-                        title: 'Veuillez fournir une raison pour votre non disponibilité',
-                        icon: 'warning',
-                        confirmButtonText: 'OK'
-                    });
-                }
-            }
-        });
-    }
-,    
-
-/*eventClick: function(calEvent, jsEvent, view) {
-        // Afficher les détails de la réunion existante avec SweetAlert2
-        Swal.fire({
-          title: calEvent.title,
-          html: `
-            <div class="form-group">
-              <strong>Description:</strong> ${calEvent.description || 'Aucune description'}
-            </div>
-            <div class="form-group">
-              <strong>Date et heure:</strong> ${calEvent.start.format('DD/MM/YYYY HH:mm')} - ${calEvent.end ? calEvent.end.format('DD/MM/YYYY HH:mm') : 'Aucune heure de fin'}
-            </div>
-          `,
-          confirmButtonText: 'Fermer',
-          customClass: {
-            confirmButton: 'btn btn-primary',
-          },
-          buttonsStyling: false
-        });
-      },*/
+      eventClick: (calEvent, jsEvent, view) => {
+        this.updateOrDeleteReunionDialog(calEvent);
+      },
       editable: true,
       eventLimit: true, // Autorise le lien "plus" lorsqu'il y a trop d'événements
-      events: [
-        {
-          title: 'All Day Event',
-          start: new Date(y, m, 1),
-          className: 'event-default'
-        },
-        {
-          id: 999,
-          title: 'Repeating Event',
-          start: new Date(y, m, d - 4, 6, 0),
-          allDay: false,
-          className: 'event-rose'
-        },
-        {
-          id: 999,
-          title: 'Repeating Event',
-          start: new Date(y, m, d + 3, 6, 0),
-          allDay: false,
-          className: 'event-rose'
-        },
-        {
-          title: 'Meeting',
-          start: new Date(y, m, d - 1, 10, 30),
-          allDay: false,
-          className: 'event-green'
-        },
-        {
-          title: 'Lunch',
-          start: new Date(y, m, d + 7, 12, 0),
-          end: new Date(y, m, d + 7, 14, 0),
-          allDay: false,
-          className: 'event-red'
-        },
-        {
-          title: 'Md-pro Launch',
-          start: new Date(y, m, d - 2, 12, 0),
-          allDay: true,
-          className: 'event-azure'
-        },
-        {
-          title: 'Birthday Party',
-          start: new Date(y, m, d + 1, 19, 0),
-          end: new Date(y, m, d + 1, 22, 30),
-          allDay: false,
-          className: 'event-azure'
-        },
-        {
-          title: 'Click for Creative Tim',
-          start: new Date(y, m, 21),
-          end: new Date(y, m, 22),
-          url: 'https://www.creative-tim.com/',
-          className: 'event-orange'
+    });
+  }
+
+  initializeCalendarEvents() {
+    // Convertir les réunions en événements compatibles avec FullCalendar
+    const events = this.reunions.map(reunion => ({
+      title: reunion.titre,
+      start: reunion.start,
+      end: reunion.end,
+      description: reunion.description
+      // Autres propriétés de réunion que vous souhaitez afficher dans le calendrier
+    }));
+
+    // Configurer les événements du calendrier
+    $('#fullCalendar').fullCalendar('renderEvents', events, true);
+  }
+
+  // Ouvrir la boîte de dialogue pour créer une réunion
+  private createReunionDialog(start, end) {
+    Swal.fire({
+      title: 'Créer une réunion',
+      html: `
+        <div class="form-group">
+          <input class="form-control" placeholder="Titre" id="event-title">
+        </div>
+        <div class="form-group">
+          <textarea class="form-control" placeholder="Description" id="event-description"></textarea>
+        </div>
+      `,
+      showCancelButton: true,
+      confirmButtonText: 'Créer',
+      cancelButtonText: 'Annuler',
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger',
+      },
+      buttonsStyling: false,
+      preConfirm: () => {
+        const titleElement = document.getElementById('event-title') as HTMLInputElement;
+        const descriptionElement = document.getElementById('event-description') as HTMLTextAreaElement;
+        const title = titleElement.value;
+        const description = descriptionElement.value;
+
+        if (!title) {
+          Swal.showValidationMessage('Le titre est requis.');
         }
-      ]
+
+        return {
+          title,
+          description
+        };
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const { title, description } = result.value;
+        const newReunion: Reunion = {
+          titre: title,
+          description,
+          start,
+          end
+        };
+        
+
+        // Appeler la méthode du service pour créer une réunion
+        this.reunionService.createReunion(newReunion).subscribe(
+          (response) => {
+            // Réussite
+            console.log('Réunion créée avec succès', response);
+            // Actualiser le calendrier pour afficher la nouvelle réunion
+            $('#fullCalendar').fullCalendar('renderEvent', newReunion, true);
+          },
+          (error) => {
+            // Erreur
+            console.error('Erreur lors de la création de la réunion', error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Une erreur est survenue lors de la création de la réunion. Veuillez réessayer.',
+            });
+          }
+        );
+      }
+    });
+  }
+
+  // Ouvrir la boîte de dialogue pour mettre à jour ou supprimer une réunion existante
+  private updateOrDeleteReunionDialog(calEvent) {
+    const updateForm = `
+      <div class="form-group">
+        <label for="updateTitle">Titre:</label>
+        <input type="text" id="updateTitle" class="form-control" value="${calEvent.title}">
+      </div>
+      <div class="form-group">
+        <label for="updateDescription">Description:</label>
+        <textarea id="updateDescription" class="form-control">${calEvent.description || ''}</textarea>
+      </div>
+      <div class="form-group">
+        <label for="updateStartDate">Date de début:</label>
+        <input type="text" id="updateStartDate" class="form-control" value="${calEvent.start.format('YYYY-MM-DD HH:mm')}">
+      </div>
+      <div class="form-group">
+        <label for="updateEndDate">Date de fin:</label>
+        <input type="text" id="updateEndDate" class="form-control" value="${calEvent.end ? calEvent.end.format('YYYY-MM-DD HH:mm') : ''}">
+      </div>
+    `;
+
+    Swal.fire({
+      title: 'Modifier la réunion',
+      html: updateForm,
+      showCancelButton: true,
+      confirmButtonText: 'Update',
+      cancelButtonText: 'Supprimer',
+      showLoaderOnConfirm: true,
+      preConfirm: () => {
+        const title = (<HTMLInputElement>document.getElementById('updateTitle')).value;
+        const description = (<HTMLTextAreaElement>document.getElementById('updateDescription')).value;
+        const startDate = (<HTMLInputElement>document.getElementById('updateStartDate')).value;
+        const endDate = (<HTMLInputElement>document.getElementById('updateEndDate')).value;
+
+        // Vous pouvez gérer ici la mise à jour des données dans votre application
+        // Remplacez ce code par l'appel à votre API ou la mise à jour de vos données en fonction de votre logique métier
+
+        // Pour cet exemple, nous afficherons simplement un message de succès
+        return new Promise<void>((resolve) => {
+          setTimeout(() => {
+            resolve();
+            Swal.fire({
+              title: 'Mise à jour réussie',
+              icon: 'success',
+              confirmButtonText: 'OK'
+            });
+          }, 1000); // Simuler un délai de chargement
+        });
+      }
+    });
+
+    // Ajouter le gestionnaire d'événements pour le bouton "Delete"
+    Swal.getCancelButton().addEventListener('click', () => {
+      // Afficher une boîte de confirmation pour supprimer l'événement
+      Swal.fire({
+        title: 'Êtes-vous sûr de vouloir supprimer cet événement ?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Oui, supprimer',
+        cancelButtonText: 'Annuler',
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Vous pouvez gérer ici la suppression des données dans votre application
+          // Remplacez ce code par l'appel à votre API ou la suppression de vos données en fonction de votre logique métier
+
+          // Pour cet exemple, nous afficherons simplement un message de succès
+          Swal.fire({
+            title: 'Événement supprimé',
+            text: 'L\'événement a été supprimé avec succès',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          });
+        }
+      });
     });
   }
 }

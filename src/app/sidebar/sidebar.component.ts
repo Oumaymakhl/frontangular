@@ -45,6 +45,7 @@ export const ROUTES: RouteInfo[] = [{
             icontype: 'nc-icon nc-laptop'
     
         },
+        
         {
             path: '/decision',
             title: 'decision',

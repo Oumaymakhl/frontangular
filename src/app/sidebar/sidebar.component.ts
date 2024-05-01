@@ -33,7 +33,6 @@ export const ROUTES: RouteInfo[] = [{
       title: 'compte-participant',
        type: 'link', 
        icontype: 'nc-icon nc-single-02' },
-    
     {
         path: '/components',
         title: 'Components',

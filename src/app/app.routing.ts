@@ -7,7 +7,6 @@ import { ListeAdminComponent } from './compte-admin/liste-admin/liste-admin.comp
 import { CompteAdminRoutingModule } from './compte-admin/compte-admin.routing';
 import { ComptePartcipantRoutingModule } from './compte-participant/compte-partcipant.routing';
 import { LoginComponent } from './login/login.component';
-import { TaskRoutes } from './task/task.routing';
 import { CompanyRoutingModule } from './company/company-routing.module';
 
 export const AppRoutes: Routes = [{

@@ -27,7 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
         SidebarModule,
         NavbarModule,
         FooterModule,
-        FixedPluginModule,
+       
     ],
     declarations: [
         AppComponent,

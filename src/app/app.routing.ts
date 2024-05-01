@@ -2,8 +2,6 @@ import { Routes } from '@angular/router';
 
 import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
-import { CompteAdminModule } from './compte-admin/compte-admin.module';
-import { ListeAdminComponent } from './compte-admin/liste-admin/liste-admin.component';
 import { CompteAdminRoutingModule } from './compte-admin/compte-admin.routing';
 import { ComptePartcipantRoutingModule } from './compte-participant/compte-partcipant.routing';
 import { LoginComponent } from './login/login.component';

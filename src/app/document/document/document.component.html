@@ -27,18 +27,21 @@
                         </tfoot>
                         <tbody>
                             <!-- Utilisez documents pour afficher tous les documents -->
-                            <tr *ngFor="let document of documents">
+                            <tr *ngFor="let document of documents" (click)="selectDocument(document.id)">
                                 <td>{{ document.name }}</td>
                                 <td>{{ document.path }}</td>
                                 <td class="text-right">
-                                    <button class="btn btn-sm btn-success" (click)="importerDocument(document)">Importer</button>
-                                    <button class="btn btn-sm btn-warning" (click)="importerDocumentAvecSign(document.id)">Importer avec sign</button>
+                                    <button class="btn btn-sm btn-primary" (click)="exporterDocument(document.id, document.name)">Exporter</button>
+                                    <button class="btn btn-sm btn-primary" (click)="signAndDownload(document.id)">Exporter sign</button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
+                    
+                    <!-- Boutons "Importer" et "Importer avec sign" alignés à droite -->
                     <div class="d-flex justify-content-end mt-3">
-                        <button class="btn btn-primary mr-2" (click)="exporterDocuments()">Exporter</button>
+                        <label for="importFile" class="btn btn-sm btn-primary mr-2">Importer</label>
+                        <input id="importFile" type="file" (change)="importerDocument($event)" style="display: none;">
                     </div>
                 </div>
             </div>

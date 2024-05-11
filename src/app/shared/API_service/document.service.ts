@@ -1,13 +1,8 @@
 // document.service.ts
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Document } from '../model/document';
-
-export interface listedocument {
-  status: number;
-  documents: Document[];
-}
 
 @Injectable({
   providedIn: 'root'
@@ -19,22 +14,26 @@ export class DocumentService {
   importDocument(file: File): Observable<any> {
     const formData: FormData = new FormData();
     formData.append('file', file);
-    return this.http.post<any>('http://localhost:8000/api/documents/import', formData);
+
+    return this.http.post('http://localhost:8000/api/import-document', formData);
   }
 
-  exportDocument(documentId: number): Observable<Blob> {
-    return this.http.get(`http://localhost:8000/api/documents/${documentId}/export`, { responseType: 'blob' });
+  exportDocument(documentId: number): Observable<any> {
+    return this.http.get(`http://localhost:8000/api/export-document/${documentId}`, { responseType: 'blob' });
   }
 
-  signDocument(documentId: number): Observable<any> {
-    return this.http.get(`http://localhost:8000/api/documents/${documentId}/sign`);
+  signDocument(documentId: number) {
+    return this.http.post<any>(`http://localhost:8000/api/sign-document/${documentId}`, {});
   }
 
-  downloadSignedDocument(documentId: number): Observable<Blob> {
-    return this.http.get(`http://localhost:8000/api/documents/${documentId}/download`, { responseType: 'blob' });
+  downloadSignedDocument(documentId: number) {
+    return this.http.get(`http://localhost:8000/api/download-signed-document/${documentId}`, { responseType: 'blob' });
   }
 
-  getDocuments() {
-    return this.http.get<listedocument>('http://localhost:8000/api/documents');
+  showDocuments(): Observable<any> {
+    return this.http.get('http://localhost:8000/api/show-documents');
+  }
+  signAndDownloadDocument(documentId: number): Observable<Blob> {
+    return this.http.get(`http://localhost:8000/api/documents/${documentId}/sign-and-download`, { responseType: 'blob' });
   }
 }

@@ -39,6 +39,12 @@ export const ROUTES: RouteInfo[] = [{
         icontype: 'nc-icon nc-single-02' },
  
         {
+            path: '/statistique',
+            title: 'statistique',
+            type: 'link',
+            icontype: 'nc-icon nc-chart-pie-36'
+    
+        }, {
             path: '/en-ligne',
             title: 'reunion en ligne',
             type: 'link',
@@ -60,6 +66,12 @@ export const ROUTES: RouteInfo[] = [{
         },  {
         path: '/task',
         title: 'task',
+        type: 'link',
+        icontype: 'nc-icon nc-chart-bar-32'
+
+    }, {
+        path: '/task-user',
+        title: 'taskuser',
         type: 'link',
         icontype: 'nc-icon nc-chart-bar-32'
 

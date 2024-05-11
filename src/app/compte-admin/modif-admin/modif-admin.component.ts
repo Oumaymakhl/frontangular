@@ -25,7 +25,7 @@ export class ModifAdminComponent{
         })
       //  alert(this.adminId);
     }
-  
+
  updateAdmin(){
 var inputData={
     nom:this.admin.nom,
@@ -41,4 +41,5 @@ this.adminservice.updateadmin(inputData,this.adminId).subscribe({
     }
 })
  }
+ 
 }

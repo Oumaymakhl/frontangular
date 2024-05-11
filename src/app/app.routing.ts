@@ -51,6 +51,9 @@ export const AppRoutes: Routes = [{
             path: '',
             loadChildren:() => import( './task/task.module').then(x=>x.TaskModule)
         }, {
+            path: '',
+            loadChildren:() => import( './taskuser/taskuser.module').then(x=>x.TaskuserModule)
+        },{
             path: 'reunion',
             loadChildren:() => import( './reunion/reunion.module').then(x=>x.ReunionModule)
         },
@@ -75,6 +78,9 @@ export const AppRoutes: Routes = [{
         },{
             path: 'decision-admin',
             loadChildren:() => import( './decision-admin/decision-admin.module').then(x=>x.DecisionAdminModule)
+        },{
+            path: 'statistique',
+            loadChildren:() => import( './statistique/statistique.module').then(x=>x.StatistiqueModule)
         },]
         },{
             path: '',

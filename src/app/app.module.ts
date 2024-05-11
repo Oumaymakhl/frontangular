@@ -15,7 +15,6 @@ import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 
 
-
 @NgModule({
     imports:[
         BrowserAnimationsModule,HttpClientModule,

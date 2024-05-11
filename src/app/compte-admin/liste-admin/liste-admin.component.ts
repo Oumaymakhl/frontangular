@@ -7,7 +7,8 @@ import { Admin } from 'app/shared/model/admin';
 @Component({
     moduleId: module.id,
     selector: 'liste-admin',
-    templateUrl: './liste-admin.component.html'
+    templateUrl: './liste-admin.component.html',
+    styleUrls: ['./liste-admin.component.css']
 })
 
 export class  ListeAdminComponent implements OnInit{

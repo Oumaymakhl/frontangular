@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { DocumentService } from 'app/shared/API_service/document.service';
 import { Document } from 'app/shared/model/document';
@@ -10,7 +9,9 @@ import { Document } from 'app/shared/model/document';
 })
 export class DocumentComponent implements OnInit {
   termeDeRecherche: string = '';
-  documents: Document[] ;
+  documents: Document[] = [];
+  selectedDocumentId: number | null = null; // Pour stocker l'ID du document sélectionné
+  
   constructor(private documentService: DocumentService) {}
 
   ngOnInit() {
@@ -18,65 +19,72 @@ export class DocumentComponent implements OnInit {
   }
 
   chargerDocuments() {
-    this.documentService.getDocuments().subscribe(
+    this.documentService.showDocuments().subscribe(
       (response) => {
-        this.documents = response.documents;
-        console.log(response);
+        this.documents = response;
+        console.log('Documents chargés avec succès :', this.documents);
       },
       (error) => {
         console.error('Erreur lors du chargement des documents :', error);
       }
     );
   }
-  
-
-  importerDocument(file: File) {
+  importerDocument(event: any) {
+    const file = event.target.files[0];
     this.documentService.importDocument(file).subscribe(
       (response) => {
-        console.log('Document imported successfully:', response);
+        console.log('Document importé avec succès :', response);
         this.chargerDocuments(); 
       },
       (error) => {
-        console.error('Error importing document:', error);
+        console.error('Erreur lors de l\'importation du document :', error);
       }
     );
   }
 
-  importerDocumentAvecSign(documentId: number) {
-    this.documentService.signDocument(documentId).subscribe(
+  signAndDownload(documentId: number) {
+    this.documentService.signAndDownloadDocument(documentId).subscribe((data: Blob) => {
+      // Téléchargement du document signé
+      const blob = new Blob([data], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);
+      window.open(url);
+    });
+  }
+  importerDocumentAvecSign(event: any) {
+    const file = event.target.files[0];
+    this.documentService.signDocument(file).subscribe(
       (response) => {
-        console.log('Document signed successfully:', response);
-
+        console.log('Document signé avec succès :', response);
+        // Gérer la réponse pour afficher un message ou effectuer d'autres actions
       },
       (error) => {
-        console.error('Error signing document:', error);
+        console.error('Erreur lors de la signature du document :', error);
       }
     );
   }
 
-  exporterDocuments() {
-    if (this.documents.length === 0) {
-      console.log('Aucun document à exporter.');
-      return;
-    }
-    this.documents.forEach(doc => {
-      this.documentService.exportDocument(doc.id).subscribe(
-        (blob: Blob) => {
-          const url = window.URL.createObjectURL(blob);
 
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = doc.name; 
-          document.body.appendChild(link);
 
-          link.click();
 
-          window.URL.revokeObjectURL(url);
-        },
-        (error) => {
-          console.error('Erreur lors de l\'exportation du document :', error);
-        }
-      );
-    });
+
+  exporterDocument(documentId: number, documentName: string) {
+    this.documentService.exportDocument(documentId).subscribe(
+      (blob: Blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = documentName;
+        document.body.appendChild(link);
+        link.click();
+        window.URL.revokeObjectURL(url);
+      },
+      (error) => {
+        console.error('Erreur lors de l\'exportation du document :', error);
+      }
+    );
+  }
+
+  selectDocument(documentId: number) {
+    this.selectedDocumentId = documentId;
   }
 }

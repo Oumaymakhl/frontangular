@@ -33,4 +33,7 @@ export class ParticipantService {
   updateparticipant(inputData: object, id: number) {
     return this.http.put(`http://localhost:8000/api/user/${id}`, inputData)
   }
+  saveparticipant(inputData: FormData) {
+    return this.http.post('http://localhost:8000/api/user/signup', inputData);
+  }
 }

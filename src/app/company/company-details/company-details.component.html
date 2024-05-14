@@ -1,0 +1,40 @@
+<div class="container mt-5" *ngIf="company && !loading">
+    <div class="text-center">
+      <div class="spinner-border text-primary" role="status" *ngIf="loading">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <div *ngIf="company">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title">Company Details</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" [(ngModel)]="company.nom" disabled>
+              </div>
+              <div class="form-group">
+                <label for="subdomain">Subdomain:</label>
+                <input type="text" class="form-control" id="subdomain" [(ngModel)]="company.subdomaine" disabled>
+              </div>
+              <div class="form-group">
+                <label for="address">Address:</label>
+                <textarea class="form-control" id="address" [(ngModel)]="company.adresse" disabled></textarea>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="logo">Logo:</label>
+                <img *ngIf="company.logo" [src]="company.logo" class="img-fluid" alt="Company Logo">
+                <p *ngIf="!company.logo">No logo available</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

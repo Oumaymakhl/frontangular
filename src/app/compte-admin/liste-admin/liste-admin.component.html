@@ -48,6 +48,7 @@
                     <td>{{ admin.company_id }}</td> 
                     <td class="text-right">
                       <a [routerLink]="['/compte-admin/modif', admin.id]" class="btn btn-warning btn-link btn-icon btn-sm edit"><i class="fa fa-edit"></i></a>
+
                       <button type="button" (click)="delete($event, admin.id)" class="btn btn-danger btn-link btn-icon btn-sm remove"><i class="fa fa-times"></i></button>
                     </td>
                   </tr>

@@ -1,49 +1,48 @@
 <div class="containerProduct">
-    <div id="formContent">
-      <h2 class="form-top">Ajouter un administrateur</h2>
-      <form [formGroup]="signupForm" (ngSubmit)="saveadmin()" class="form" #form="ngForm">
-        <div class="div-form">
-          <label for="nom">Nom:</label>
-          <input type="text" formControlName="nom" id="nom" placeholder="Nom" class="form-input">
-        </div>
-        <div class="div-form">
-          <label for="prenom">Prénom:</label>
-          <input type="text" formControlName="prenom" id="prenom" placeholder="Prénom" class="form-input">
-        </div>
-        <div class="div-form">
-          <label for="login">Login:</label>
-          <input type="text" formControlName="login" id="login" placeholder="Login" class="form-input">
-        </div>
-        <div class="div-form">
-          <label for="password">Mot de passe:</label>
-          <input type="password" formControlName="password" id="password" placeholder="Mot de passe" class="form-input">
-        </div>
-        <div class="div-form">
-          <label for="email">Email:</label>
-          <input type="email" formControlName="email" id="email" placeholder="Email" class="form-input">
-        </div>
-        <h3 class="form-top">Informations sur l'entreprise</h3>
-        <div class="div-form">
-          <label for="companyNom">Nom de l'entreprise:</label>
-          <input type="text" formControlName="companyNom" id="companyNom" placeholder="Nom de l'entreprise" class="form-input">
-        </div>
-        <div class="div-form">
-          <label for="companySubdomaine">Sous-domaine de l'entreprise:</label>
-          <input type="text" formControlName="companySubdomaine" id="companySubdomaine" placeholder="Sous-domaine de l'entreprise" class="form-input">
-        </div>
-        <div class="div-form">
-          <label for="companyLogo">Logo de l'entreprise:</label>
-          <input type="file" id="companyLogo" (change)="onLogoChange($event)" accept="image/*" class="form-input" required>
-        </div>
-        <div class="div-form">
-          <label for="companyAdresse">Adresse de l'entreprise:</label>
-          <input type="text" formControlName="companyAdresse" id="companyAdresse" placeholder="Adresse de l'entreprise" class="form-input">
-        </div>
-        <div class="div-form buttons">
-          <button type="button" routerLink="/compte-admin" class="btn-action">Retour</button>
-          <button type="submit" class="btn-action">Ajouter</button>
-        </div>
-      </form>
-    </div>
+  <div id="formContent">
+    <h2 class="form-top">Ajouter un administrateur</h2>
+    <form [formGroup]="signupForm" (ngSubmit)="saveadmin()" class="form" #form="ngForm">
+      <div class="div-form">
+        <label for="nom">Nom:</label>
+        <input type="text" formControlName="nom" id="nom" placeholder="Nom" class="form-input">
+      </div>
+      <div class="div-form">
+        <label for="prenom">Prénom:</label>
+        <input type="text" formControlName="prenom" id="prenom" placeholder="Prénom" class="form-input">
+      </div>
+      <div class="div-form">
+        <label for="login">Login:</label>
+        <input type="text" formControlName="login" id="login" placeholder="Login" class="form-input">
+      </div>
+      <div class="div-form">
+        <label for="password">Mot de passe:</label>
+        <input type="password" formControlName="password" id="password" placeholder="Mot de passe" class="form-input">
+      </div>
+      <div class="div-form">
+        <label for="email">Email:</label>
+        <input type="email" formControlName="email" id="email" placeholder="Email" class="form-input">
+      </div>
+      <h3 class="form-top">Informations sur l'entreprise</h3>
+      <div class="div-form">
+        <label for="companyNom">Nom de l'entreprise:</label>
+        <input type="text" formControlName="companyNom" id="companyNom" placeholder="Nom de l'entreprise" class="form-input">
+      </div>
+      <div class="div-form">
+        <label for="companySubdomaine">Sous-domaine de l'entreprise:</label>
+        <input type="text" formControlName="companySubdomaine" id="companySubdomaine" placeholder="Sous-domaine de l'entreprise" class="form-input">
+      </div>
+      <div class="div-form">
+        <label for="companyLogo">Logo de l'entreprise:</label>
+        <input type="file" id="companyLogo" (change)="onLogoChange($event)" accept="image/*" class="form-input" required>
+      </div>
+      <div class="div-form">
+        <label for="companyAdresse">Adresse de l'entreprise:</label>
+        <input type="text" formControlName="companyAdresse" id="companyAdresse" placeholder="Adresse de l'entreprise" class="form-input">
+      </div>
+      <div class="div-form buttons">
+        <button type="button" routerLink="/compte-admin" class="btn-action">Retour</button>
+        <button type="submit" class="btn-action">Ajouter</button>
+      </div>
+    </form>
   </div>
-  
+</div>

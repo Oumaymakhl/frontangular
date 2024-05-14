@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AdminService } from 'app/shared/API_service/admin.service';
-import { Admin } from 'app/shared/model/admin';
 
 @Component({
   selector: 'app-ajout-admin',

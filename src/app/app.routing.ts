@@ -8,6 +8,8 @@ import { CompteAdminRoutingModule } from './compte-admin/compte-admin.routing';
 import { ComptePartcipantRoutingModule } from './compte-participant/compte-partcipant.routing';
 import { LoginComponent } from './login/login.component';
 import { CompanyRoutingModule } from './company/company-routing.module';
+import { AuthRoutingModule } from './auth/auth-routing.module';
+
 export const AppRoutes: Routes = [{
         path: '',
         redirectTo: 'dashboard',
@@ -66,7 +68,14 @@ export const AppRoutes: Routes = [{
                 loadChildren:() => import( './pages/pages.module').then(x=>x.PagesModule)
             }]
         },
-        { path: '', redirectTo: '/login', pathMatch: 'full' },
-        { path: 'login', component: LoginComponent },
-     
-];
+    {
+      path: 'login',
+      component: LoginComponent
+    }, {
+      path: 'auth', 
+      loadChildren: () => AuthRoutingModule, 
+    },
+    {
+      path: '**',
+      redirectTo: '/login'
+    }]

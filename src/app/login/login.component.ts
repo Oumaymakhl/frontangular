@@ -2,6 +2,10 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { AuthService } from 'app/shared/API_service/auth.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TokenService } from 'app/shared/API_service/token.service';
+import { AuthStateService } from 'app/shared/API_service/auth-state.service';
 
 declare var $:any;
 
@@ -11,58 +15,97 @@ declare var $:any;
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit{
-  focus;
-  focus1;
-  focus2;
-    test : Date = new Date();
-    private toggleButton;
+    loginForm: FormGroup;
+    errors: any = null;
+    focus: boolean;
+    focus1: boolean;
+    focus2: boolean;
     private sidebarVisible: boolean;
-    private nativeElement: Node;
-
-    constructor(private element : ElementRef) {
-        this.nativeElement = element.nativeElement;
+  
+    constructor(
+        public router: Router,
+        public fb: FormBuilder,
+        public authService: AuthService,
+        private token: TokenService,
+        private authState: AuthStateService,
+        
+        private element: ElementRef
+      )  {
+      this.loginForm = this.fb.group({
+        login: ['', Validators.required], 
+        password: ['', Validators.required], 
+      });
+    }
+    
+    ngOnInit() {
+      this.checkFullPageBackgroundImage();
+      document.body.classList.add('login-page');
+    }
+  
+    ngOnDestroy() {
+      document.body.classList.remove('login-page');
+    }
+  
+    onSubmit() {
+      this.authService.login(this.loginForm.value).subscribe(
+        (result) => {
+          this.responseHandler(result);
+        },
+        (error) => {
+          this.errors = error.error;
+        },
+        () => {
+          this.authState.setAuthState(true);
+          this.loginForm.reset();
+        }
+      );
+    }
+    responseHandler(data: any) {
+      this.token.handle(data.token);
+      const userType = data.type;
+      switch (userType) {
+        case 'admin':
+          this.router.navigate(['/compte-admin']);
+          break;
+        case 'superadmin':
+          this.router.navigate(['/compte-participant']);
+          break;
+        case 'user':
+          this.router.navigate(['/compte-participant']);
+          break;
+        default:
+          this.router.navigate(['/']);
+          break;
+      }
+    }
+    // Method to check full page background image
+    checkFullPageBackgroundImage() {
+      const $page = document.querySelector('.full-page');
+      const image_src = $page ? $page.getAttribute('data-image') : null;
+  
+      if (image_src) {
+        const image_container = '<div class="full-page-background" style="background-image: url(' + image_src + ') "/>';
+        $page.insertAdjacentHTML('beforeend', image_container);
+      }
+    }
+  
+    // Method to toggle sidebar
+    sidebarToggle() {
+      const body = document.getElementsByTagName('body')[0];
+      const sidebar = document.getElementsByClassName('navbar-collapse')[0];
+      const toggleButton = document.querySelector('.navbar-toggler');
+  
+      if (!this.sidebarVisible) {
+        setTimeout(() => {
+          toggleButton.classList.add('toggled');
+        }, 500);
+        body.classList.add('nav-open');
+        this.sidebarVisible = true;
+      } else {
+        toggleButton.classList.remove('toggled');
         this.sidebarVisible = false;
+        body.classList.remove('nav-open');
+      }
     }
-    checkFullPageBackgroundImage(){
-        var $page = $('.full-page');
-        var image_src = $page.data('image');
-
-        if(image_src !== undefined){
-            var image_container = '<div class="full-page-background" style="background-image: url(' + image_src + ') "/>'
-            $page.append(image_container);
-        }
-    };
-
-    ngOnInit(){
-        this.checkFullPageBackgroundImage();
-        var body = document.getElementsByTagName('body')[0];
-        body.classList.add('login-page');
-        var navbar : HTMLElement = this.element.nativeElement;
-        this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
-
-        setTimeout(function(){
-            // after 1000 ms we add the class animated to the login/register card
-            $('.card').removeClass('card-hidden');
-        }, 700)
-    }
-    ngOnDestroy(){
-        var body = document.getElementsByTagName('body')[0];
-        body.classList.remove('login-page');
-    }
-    sidebarToggle(){
-        var toggleButton = this.toggleButton;
-        var body = document.getElementsByTagName('body')[0];
-        var sidebar = document.getElementsByClassName('navbar-collapse')[0];
-        if(this.sidebarVisible == false){
-            setTimeout(function(){
-                toggleButton.classList.add('toggled');
-            },500);
-            body.classList.add('nav-open');
-            this.sidebarVisible = true;
-        } else {
-            this.toggleButton.classList.remove('toggled');
-            this.sidebarVisible = false;
-            body.classList.remove('nav-open');
-        }
-    }
-}
+  }
+  

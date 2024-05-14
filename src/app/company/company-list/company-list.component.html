@@ -40,6 +40,8 @@
                     <td>{{ company.adresse }}</td>
                     <td class="text-right">
                       <a [routerLink]="['/companies/list/modif', company.id]" class="btn btn-warning btn-link btn-icon btn-sm edit"><i class="fa fa-edit"></i></a>
+                      <a [routerLink]="['/companies/details', company.id]"class="btn btn-warning btn-link btn-icon btn-sm edit"><i class="fa fa-edit"></i></a>
+
                       <button type="button" (click)="deleteCompany($event, company.id)" class="btn btn-danger btn-link btn-icon btn-sm remove"><i class="fa fa-times"></i></button>
                     </td>
                   </tr>

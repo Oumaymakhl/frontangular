@@ -1,82 +1,35 @@
-<div class="main-content">
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card">
-                    <form #f="ngForm" novalidate (ngSubmit)="save(f.value, f.valid)">
-
-                        <div class="card-header">
-                            <h4 class="card-title">Register participant</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="form-group has-label">
-                                <label class="control-label" for="nom">Nom:
-                                    <span class="star">*</span>
-                                </label>
-                                <input type="text" class="form-control" name="nom" [ngModel]="register.nom"
-                                  required  #nom="ngModel">
-                                <small [hidden]="nom.valid || (nom.pristine && !f.submitted)" class="text-danger">
-                                  Nom is required.
-                                </small>
-                            </div>
-                            <div class="form-group has-label">
-                                <label class="control-label" for="prenom">Prénom:
-                                    <span class="star">*</span>
-                                </label>
-                                <input type="text" class="form-control" name="prenom" [ngModel]="register.prenom"
-                                  required  #prenom="ngModel">
-                                <small [hidden]="prenom.valid || (prenom.pristine && !f.submitted)" class="text-danger">
-                                  Prénom is required.
-                                </small>
-                            </div>
-                            <div class="form-group has-label">
-                                <label class="control-label" for="login">Login:
-                                    <span class="star">*</span>
-                                </label>
-                                <input type="text" class="form-control" name="login" [ngModel]="register.login"
-                                  required  #login="ngModel">
-                                <small [hidden]="login.valid || (login.pristine && !f.submitted)" class="text-danger">
-                                  Login is required.
-                                </small>
-                            </div>
-                            <div class="form-group has-label">
-                                <label class="control-label" for="email">Email Address:
-                                    <span class="star">*</span>
-                                </label>
-                                <input type="email" class="form-control" name="email" [ngModel]="register.email"
-                                  required  #email="ngModel" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$">
-                                <small [hidden]="email.valid || (email.pristine && !f.submitted)" class="text-danger">
-                                  Email is required and format should be <i>john@doe.com</i>.
-                                </small>
-                            </div>
-                            <div class="form-group has-label">
-                                <label class="control-label" for="companyid">Company id:
-                                    <span class="star">*</span>
-                                </label>
-                                <input type="number" class="form-control" name="companyid" [ngModel]="register.companyid"
-                                  required  #companyid="ngModel">
-                                <small [hidden]="companyid.valid || (companyid.pristine && !f.submitted)" class="text-danger">
-                                  Company id is required.
-                                </small>
-                            </div>
-                           
-                          
-                            <div class="category">    <span class="star">*</span> Required fields</div>
-                        </div>
-                        <div class="card-footer text-right">
-                          <div class="form-check pull-left">
-                            <label class="form-check-label">
-                              <input class="form-check-input" type="checkbox" name="optionCheckboxes"  [ngModel]>
-                              <span class="form-check-sign"></span>
-                              Subscribe to newsletter
-                            </label>
-                          </div>
-                          <button type="submit" class="btn btn-primary">Register</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="containerProduct">
+  <div id="formContent">
+    <h2 class="form-top">Ajouter un participant</h2>
+    <form [formGroup]="participantForm" (ngSubmit)="saveParticipant()" class="form" #form="ngForm">
+      <div class="div-form">
+        <label for="nom">Nom:</label>
+        <input type="text" formControlName="nom" id="nom" placeholder="Nom" class="form-input">
+      </div>
+      <div class="div-form">
+        <label for="prenom">Prénom:</label>
+        <input type="text" formControlName="prenom" id="prenom" placeholder="Prénom" class="form-input">
+      </div>
+      <div class="div-form">
+        <label for="login">Login:</label>
+        <input type="text" formControlName="login" id="login" placeholder="Login" class="form-input">
+      </div>
+      <div class="div-form">
+        <label for="password">Mot de passe:</label>
+        <input type="password" formControlName="password" id="password" placeholder="Mot de passe" class="form-input">
+      </div>
+      <div class="div-form">
+        <label for="email">Email:</label>
+        <input type="email" formControlName="email" id="email" placeholder="Email" class="form-input">
+      </div>
+      <div class="div-form">
+        <label for="company_id">ID de l'entreprise:</label>
+        <input type="text" formControlName="company_id" id="company_id" placeholder="ID de l'entreprise" class="form-input">
+      </div>
+      <div class="div-form buttons">
+        <button type="button" routerLink="/compte-participant" class="btn-action">Retour</button>
+        <button type="submit" class="btn-action">Ajouter</button>
+      </div>
+    </form>
+  </div>
 </div>
-

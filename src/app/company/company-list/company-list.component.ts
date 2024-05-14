@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CompanyService } from 'app/shared/API_service/company.service';
 import { Company } from 'app/shared/model/company';
 
+
 @Component({
   selector: 'app-company-list',
   templateUrl: './company-list.component.html',

@@ -1,77 +1,49 @@
-
-
-
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { PasswordValidation } from './password-validator.component';
-
-declare interface User {
-    text?: string;
-    email?: string; //  must be valid email format
-    password?: string; // required, value must be equal to confirm password.
-    confirmPassword?: string; // required, value must be equal to password.
-    number?: number; // required, value must be equal to password.
-    url?: string;
-    idSource?: string;
-    idDestination?: string;
-  
-    nom?: string;
-    prenom?: string;
-    login?: string;
-    companyid?: number;
-  
-}
+import { ActivatedRoute } from '@angular/router';
+import { ParticipantService } from 'app/shared/API_service/participant.service';
 
 @Component({
   selector: 'app-modif-partcipant',
   templateUrl: './modif-partcipant.component.html',
   styleUrls: ['./modif-partcipant.component.css']
 })
-export class ModifPartcipantComponent{
+export class ModifPartcipantComponent implements OnInit {
+  
+  constructor(
+    private route: ActivatedRoute, 
+    private participantservice: ParticipantService
+  ) {}
+  
+  participant: any = {}; 
+  participantId: any;
+  loading: boolean = true;
 
-    public register: User;
-    public login: User;
-    public typeValidation: User;
+  ngOnInit() {
+    this.participantId = this.route.snapshot.paramMap.get('id');
+    this.participantservice.getParticipant(this.participantId).subscribe(
+      (res:any) => {
+        console.log(res); 
+        this.participant = res.user; 
+        this.loading = false;
+      }
+    );
+  }
 
-    ngOnInit() {
-        this.register = {
-            email: '',
-            password: '',
-            confirmPassword: '',
-            nom: '',
-            prenom: '',
-            login: '',
-            companyid: null,
-           
-        }
-        this.typeValidation = {
-            text: '',
-            email: '',
-            idSource: '',
-            idDestination: '',
-            url: ''
-        }
-    }
+  updateParticipant() {
+    var inputData = {
+      nom: this.participant.nom,
+      prenom: this.participant.prenom,
+      login: this.participant.login,
+      email: this.participant.email,
+      company_id: this.participant.company_id,
+    };
 
-    save(model: User, isValid: boolean) {
-    // call API to save customer
-        if(isValid){
-            console.log(model, isValid);
-        }
-    }
-    save1(model: User, isValid: boolean) {
-    // call API to save customer
-        if(isValid){
-            console.log(model, isValid);
-        }
-    }
-    save2(model: User, isValid: boolean) {
-    // call API to save customer
-        if(isValid){
-            console.log(model, isValid);
-        }
-    }
-    onSubmit(value: any):void{
-        console.log(value);
-    }
+    this.participantservice.updateparticipant(inputData, this.participantId).subscribe({
+      next: (res: any) => {
+        console.log(res);
+        alert(res.message);
+      }
+    });
+  }
 }

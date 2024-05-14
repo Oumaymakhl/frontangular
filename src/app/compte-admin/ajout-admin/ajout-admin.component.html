@@ -1,118 +1,48 @@
-<div class="container-xl" style="margin-top: 80px; margin-bottom: 100px;">
-    <div class="table-wrapper mt-5">
-        <div class="card shadow">
-            <div class="table-title bg-custom-blue text-light p-4 rounded-top d-flex justify-content-between align-items-center">
-                <div>
-                    <h4 class="mb-0">Register Admin</h4>
-                </div>
-                <div class="col-auto">
-                    <button class="btn btn-secondary">Back</button>
-                </div>
-            </div>
-            <div class="card-body">
-                <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-                    <div class="form-group p-10 row">
-                        <div class="col-sm-3">
-                            <label class="p-t-b-10">Nom<span class="requiredStar">*</span></label>
-                        </div>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" formControlName="nom">
-                            <small *ngIf="signupForm.get('nom').invalid && signupForm.get('nom').touched" class="text-danger">
-                                Nom is required.
-                            </small>
-                        </div>
-                    </div>
-                    <div class="form-group p-10 row">
-                        <div class="col-sm-3">
-                            <label class="p-t-b-10">Prénom<span class="requiredStar">*</span></label>
-                        </div>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" formControlName="prenom">
-                            <small *ngIf="signupForm.get('prenom').invalid && signupForm.get('prenom').touched" class="text-danger">
-                                Prénom is required.
-                            </small>
-                        </div>
-                    </div>
-                    <div class="form-group p-10 row">
-                        <div class="col-sm-3">
-                            <label class="p-t-b-10">Login<span class="requiredStar">*</span></label>
-                        </div>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" formControlName="login">
-                            <small *ngIf="signupForm.get('login').invalid && signupForm.get('login').touched" class="text-danger">
-                                Login is required.
-                            </small>
-                        </div>
-                    </div>
-                    <div class="form-group p-10 row">
-                        <div class="col-sm-3">
-                            <label class="p-t-b-10">Email Address<span class="requiredStar">*</span></label>
-                        </div>
-                        <div class="col-sm-9">
-                            <input type="email" class="form-control" formControlName="email">
-                            <small *ngIf="signupForm.get('email').invalid && signupForm.get('email').touched" class="text-danger">
-                                Email is required and format should be <i>john@doe.com</i>.
-                            </small>
-                        </div>
-                    </div>
-                    <div formGroupName="company">
-                        <div class="form-group p-10 row">
-                            <div class="col-sm-3">
-                                <label class="p-t-b-10">Company Nom<span class="requiredStar">*</span></label>
-                            </div>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" formControlName="nom">
-                                <small *ngIf="signupForm.get('company.nom').invalid && signupForm.get('company.nom').touched" class="text-danger">
-                                    Company Nom is required.
-                                </small>
-                            </div>
-                        </div>
-                        <div class="form-group p-10 row">
-                            <div class="col-sm-3">
-                                <label class="p-t-b-10">Company Adresse<span class="requiredStar">*</span></label>
-                            </div>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" formControlName="adresse">
-                                <small *ngIf="signupForm.get('company.adresse').invalid && signupForm.get('company.adresse').touched" class="text-danger">
-                                    Company Adresse is required.
-                                </small>
-                            </div>
-                        </div>
-                        <div class="form-group p-10 row">
-                            <div class="col-sm-3">
-                                <label class="p-t-b-10">Company Subdomaine<span class="requiredStar">*</span></label>
-                            </div>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" formControlName="subdomaine">
-                                <small *ngIf="signupForm.get('company.subdomaine').invalid && signupForm.get('company.subdomaine').touched" class="text-danger">
-                                    Company Subdomaine is required.
-                                </small>
-                            </div>
-                        </div>
-                        <div class="form-group p-10 row">
-                            <div class="col-sm-3">
-                                <label class="p-t-b-10">Company Logo</label>
-                            </div>
-                            <div class="col-sm-9">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text bg-white border-right-0"><i class="fas fa-image text-primary"></i></span>
-                                    </div>
-                                    <input type="file" class="form-control border-left-0" formControlName="logo">
-                                </div>
-                                <small *ngIf="signupForm.get('company.logo').invalid && signupForm.get('company.logo').touched" class="text-danger">
-                                    Please upload a valid image.
-                                </small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group p-10 row">
-                        <div class="col-sm-12 text-center">
-                            <button type="submit" class="btn btn-success green-btn">Register</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+<div class="containerProduct">
+  <div id="formContent">
+    <h2 class="form-top">Ajouter un administrateur</h2>
+    <form [formGroup]="signupForm" (ngSubmit)="saveadmin()" class="form" #form="ngForm">
+      <div class="div-form">
+        <label for="nom">Nom:</label>
+        <input type="text" formControlName="nom" id="nom" placeholder="Nom" class="form-input">
+      </div>
+      <div class="div-form">
+        <label for="prenom">Prénom:</label>
+        <input type="text" formControlName="prenom" id="prenom" placeholder="Prénom" class="form-input">
+      </div>
+      <div class="div-form">
+        <label for="login">Login:</label>
+        <input type="text" formControlName="login" id="login" placeholder="Login" class="form-input">
+      </div>
+      <div class="div-form">
+        <label for="password">Mot de passe:</label>
+        <input type="password" formControlName="password" id="password" placeholder="Mot de passe" class="form-input">
+      </div>
+      <div class="div-form">
+        <label for="email">Email:</label>
+        <input type="email" formControlName="email" id="email" placeholder="Email" class="form-input">
+      </div>
+      <h3 class="form-top">Informations sur l'entreprise</h3>
+      <div class="div-form">
+        <label for="companyNom">Nom de l'entreprise:</label>
+        <input type="text" formControlName="companyNom" id="companyNom" placeholder="Nom de l'entreprise" class="form-input">
+      </div>
+      <div class="div-form">
+        <label for="companySubdomaine">Sous-domaine de l'entreprise:</label>
+        <input type="text" formControlName="companySubdomaine" id="companySubdomaine" placeholder="Sous-domaine de l'entreprise" class="form-input">
+      </div>
+      <div class="div-form">
+        <label for="companyLogo">Logo de l'entreprise:</label>
+        <input type="file" id="companyLogo" (change)="onLogoChange($event)" accept="image/*" class="form-input" required>
+      </div>
+      <div class="div-form">
+        <label for="companyAdresse">Adresse de l'entreprise:</label>
+        <input type="text" formControlName="companyAdresse" id="companyAdresse" placeholder="Adresse de l'entreprise" class="form-input">
+      </div>
+      <div class="div-form buttons">
+        <button type="button" routerLink="/compte-admin" class="btn-action">Retour</button>
+        <button type="submit" class="btn-action">Ajouter</button>
+      </div>
+    </form>
+  </div>
 </div>

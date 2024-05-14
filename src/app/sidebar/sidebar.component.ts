@@ -168,6 +168,17 @@ export const ROUTES: RouteInfo[] = [{
             {path: 'register', title: 'Register Page', ab:'RP'},
             {path: 'lock', title: 'Lock Screen Page', ab:'LSP'}
         ]
+    },{
+        path: '/auth',
+        title: 'auth',
+        type: 'sub',
+        collapse: 'auth',
+        icontype: 'nc-icon nc-layout-11',
+        children: [
+            {path: 'reset', title: 'reset', ab:'R'},
+            {path: 'change', title: 'change', ab:'ch'},
+           
+        ]
     }
 ];
 

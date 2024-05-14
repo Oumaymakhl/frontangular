@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Admin } from '../model/admin';
+import { Observable } from 'rxjs';
 export interface listeadmin{
   status:number;
   admins:Admin[];
@@ -16,8 +17,8 @@ export class AdminService {
 
   constructor(private http: HttpClient) { }
   
-  saveadmin(inputData:object){
-    return this.http.post('http://localhost:8000/api/admin/signup',inputData);
+  saveadmin(inputData: FormData) {
+    return this.http.post('http://localhost:8000/api/admin/signup', inputData);
   }
   getAdmins() {
     return this.http.get<listeadmin>(`http://localhost:8000/api/admin`);

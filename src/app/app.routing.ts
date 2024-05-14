@@ -6,6 +6,7 @@ import { CompteAdminRoutingModule } from './compte-admin/compte-admin.routing';
 import { ComptePartcipantRoutingModule } from './compte-participant/compte-partcipant.routing';
 import { LoginComponent } from './login/login.component';
 import { CompanyRoutingModule } from './company/company-routing.module';
+import { AuthRoutingModule } from './auth/auth-routing.module';
 
 export const AppRoutes: Routes = [{
         path: '',
@@ -69,6 +70,7 @@ export const AppRoutes: Routes = [{
           },{
             path: 'companies', // Chemin pour accéder au module du compte administrateur
             loadChildren: () => CompanyRoutingModule, // Utilisez le module de routage du compte admin
+          }]
           },{
             path: 'en-ligne',
             loadChildren:() => import( './reunion2/reunion2.module').then(x=>x.Reunion2Module)
@@ -90,9 +92,14 @@ export const AppRoutes: Routes = [{
                 loadChildren:() => import( './pages/pages.module').then(x=>x.PagesModule)
             }]
         },
-        {
-            path: 'login', // Chemin pour accéder au composant d'enregistrement
-            component: LoginComponent, // Composant d'enregistrement
-        }
-        
-];
+    {
+      path: 'login',
+      component: LoginComponent
+    }, {
+      path: 'auth', 
+      loadChildren: () => AuthRoutingModule, 
+    },
+    {
+      path: '**',
+      redirectTo: '/login'
+    }]

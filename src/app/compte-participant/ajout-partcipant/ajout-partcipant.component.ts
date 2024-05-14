@@ -3,23 +3,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { PasswordValidation } from './password-validator.component';
+import { ParticipantService } from 'app/shared/API_service/participant.service';
 
-declare interface User {
-    text?: string;
-    email?: string; //  must be valid email format
-    password?: string; // required, value must be equal to confirm password.
-    confirmPassword?: string; // required, value must be equal to password.
-    number?: number; // required, value must be equal to password.
-    url?: string;
-    idSource?: string;
-    idDestination?: string;
-  
-    nom?: string;
-    prenom?: string;
-    login?: string;
-    companyid?: number;
-  
-}
 
 @Component({
   selector: 'app-ajout-partcipant',
@@ -27,50 +12,44 @@ declare interface User {
   styleUrls: ['./ajout-partcipant.component.css']
 })
 export class AjoutPartcipantComponent{
-
-    public register: User;
-    public login: User;
-    public typeValidation: User;
-
-    ngOnInit() {
-        this.register = {
-            email: '',
-            password: '',
-            confirmPassword: '',
-            nom: '',
-            prenom: '',
-            login: '',
-            companyid: null,
-           
-        }
-        this.typeValidation = {
-            text: '',
-            email: '',
-            idSource: '',
-            idDestination: '',
-            url: ''
-        }
+    participantForm: FormGroup;
+    errors: any;
+  
+    constructor(private formBuilder: FormBuilder, private userService: ParticipantService) {}
+  
+    ngOnInit(): void {
+      this.participantForm = this.formBuilder.group({
+        nom: ['', Validators.required],
+        prenom: ['', Validators.required],
+        login: ['', Validators.required],
+        password: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        company_id: ['', Validators.required]
+      });
     }
-
-    save(model: User, isValid: boolean) {
-    // call API to save customer
-        if(isValid){
-            console.log(model, isValid);
+  
+    saveParticipant() {
+      if (this.participantForm.invalid) {
+        return;
+      }
+      
+      const inputData = new FormData();
+      inputData.append('nom', this.participantForm.get('nom')?.value);
+      inputData.append('prenom', this.participantForm.get('prenom')?.value);
+      inputData.append('login', this.participantForm.get('login')?.value);
+      inputData.append('password', this.participantForm.get('password')?.value);
+      inputData.append('email', this.participantForm.get('email')?.value);
+      inputData.append('company_id', this.participantForm.get('company_id')?.value);
+  
+      this.userService.saveparticipant(inputData).subscribe(
+        (res: any) => {
+          console.log(res, 'response');
+          alert(res.message);
+        },
+        (err: any) => {
+          this.errors = err.error.message;
+          console.log(err.error.message, 'error');
         }
+      );
     }
-    save1(model: User, isValid: boolean) {
-    // call API to save customer
-        if(isValid){
-            console.log(model, isValid);
-        }
-    }
-    save2(model: User, isValid: boolean) {
-    // call API to save customer
-        if(isValid){
-            console.log(model, isValid);
-        }
-    }
-    onSubmit(value: any):void{
-        console.log(value);
-    }
-}
+  }

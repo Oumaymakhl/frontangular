@@ -2,8 +2,6 @@ import { Routes } from '@angular/router';
 
 import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
-import { CompteAdminModule } from './compte-admin/compte-admin.module';
-import { ListeAdminComponent } from './compte-admin/liste-admin/liste-admin.component';
 import { CompteAdminRoutingModule } from './compte-admin/compte-admin.routing';
 import { ComptePartcipantRoutingModule } from './compte-participant/compte-partcipant.routing';
 import { LoginComponent } from './login/login.component';
@@ -51,6 +49,19 @@ export const AppRoutes: Routes = [{
             path: '',
             loadChildren:() => import( './widgets/widgets.module').then(x=>x.WidgetsModule)
         }, {
+            path: '',
+            loadChildren:() => import( './task/task.module').then(x=>x.TaskModule)
+        }, {
+            path: '',
+            loadChildren:() => import( './taskuser/taskuser.module').then(x=>x.TaskuserModule)
+        },{
+            path: 'reunion',
+            loadChildren:() => import( './reunion/reunion.module').then(x=>x.ReunionModule)
+        },
+        {
+            path: 'document',
+            loadChildren:() => import( './document/document.module').then(x=>x.DocumentModule)
+        },{
             path: 'compte-admin', // Chemin pour accéder au module du compte administrateur
             loadChildren: () => CompteAdminRoutingModule, // Utilisez le module de routage du compte admin
           }, {
@@ -60,6 +71,19 @@ export const AppRoutes: Routes = [{
             path: 'companies', // Chemin pour accéder au module du compte administrateur
             loadChildren: () => CompanyRoutingModule, // Utilisez le module de routage du compte admin
           }]
+          },{
+            path: 'en-ligne',
+            loadChildren:() => import( './reunion2/reunion2.module').then(x=>x.Reunion2Module)
+        },{
+            path: 'decision',
+            loadChildren:() => import( './decision/decision.module').then(x=>x.DecisionModule)
+        },{
+            path: 'decision-admin',
+            loadChildren:() => import( './decision-admin/decision-admin.module').then(x=>x.DecisionAdminModule)
+        },{
+            path: 'statistique',
+            loadChildren:() => import( './statistique/statistique.module').then(x=>x.StatistiqueModule)
+        },]
         },{
             path: '',
             component: AuthLayoutComponent,

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Statistics Dashboard</title>
+  <!-- Importation de Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <div class="main-content">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card card-chart">
+          <div class="card-header">
+            <h5 class="card-title">Totals</h5>
+            <p class="card-category">Bar Chart</p>
+          </div>
+          <div class="card-body">
+            <canvas id="totalsChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card card-chart">
+          <div class="card-header">
+            <h5 class="card-title">Average Reunions per User</h5>
+            <p class="card-category">Line Chart</p>
+          </div>
+          <div class="card-body">
+            <canvas id="averageReunionsChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card card-chart">
+          <div class="card-header">
+            <h5 class="card-title">Tasks by Status</h5>
+            <p class="card-category">Pie Chart</p>
+          </div>
+          <div class="card-body">
+            <canvas id="tasksByStatusChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card card-chart">
+          <div class="card-header">
+            <h5 class="card-title">Task Completion Rate</h5>
+            <p class="card-category">Doughnut Chart</p>
+          </div>
+          <div class="card-body">
+            <canvas id="taskCompletionRateChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card card-chart">
+          <div class="card-header">
+            <h5 class="card-title">Average Tasks per User</h5>
+            <p class="card-category">Line Chart</p>
+          </div>
+          <div class="card-body">
+            <canvas id="averageTasksPerUserChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card card-chart">
+          <div class="card-header">
+            <h5 class="card-title">Users by Company</h5>
+            <p class="card-category">Bar Chart</p>
+          </div>
+          <div class="card-body">
+            <canvas id="usersByCompanyChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Vous pouvez ajouter votre code TypeScript ici une fois que Angular l'a transformé en JavaScript
+  </script>
+</body>
+
+</html>

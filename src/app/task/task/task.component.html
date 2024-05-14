@@ -1,0 +1,58 @@
+<div class="container-xl mt-5 mb-4">
+    <div class="table-responsive">
+        <div class="table-wrapper mt-5">
+            <table class="table table-bordered shadow rounded">
+                <tbody>
+                    <tr>
+                        <td colspan="7">
+                            <div class="table-title bg-custom-blue text-light p-4 rounded-top d-flex justify-content-between align-items-center">
+                                <h4 class="m-0"><b>Tasks</b></h4>
+                                <button class="btn btn-success" (click)="ajouterTache()">
+                                    <i class="fas fa-plus-circle"></i><span class="ml-2">Add Task</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table class="table table-striped table-hover">
+                                <thead class="bg-white text-dark">
+                                    <tr>
+                                       
+                                        <th>User Name</th>
+                                        <th>Task Name</th>
+                                        <th>Description</th>
+                                        <th>Estimated Time (hours)</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let task of tasks">
+                                     
+                                        <td>{{ task.user_id }}</td>
+                                        <td>{{ task.name }}</td>
+                                        <td>{{ task.description }}</td>
+                                        <td>{{ task.estimated_time }}</td>
+                                        <td>{{ task.status }}</td>
+                                        <td class="td-actions text-right" style="text-align: right;">
+                                            <button type="button" class="btn btn-warning btn-icon btn-sm mr-2" title="Edit Task" (click)="editerTache(task)">
+                                                <i class="fa fa-edit" ></i>
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-icon btn-sm" title="Remove" (click)="supprimerTache(task.id)">
+                                                <i class="fa fa-times" ></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="tasks.length == 0">
+                                        <td colspan="7" class="text-center">No tasks found</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

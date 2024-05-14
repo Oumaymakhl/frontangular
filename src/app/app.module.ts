@@ -15,28 +15,29 @@ import { LoginComponent } from './login/login.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 
+
 @NgModule({
     imports:[
         BrowserAnimationsModule,HttpClientModule,
         FormsModule,
         RouterModule.forRoot(AppRoutes,{
-          useHash: true
+          useHash: true,
         }),
         NgbModule,
         SidebarModule,
         NavbarModule,
         FooterModule, FixedPluginModule,ReactiveFormsModule,
+        FooterModule,
+        FixedPluginModule,ReactiveFormsModule
     ],
     declarations: [
         AppComponent,
         AdminLayoutComponent,
         AuthLayoutComponent,
         LoginComponent,
-      
-       
     ], providers: [],
-   
-    bootstrap:[ AppComponent ]
+
+    bootstrap:    [ AppComponent ]
 })
 
 export class AppModule { }

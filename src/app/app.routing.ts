@@ -70,7 +70,6 @@ export const AppRoutes: Routes = [{
           },{
             path: 'companies', // Chemin pour accéder au module du compte administrateur
             loadChildren: () => CompanyRoutingModule, // Utilisez le module de routage du compte admin
-          }]
           },{
             path: 'en-ligne',
             loadChildren:() => import( './reunion2/reunion2.module').then(x=>x.Reunion2Module)
@@ -92,14 +91,16 @@ export const AppRoutes: Routes = [{
                 loadChildren:() => import( './pages/pages.module').then(x=>x.PagesModule)
             }]
         },
-    {
-      path: 'login',
-      component: LoginComponent
-    }, {
-      path: 'auth', 
-      loadChildren: () => AuthRoutingModule, 
-    },
-    {
-      path: '**',
-      redirectTo: '/login'
-    }]
+        {
+            path: 'login', // Chemin pour accéder au composant d'enregistrement
+            component: LoginComponent, // Composant d'enregistrement
+        }, {
+            path: 'auth', 
+            loadChildren: () => AuthRoutingModule
+          },
+          {
+            path: '**',
+            redirectTo: '/login'
+          }
+        
+];

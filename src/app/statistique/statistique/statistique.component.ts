@@ -49,8 +49,8 @@ export class StatistiqueComponent implements OnInit {
             datasets: [{
                 label: 'Totals',
                 data: [data.reunions_count, data.tasks_count, data.users_count],
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(0, 51, 102, 0.9)',
+                borderColor: 'rgba(0, 51, 102, 1)',
                 borderWidth: 1
             }]
         },
@@ -90,11 +90,11 @@ createAverageReunionsChart(data: any): void {
               data: [averageReunionsPerUser, 100 - averageReunionsPerUser],
               backgroundColor: [
                   'rgba(75, 192, 192, 0.5)',
-                  'rgba(255, 99, 132, 0.5)',
+                  'rgba(0, 51, 102, 0.9)',
               ],
               borderColor: [
                   'rgba(75, 192, 192, 1)',
-                  'rgba(255, 99, 132, 1)',
+                  'rgba(0, 51, 102,1)',
               ],
               borderWidth: 1
           }]
@@ -133,11 +133,11 @@ createTasksByStatusChart(data: any): void {
                 label: 'Tasks by Status',
                 data: data.tasks_by_status.map((status: any) => status.count),
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.5)',
+                    'rgba(0, 51, 102, 0.9)',
                     'rgba(54, 162, 235, 0.5)',
                 ],
                 borderColor: [
-                    'rgba(255, 99, 132, 1)',
+                    'rgba(0, 51, 102,1)',
                     'rgba(54, 162, 235, 1)',
                 ],
                 borderWidth: 1
@@ -168,11 +168,11 @@ createTaskCompletionRateChart(data: any): void {
               data: [completedTasks.reduce((a: number, b: number) => a + b, 0), incompleteTasks.reduce((a: number, b: number) => a + b, 0)],
               backgroundColor: [
                   'rgba(75, 192, 192, 0.5)',
-                  'rgba(255, 99, 132, 0.5)',
+                  'rgba(0, 51, 102, 0.75)',
               ],
               borderColor: [
                   'rgba(75, 192, 192, 1)',
-                  'rgba(255, 99, 132, 1)',
+                  'rgba(0, 51, 102, 1)',
               ],
               borderWidth: 1
           }]
@@ -195,8 +195,8 @@ createAverageTasksPerUserChart(data: any): void {
           datasets: [{
               label: 'Average Tasks per User',
               data: [data.average_tasks_per_user],
-              backgroundColor: 'rgb(75, 192, 192)', // Couleur de fond des barres
-              borderColor: 'rgb(75, 192, 192)', // Couleur de la bordure des barres
+              backgroundColor: 'rgba(0, 51, 102, 0.9)', // Couleur de fond des barres
+              borderColor: 'rgba(0, 51, 102,1)', // Couleur de la bordure des barres
               borderWidth: 1
           }]
       },

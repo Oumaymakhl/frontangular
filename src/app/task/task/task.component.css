@@ -1,28 +1,39 @@
-.custom-height-popup {
-    max-height: 200px; /* Réduisez encore plus la hauteur maximale */
-    overflow-y: auto; /* Activez le défilement vertical si nécessaire */
+.bg-custom-blue {
+    background-color: #003366; /* Couleur bleu foncé */
+    color: #fff; /* Couleur du texte en blanc */
 }
 
-.custom-swal-input {
-    font-size: 5px; /* Réduisez davantage la taille de la police des champs */
-    padding: 2px; /* Réduisez le padding pour réduire la taille des champs */
-    max-width: 80%; /* Réduisez la largeur maximale des champs */
-}
 
-  @media (min-width: 992px) {
-    .col-lg-6 {
-        flex: 0 0 100%;
-        max-width: 100%;
-    }
-}
-.checkbox-color {
-    width: 18px;
-    height: 18px;
-    background-color: red; /* Vous pouvez changer cela en 'green' si nécessaire */
-    border-radius: 50%; /* Si vous voulez des cases rondes */
+.table-title button {
+    background-color: #28a745; /* Couleur verte pour le bouton Add */
+    color: #fff; /* Couleur du texte en blanc */
+    border: none;
+    border-radius: 3px;
     cursor: pointer;
 }
 
+.table-title button:hover {
+    background-color: #218838; /* Couleur de survol du bouton Add */
+}
 
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f8f9fa; /* Couleur de fond des lignes impaires */
+}
 
+.btn-warning {
+    background-color: #ffc107 !important; /* Couleur orange pour le bouton Edit */
+    color: #212529 !important; /* Couleur du texte en noir */
+}
 
+.btn-warning:hover {
+    background-color: #e0a800 !important; /* Couleur de survol du bouton Edit */
+}
+
+.btn-danger {
+    background-color: #dc3545 !important; /* Couleur rouge pour le bouton Remove */
+    color: #fff !important; /* Couleur du texte en blanc */
+}
+
+.btn-danger:hover {
+    background-color: #c82333 !important; /* Couleur de survol du bouton Remove */
+}

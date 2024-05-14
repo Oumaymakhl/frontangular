@@ -1,0 +1,12 @@
+.sidebar-navy {
+    background-color: #003366; /* Couleur bleu marine */
+}
+.sidebar-wrapper.sidebar-navy {
+    height: 100vh; /* Définit la hauteur du sidebar à 100% de la hauteur de la fenêtre */
+}
+.nav li.active > a {
+    color: #0084ff; /* Définit la couleur du texte des éléments actifs en noir */
+}
+.nav li.active > a i {
+    color: #0084ff; /* Définit la couleur des icônes dans les éléments actifs en noir */
+}

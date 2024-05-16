@@ -1,35 +1,73 @@
-<div class="containerProduct">
-  <div id="formContent">
-    <h2 class="form-top">Ajouter un participant</h2>
-    <form [formGroup]="participantForm" (ngSubmit)="saveParticipant()" class="form" #form="ngForm">
-      <div class="div-form">
-        <label for="nom">Nom:</label>
-        <input type="text" formControlName="nom" id="nom" placeholder="Nom" class="form-input">
+<div class="container-xl mt-5">
+  <div class="table-responsive">
+    <div class="table-wrapper">
+      <div class="card shadow">
+        <div class="table-title bg-custom-blue text-light p-4 rounded-top d-flex justify-content-between align-items-center">
+          <div>
+            <h4 class="mb-0">Ajouter un participant</h4>
+          </div>
+          <div class="col-auto">
+            <button type="button" class="btn btn-secondary" routerLink="/compte-participant">Retour</button>
+          </div>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="participantForm" (ngSubmit)="saveParticipant()" class="form" #form="ngForm">
+            <div class="form-group p-10 row">
+              <div class="col-sm-3">
+                <label for="nom" class="p-t-b-10">Nom:</label>
+              </div>
+              <div class="col-sm-9">
+                <input type="text" formControlName="nom" id="nom" placeholder="Nom" class="form-control">
+              </div>
+            </div>
+            <div class="form-group p-10 row">
+              <div class="col-sm-3">
+                <label for="prenom" class="p-t-b-10">Prénom:</label>
+              </div>
+              <div class="col-sm-9">
+                <input type="text" formControlName="prenom" id="prenom" placeholder="Prénom" class="form-control">
+              </div>
+            </div>
+            <div class="form-group p-10 row">
+              <div class="col-sm-3">
+                <label for="login" class="p-t-b-10">Login:</label>
+              </div>
+              <div class="col-sm-9">
+                <input type="text" formControlName="login" id="login" placeholder="Login" class="form-control">
+              </div>
+            </div>
+            <div class="form-group p-10 row">
+              <div class="col-sm-3">
+                <label for="password" class="p-t-b-10">Mot de passe:</label>
+              </div>
+              <div class="col-sm-9">
+                <input type="password" formControlName="password" id="password" placeholder="Mot de passe" class="form-control">
+              </div>
+            </div>
+            <div class="form-group p-10 row">
+              <div class="col-sm-3">
+                <label for="email" class="p-t-b-10">Email:</label>
+              </div>
+              <div class="col-sm-9">
+                <input type="email" formControlName="email" id="email" placeholder="Email" class="form-control">
+              </div>
+            </div>
+            <div class="form-group p-10 row">
+              <div class="col-sm-3">
+                <label for="company_id" class="p-t-b-10">ID de l'entreprise:</label>
+              </div>
+              <div class="col-sm-9">
+                <input type="text" formControlName="company_id" id="company_id" placeholder="ID de l'entreprise" class="form-control">
+              </div>
+            </div>
+            <div class="form-group p-10 row">
+              <div class="col-sm-12 text-center">
+                <button type="submit" class="btn btn-success green-btn">Ajouter</button>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
-      <div class="div-form">
-        <label for="prenom">Prénom:</label>
-        <input type="text" formControlName="prenom" id="prenom" placeholder="Prénom" class="form-input">
-      </div>
-      <div class="div-form">
-        <label for="login">Login:</label>
-        <input type="text" formControlName="login" id="login" placeholder="Login" class="form-input">
-      </div>
-      <div class="div-form">
-        <label for="password">Mot de passe:</label>
-        <input type="password" formControlName="password" id="password" placeholder="Mot de passe" class="form-input">
-      </div>
-      <div class="div-form">
-        <label for="email">Email:</label>
-        <input type="email" formControlName="email" id="email" placeholder="Email" class="form-input">
-      </div>
-      <div class="div-form">
-        <label for="company_id">ID de l'entreprise:</label>
-        <input type="text" formControlName="company_id" id="company_id" placeholder="ID de l'entreprise" class="form-input">
-      </div>
-      <div class="div-form buttons">
-        <button type="button" routerLink="/compte-participant" class="btn-action">Retour</button>
-        <button type="submit" class="btn-action">Ajouter</button>
-      </div>
-    </form>
+    </div>
   </div>
 </div>

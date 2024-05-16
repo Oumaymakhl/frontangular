@@ -2,12 +2,14 @@
     background-color: #003366; /* Couleur bleu foncé */
     color: #fff; /* Couleur du texte en blanc */
   }
-
-.container-xl {
+  
+  .container-xl {
     width: 60%;
     margin: 50px auto 70px auto;
-}
-.green-btn {
+  }
+  
+  .green-btn {
     background-color: #28a745; /* Couleur verte */
     border-color: #28a745; /* Couleur de la bordure */
-}
+  }
+  

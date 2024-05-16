@@ -1,48 +1,96 @@
-<div class="containerProduct">
-  <div id="formContent">
-    <h2 class="form-top">Ajouter un administrateur</h2>
-    <form [formGroup]="signupForm" (ngSubmit)="saveadmin()" class="form" #form="ngForm">
-      <div class="div-form">
-        <label for="nom">Nom:</label>
-        <input type="text" formControlName="nom" id="nom" placeholder="Nom" class="form-input">
+<div class="container-xl" style="margin-top: 80px; margin-bottom: 100px;">
+  <div class="table-wrapper mt-5">
+    <div class="card shadow">
+      <div class="table-title bg-custom-blue text-light p-4 rounded-top d-flex justify-content-between align-items-center">
+        <div>
+          <h4 class="mb-0">Ajouter un administrateur</h4>
+        </div>
+        <div class="col-auto">
+          <button type="button" class="btn btn-secondary" routerLink="/compte-admin">Retour</button>
+        </div>
       </div>
-      <div class="div-form">
-        <label for="prenom">Prénom:</label>
-        <input type="text" formControlName="prenom" id="prenom" placeholder="Prénom" class="form-input">
+      <div class="card-body">
+        <form [formGroup]="signupForm" (ngSubmit)="saveadmin()" class="form" #form="ngForm">
+          <div class="form-group p-10 row">
+            <div class="col-sm-3">
+              <label class="p-t-b-10">Nom<span class="requiredStar">*</span></label>
+            </div>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" formControlName="nom" id="nom" placeholder="Nom">
+            </div>
+          </div>
+          <div class="form-group p-10 row">
+            <div class="col-sm-3">
+              <label class="p-t-b-10">Prénom<span class="requiredStar">*</span></label>
+            </div>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" formControlName="prenom" id="prenom" placeholder="Prénom">
+            </div>
+          </div>
+          <div class="form-group p-10 row">
+            <div class="col-sm-3">
+              <label class="p-t-b-10">Login<span class="requiredStar">*</span></label>
+            </div>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" formControlName="login" id="login" placeholder="Login">
+            </div>
+          </div>
+          <div class="form-group p-10 row">
+            <div class="col-sm-3">
+              <label class="p-t-b-10">Mot de passe<span class="requiredStar">*</span></label>
+            </div>
+            <div class="col-sm-9">
+              <input type="password" class="form-control" formControlName="password" id="password" placeholder="Mot de passe">
+            </div>
+          </div>
+          <div class="form-group p-10 row">
+            <div class="col-sm-3">
+              <label class="p-t-b-10">Email<span class="requiredStar">*</span></label>
+            </div>
+            <div class="col-sm-9">
+              <input type="email" class="form-control" formControlName="email" id="email" placeholder="Email">
+            </div>
+          </div>
+          <h3 class="form-top">Informations sur l'entreprise</h3>
+          <div class="form-group p-10 row">
+            <div class="col-sm-3">
+              <label class="p-t-b-10">Nom de l'entreprise<span class="requiredStar">*</span></label>
+            </div>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" formControlName="companyNom" id="companyNom" placeholder="Nom de l'entreprise">
+            </div>
+          </div>
+          <div class="form-group p-10 row">
+            <div class="col-sm-3">
+              <label class="p-t-b-10">Sous-domaine de l'entreprise<span class="requiredStar">*</span></label>
+            </div>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" formControlName="companySubdomaine" id="companySubdomaine" placeholder="Sous-domaine de l'entreprise">
+            </div>
+          </div>
+          <div class="form-group p-10 row">
+            <div class="col-sm-3">
+              <label class="p-t-b-10">Logo de l'entreprise<span class="requiredStar">*</span></label>
+            </div>
+            <div class="col-sm-9">
+              <input type="file" class="form-control" formControlName="companyLogo" id="companyLogo" (change)="onLogoChange($event)" accept="image/*" required>
+            </div>
+          </div>
+          <div class="form-group p-10 row">
+            <div class="col-sm-3">
+              <label class="p-t-b-10">Adresse de l'entreprise<span class="requiredStar">*</span></label>
+            </div>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" formControlName="companyAdresse" id="companyAdresse" placeholder="Adresse de l'entreprise">
+            </div>
+          </div>
+          <div class="form-group p-10 row">
+            <div class="col-sm-12 text-center">
+              <button type="submit" class="btn btn-success green-btn">Ajouter</button>
+            </div>
+          </div>
+        </form>
       </div>
-      <div class="div-form">
-        <label for="login">Login:</label>
-        <input type="text" formControlName="login" id="login" placeholder="Login" class="form-input">
-      </div>
-      <div class="div-form">
-        <label for="password">Mot de passe:</label>
-        <input type="password" formControlName="password" id="password" placeholder="Mot de passe" class="form-input">
-      </div>
-      <div class="div-form">
-        <label for="email">Email:</label>
-        <input type="email" formControlName="email" id="email" placeholder="Email" class="form-input">
-      </div>
-      <h3 class="form-top">Informations sur l'entreprise</h3>
-      <div class="div-form">
-        <label for="companyNom">Nom de l'entreprise:</label>
-        <input type="text" formControlName="companyNom" id="companyNom" placeholder="Nom de l'entreprise" class="form-input">
-      </div>
-      <div class="div-form">
-        <label for="companySubdomaine">Sous-domaine de l'entreprise:</label>
-        <input type="text" formControlName="companySubdomaine" id="companySubdomaine" placeholder="Sous-domaine de l'entreprise" class="form-input">
-      </div>
-      <div class="div-form">
-        <label for="companyLogo">Logo de l'entreprise:</label>
-        <input type="file" id="companyLogo" (change)="onLogoChange($event)" accept="image/*" class="form-input" required>
-      </div>
-      <div class="div-form">
-        <label for="companyAdresse">Adresse de l'entreprise:</label>
-        <input type="text" formControlName="companyAdresse" id="companyAdresse" placeholder="Adresse de l'entreprise" class="form-input">
-      </div>
-      <div class="div-form buttons">
-        <button type="button" routerLink="/compte-admin" class="btn-action">Retour</button>
-        <button type="submit" class="btn-action">Ajouter</button>
-      </div>
-    </form>
+    </div>
   </div>
 </div>

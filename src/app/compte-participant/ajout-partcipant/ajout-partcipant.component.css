@@ -1,0 +1,16 @@
+/* Couleur bleu foncé */
+.bg-custom-blue {
+    background-color: #003366;
+    color: #fff;
+}
+
+/* Couleur verte */
+.green-btn {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.container-xl {
+    width: 60%;
+    margin: 50px auto 70px auto;
+}

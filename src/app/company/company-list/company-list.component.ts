@@ -3,16 +3,15 @@ import { Router } from '@angular/router';
 import { CompanyService } from 'app/shared/API_service/company.service';
 import { Company } from 'app/shared/model/company';
 
-
 @Component({
   selector: 'app-company-list',
   templateUrl: './company-list.component.html',
   styleUrls: ['./company-list.component.css']
 })
 export class CompanyListComponent implements OnInit {
-
   companies: Company[];
-  
+  searchTerm: string = '';
+
   constructor(private companyService: CompanyService, private router: Router) { }
 
   ngOnInit(): void {
@@ -39,7 +38,15 @@ export class CompanyListComponent implements OnInit {
       });
     }
   }
-  
 
- 
+  ajouterCompany(): void {
+    this.router.navigate(['/companies/list/ajout']);
+  }
+
+  filteredCompanies(): Company[] {
+    return this.companies.filter((company: Company) =>
+      company.nom.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      company.adresse.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
 }

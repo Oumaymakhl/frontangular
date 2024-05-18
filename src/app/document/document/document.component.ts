@@ -87,4 +87,9 @@ export class DocumentComponent implements OnInit {
   selectDocument(documentId: number) {
     this.selectedDocumentId = documentId;
   }
+  documentsFiltered(): Document[] {
+    return this.documents.filter((document: Document) =>
+      document.name.toLowerCase().includes(this.termeDeRecherche.toLowerCase())
+    );
+  }
 }

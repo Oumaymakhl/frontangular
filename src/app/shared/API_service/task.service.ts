@@ -41,4 +41,10 @@ export class TaskService {
     deleteTask(id: number): Observable<any> {
       return this.http.delete(`http://localhost:8000/api/tasks/${id}`);
     }
+    updateTaskStatus(taskId: number, status: string): Observable<Task> {
+      const url = `http://localhost:8000/api/tasks/${taskId}`;
+      // Assumez que votre backend Laravel attend une requête PATCH pour mettre à jour le statut de la tâche
+      return this.http.patch<Task>(url, { status });
+    }
+    
   }

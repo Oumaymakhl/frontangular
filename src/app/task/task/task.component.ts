@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { TaskService, listetask, taskajout, taskEdit } from 'app/shared/API_service/task.service'; // Importez le service TaskService et les interfaces correspondantes
 import { Task } from 'app/shared/model/task'; // Assurez-vous de spécifier le chemin correct vers votre modèle Task
 import Swal from 'sweetalert2';
+import { ParticipantService } from 'app/shared/API_service/participant.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
     selector: 'app-task',
@@ -10,26 +12,44 @@ import Swal from 'sweetalert2';
 })
 export class TaskComponent implements OnInit {
     tasks: Task[] = [];
-
-    constructor(private taskService: TaskService) { }
+    searchTerm: string = '';
+    constructor(private taskService: TaskService, private participantService: ParticipantService) { }
+    
 
     ngOnInit() {
         // Appelez une méthode pour récupérer toutes les tâches lorsque le composant est initialisé
         this.loadTasks();
     }
 
-    // Méthode pour récupérer toutes les tâches depuis le service
     loadTasks(): void {
-        this.taskService.getTasks().subscribe(
-          (response: listetask) => { // Utilisez l'interface listetask pour typage de la réponse
-            this.tasks = response.tasks;
-            console.log(response);
+      this.taskService.getTasks().subscribe(
+          (response: listetask) => {
+              this.tasks = response.tasks;
+
+              // Create an array of Observables for each HTTP call
+              const userNameObservables = this.tasks.map(task =>
+                  this.participantService.getUserNameById(task.user_id)
+              );
+
+              // Use forkJoin to wait for all HTTP calls to complete
+              forkJoin(userNameObservables).subscribe(
+                  userNames => {
+                      // userNames is an array containing the full name of each user
+                      this.tasks.forEach((task, index) => {
+                          task.userName = userNames[index]; // Assign the full name to each task
+                      });
+                  },
+                  error => {
+                      console.error('Error fetching user names:', error);
+                  }
+              );
           },
           (error) => {
-            console.error('Error loading tasks:', error);
+              console.error('Error loading tasks:', error);
           }
-        );
-    }
+      );
+  }
+  
 
     ajouterTache() {
         Swal.fire({
@@ -131,4 +151,9 @@ export class TaskComponent implements OnInit {
             }
         });
     }
+    filteredTasks(): Task[] {
+      return this.tasks.filter((task: Task) =>
+          task.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+  }
 }

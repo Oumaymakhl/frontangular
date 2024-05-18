@@ -105,7 +105,8 @@
               "browserTarget": "pd-pro-angularcli:build:production"
             },
             "development": {
-              "browserTarget": "argon-design-system-angular:build:development"
+              "browserTarget": "argon-design-system-angular:build:development",
+              "proxyConfig": "src/proxy.Conf.json"
             },
             "defaultConfiguration": "development"
           }

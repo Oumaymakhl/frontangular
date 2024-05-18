@@ -7,9 +7,12 @@
                         <td colspan="7">
                             <div class="table-title bg-custom-blue text-light p-4 rounded-top d-flex justify-content-between align-items-center">
                                 <h4 class="m-0"><b>Tasks</b></h4>
-                                <button class="btn btn-success" (click)="ajouterTache()">
-                                    <i class="fas fa-plus-circle"></i><span class="ml-2">Add Task</span>
-                                </button>
+                                <div class="d-flex align-items-center">
+                                    <input type="text" class="form-control w-50 mr-2" placeholder="Recherche par nom" [(ngModel)]="searchTerm">
+                                    <button class="btn btn-success" (click)="ajouterTache()">
+                                        <i class="fas fa-plus-circle"></i><span class="ml-2">Add Task</span>
+                                    </button>
+                                </div>
                             </div>
                         </td>
                     </tr>
@@ -18,7 +21,6 @@
                             <table class="table table-striped table-hover">
                                 <thead class="bg-white text-dark">
                                     <tr>
-                                       
                                         <th>User Name</th>
                                         <th>Task Name</th>
                                         <th>Description</th>
@@ -28,14 +30,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let task of tasks">
-                                     
-                                        <td>{{ task.user_id }}</td>
+                                    <tr *ngFor="let task of filteredTasks()">
+                                        <td>{{ task.userName }}</td>
                                         <td>{{ task.name }}</td>
                                         <td>{{ task.description }}</td>
                                         <td>{{ task.estimated_time }}</td>
                                         <td>{{ task.status }}</td>
-                                        <td class="td-actions text-right" style="text-align: right;">
+                                        <td class="td-actions text-right">
                                             <button type="button" class="btn btn-warning btn-icon btn-sm mr-2" title="Edit Task" (click)="editerTache(task)">
                                                 <i class="fa fa-edit" ></i>
                                             </button>
@@ -44,7 +45,7 @@
                                             </button>
                                         </td>
                                     </tr>
-                                    <tr *ngIf="tasks.length == 0">
+                                    <tr *ngIf="filteredTasks().length == 0">
                                         <td colspan="7" class="text-center">No tasks found</td>
                                     </tr>
                                 </tbody>
@@ -55,4 +56,5 @@
             </table>
         </div>
     </div>
-</div>
+  </div>
+  

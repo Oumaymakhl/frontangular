@@ -12,6 +12,7 @@ import { Participant } from 'app/shared/model/participant';
 export class ListeParticipantComponent implements OnInit {
 
   participants: Participant[];
+  searchTerm: string = '';
 
   constructor(private participantService: ParticipantService, private router: Router) { }
 
@@ -22,7 +23,7 @@ export class ListeParticipantComponent implements OnInit {
   loadParticipants(): void {
     this.participantService.getparticipants().subscribe(
       (response: any) => {
-        this.participants = response.users; // Modifier ici
+        this.participants = response.users;
         console.log(response);
       },
       (error) => {
@@ -42,5 +43,12 @@ export class ListeParticipantComponent implements OnInit {
 
   ajouterParticipant(): void {
     this.router.navigate(['/compte-participant/ajout']);
+  }
+
+  filteredParticipants(): Participant[] {
+    return this.participants.filter((participant: Participant) =>
+      participant.nom.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      participant.email.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
   }
 }

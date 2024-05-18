@@ -13,6 +13,10 @@ export class DecisionService {
 
   constructor(private http: HttpClient) { }
 
+  getDecisionsWithLikesAndDislikes() {
+    return this.http.get<any>('http://localhost:8000/api/decisions');
+  }
+  
   getDecisions(): Observable<Decision[]> {
     return this.http.get<Decision[]>(this.baseUrl);
   }
@@ -47,5 +51,8 @@ export class DecisionService {
 
   getDislikesForDecision(decisionId: number): Observable<Like[]> {
     return this.http.get<Like[]>(`${this.baseUrl}/${decisionId}/dislikes`);
+  }
+  getAllLikes(): Observable<Like[]> {
+    return this.http.get<Like[]>(`http://localhost:8000/api/likes`);
   }
 }

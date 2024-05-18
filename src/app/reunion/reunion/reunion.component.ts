@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { ReunionService, listereunion } from 'app/shared/API_service/reunion.service';
 import { Reunion } from 'app/shared/model/reunion';
+import { Router } from '@angular/router'; 
 
 declare var $: any;
 
@@ -14,31 +15,29 @@ declare var $: any;
 export class ReunionComponent implements OnInit {
   reunions: Reunion[];
 
-  constructor(private reunionService: ReunionService) { }
+  constructor(private reunionService: ReunionService, private router: Router) { }
 
   ngOnInit() {
-    // Appel de la méthode getReunions du service
+    this.loadReunions();
+    this.initializeCalendar();
+  }
+
+  loadReunions() {
     this.reunionService.getReunions().subscribe(
-      (response: listereunion) => { // Adaptation du type de paramètre
-        // Utilisez la liste de réunions retournée par le service ici
-        const reunions: Reunion[] = response.reunions;
-        this.initializeCalendarEvents();
+      (response: listereunion) => {
+        this.reunions = response.reunions;
+        this.renderCalendarEvents();
       },
       (error) => {
         console.error('Erreur lors de la récupération des réunions', error);
       }
     );
+  }
 
+  initializeCalendar() {
     const $calendar = $('#fullCalendar');
-    const today = new Date();
-    const y = today.getFullYear();
-    const m = today.getMonth();
-    const d = today.getDate();
-
-    // Configurer le calendrier FullCalendar
     $calendar.fullCalendar({
-      viewRender: function(view, element) {
-        // Active le perfect scrollbar si la vue n'est pas en mode mois
+      viewRender: (view, element) => {
         if (view.name !== 'month') {
           const elem = $(element).find('.fc-scroller')[0];
           new PerfectScrollbar(elem);
@@ -49,47 +48,32 @@ export class ReunionComponent implements OnInit {
         center: 'month,agendaWeek,agendaDay',
         right: 'prev,next,today'
       },
-      defaultDate: today,
       selectable: true,
       selectHelper: true,
       views: {
-        month: {
-          titleFormat: 'MMMM YYYY'
-        },
-        week: {
-          titleFormat: 'MMMM D YYYY'
-        },
-        day: {
-          titleFormat: 'D MMM, YYYY'
-        }
+        month: { titleFormat: 'MMMM YYYY' },
+        week: { titleFormat: 'MMMM D YYYY' },
+        day: { titleFormat: 'D MMM, YYYY' }
       },
-      select: (start, end) => {
-        this.createReunionDialog(start, end);
-      },
-      eventClick: (calEvent, jsEvent, view) => {
-        this.updateOrDeleteReunionDialog(calEvent);
-      },
+      select: (start, end) => { this.createReunionDialog(start, end); },
+      eventClick: (calEvent, jsEvent, view) => { this.updateOrDeleteReunionDialog(calEvent); },
       editable: true,
-      eventLimit: true, // Autorise le lien "plus" lorsqu'il y a trop d'événements
+      eventLimit: true
     });
   }
 
-  initializeCalendarEvents() {
-    // Convertir les réunions en événements compatibles avec FullCalendar
+  renderCalendarEvents() {
     const events = this.reunions.map(reunion => ({
+      id: reunion.id,
       title: reunion.titre,
-      start: reunion.start,
-      end: reunion.end,
+      start: reunion.date,
       description: reunion.description
-      // Autres propriétés de réunion que vous souhaitez afficher dans le calendrier
     }));
 
-    // Configurer les événements du calendrier
     $('#fullCalendar').fullCalendar('renderEvents', events, true);
   }
 
-  // Ouvrir la boîte de dialogue pour créer une réunion
-  private createReunionDialog(start, end) {
+  createReunionDialog(start, end) {
     Swal.fire({
       title: 'Créer une réunion',
       html: `
@@ -103,135 +87,122 @@ export class ReunionComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'Créer',
       cancelButtonText: 'Annuler',
-      customClass: {
-        confirmButton: 'btn btn-success',
-        cancelButton: 'btn btn-danger',
-      },
+      customClass: { confirmButton: 'btn btn-success', cancelButton: 'btn btn-danger' },
       buttonsStyling: false,
       preConfirm: () => {
-        const titleElement = document.getElementById('event-title') as HTMLInputElement;
-        const descriptionElement = document.getElementById('event-description') as HTMLTextAreaElement;
-        const title = titleElement.value;
-        const description = descriptionElement.value;
+        const title = $('#event-title').val();
+        const description = $('#event-description').val();
 
         if (!title) {
           Swal.showValidationMessage('Le titre est requis.');
         }
 
-        return {
-          title,
-          description
-        };
+        return { title, description };
       }
     }).then((result) => {
       if (result.isConfirmed) {
         const { title, description } = result.value;
-        const newReunion: Reunion = {
-          titre: title,
-          description,
-          start,
-          end
-        };
-        
+        const newReunion: Reunion = { titre: title, description, date: start, end };
 
-        // Appeler la méthode du service pour créer une réunion
         this.reunionService.createReunion(newReunion).subscribe(
-          (response) => {
-            // Réussite
-            console.log('Réunion créée avec succès', response);
-            // Actualiser le calendrier pour afficher la nouvelle réunion
-            $('#fullCalendar').fullCalendar('renderEvent', newReunion, true);
+          () => {
+            this.loadReunions(); // Reload the reunions after creating a new one
+            Swal.fire('Succès', 'Réunion créée avec succès', 'success');
           },
           (error) => {
-            // Erreur
             console.error('Erreur lors de la création de la réunion', error);
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Une erreur est survenue lors de la création de la réunion. Veuillez réessayer.',
-            });
+            Swal.fire('Erreur', 'Une erreur est survenue lors de la création de la réunion. Veuillez réessayer.', 'error');
           }
         );
       }
     });
   }
-
-  // Ouvrir la boîte de dialogue pour mettre à jour ou supprimer une réunion existante
-  private updateOrDeleteReunionDialog(calEvent) {
-    const updateForm = `
-      <div class="form-group">
-        <label for="updateTitle">Titre:</label>
-        <input type="text" id="updateTitle" class="form-control" value="${calEvent.title}">
-      </div>
-      <div class="form-group">
-        <label for="updateDescription">Description:</label>
-        <textarea id="updateDescription" class="form-control">${calEvent.description || ''}</textarea>
-      </div>
-      <div class="form-group">
-        <label for="updateStartDate">Date de début:</label>
-        <input type="text" id="updateStartDate" class="form-control" value="${calEvent.start.format('YYYY-MM-DD HH:mm')}">
-      </div>
-      <div class="form-group">
-        <label for="updateEndDate">Date de fin:</label>
-        <input type="text" id="updateEndDate" class="form-control" value="${calEvent.end ? calEvent.end.format('YYYY-MM-DD HH:mm') : ''}">
-      </div>
-    `;
+ updateOrDeleteReunionDialog(calEvent) {
+    const { id, title, description, start } = calEvent;
 
     Swal.fire({
-      title: 'Modifier la réunion',
-      html: updateForm,
+      title: 'Détails de la réunion',
+      html: `<p><strong>Titre:</strong> ${title}</p><p><strong>Description:</strong> ${description}</p>`,
+      showCloseButton: true,
       showCancelButton: true,
-      confirmButtonText: 'Update',
+      showConfirmButton: true,
       cancelButtonText: 'Supprimer',
-      showLoaderOnConfirm: true,
-      preConfirm: () => {
-        const title = (<HTMLInputElement>document.getElementById('updateTitle')).value;
-        const description = (<HTMLTextAreaElement>document.getElementById('updateDescription')).value;
-        const startDate = (<HTMLInputElement>document.getElementById('updateStartDate')).value;
-        const endDate = (<HTMLInputElement>document.getElementById('updateEndDate')).value;
-
-        // Vous pouvez gérer ici la mise à jour des données dans votre application
-        // Remplacez ce code par l'appel à votre API ou la mise à jour de vos données en fonction de votre logique métier
-
-        // Pour cet exemple, nous afficherons simplement un message de succès
-        return new Promise<void>((resolve) => {
-          setTimeout(() => {
-            resolve();
-            Swal.fire({
-              title: 'Mise à jour réussie',
-              icon: 'success',
-              confirmButtonText: 'OK'
-            });
-          }, 1000); // Simuler un délai de chargement
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Modifier',
+      customClass: { confirmButton: 'btn btn-primary', cancelButton: 'btn btn-danger' },
+      buttonsStyling: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Logique pour la mise à jour de la réunion
+        Swal.fire({
+          title: 'Modifier la réunion',
+          html: `
+            <div class="form-group">
+              <input class="form-control" placeholder="Titre" id="updated-event-title" value="${title}">
+            </div>
+            <div class="form-group">
+              <textarea class="form-control" placeholder="Description" id="updated-event-description">${description}</textarea>
+            </div>
+          `,
+          showCancelButton: true,
+          confirmButtonText: 'Enregistrer',
+          cancelButtonText: 'Annuler',
+          customClass: { confirmButton: 'btn btn-success', cancelButton: 'btn btn-danger' },
+          buttonsStyling: false,
+          preConfirm: () => {
+            const updatedTitle = $('#updated-event-title').val();
+            const updatedDescription = $('#updated-event-description').val();
+            
+            if (!updatedTitle) {
+              Swal.showValidationMessage('Le titre est requis.');
+            }
+            
+            return { updatedTitle, updatedDescription };
+          }
+        }).then((result) => {
+          if (result.isConfirmed) {
+            const { updatedTitle, updatedDescription } = result.value;
+            const updatedReunion: Reunion = { id, titre: updatedTitle, description: updatedDescription, date: start };
+            
+            this.reunionService.updateReunion(id, updatedReunion).subscribe(
+              () => {
+                // Mise à jour réussie, actualisez les données
+                this.loadReunions();
+                // Mettre à jour le titre de l'événement dans le calendrier
+                const updatedEvent = $('#fullCalendar').fullCalendar('clientEvents', id)[0];
+                if (updatedEvent) {
+                  updatedEvent.title = updatedTitle;
+                  $('#fullCalendar').fullCalendar('updateEvent', updatedEvent);
+                }
+                Swal.fire('Succès', 'Réunion mise à jour avec succès', 'success');
+              },
+              (error) => {
+                console.error('Erreur lors de la mise à jour de la réunion', error);
+                Swal.fire('Erreur', 'Une erreur est survenue lors de la mise à jour de la réunion. Veuillez réessayer.', 'error');
+              }
+            );
+          }
         });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        // Logique pour supprimer la réunion
+        if (id) {
+          // Logique pour supprimer la réunion
+          this.reunionService.deleteReunion(id).subscribe(
+            () => {
+              // Supprimez l'événement du calendrier
+              $('#fullCalendar').fullCalendar('removeEvents', id);
+              Swal.fire('Succès', 'Réunion supprimée avec succès', 'success');
+            },
+            (error) => {
+              console.error('Erreur lors de la suppression de la réunion', error);
+              Swal.fire('Erreur', 'Une erreur est survenue lors de la suppression de la réunion. Veuillez réessayer.', 'error');
+            }
+          );
+        } else {
+          console.error('L\'ID de la réunion est indéfini');
+        }
       }
     });
-
-    // Ajouter le gestionnaire d'événements pour le bouton "Delete"
-    Swal.getCancelButton().addEventListener('click', () => {
-      // Afficher une boîte de confirmation pour supprimer l'événement
-      Swal.fire({
-        title: 'Êtes-vous sûr de vouloir supprimer cet événement ?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Oui, supprimer',
-        cancelButtonText: 'Annuler',
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          // Vous pouvez gérer ici la suppression des données dans votre application
-          // Remplacez ce code par l'appel à votre API ou la suppression de vos données en fonction de votre logique métier
-
-          // Pour cet exemple, nous afficherons simplement un message de succès
-          Swal.fire({
-            title: 'Événement supprimé',
-            text: 'L\'événement a été supprimé avec succès',
-            icon: 'success',
-            confirmButtonText: 'OK'
-          });
-        }
-      });
-    });
   }
+
 }

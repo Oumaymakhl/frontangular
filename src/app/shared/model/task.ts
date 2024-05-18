@@ -6,6 +6,7 @@ export interface Task {
     time_spent?: number; // Le "?" indique que cette propriété est facultative
     name: string;
     description: string;
+    userName?: string; 
     created_at?: string; // Le "?" indique que cette propriété est facultative
     updated_at?: string; // Le "?" indique que cette propriété est facultative
 }

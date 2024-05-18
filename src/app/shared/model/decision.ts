@@ -1,8 +1,9 @@
-export interface Decision {
-    id?: number; // Le '?' rend la propriété 'id' optionnelle
-    title: string;
-    description: string;
-    likes?: number; // Déclarer likes comme un nombre
-    dislikes?: number; // Déclarer dislikes comme un nombre
-  }
-  
+export class Decision {
+  id: number;
+  title: string;
+  description: string;
+  likes_count: number; // Ajoutez cette propriété
+  dislikes_count: number; // Ajoutez cette propriété
+  alreadyLiked?: boolean; // Ajoutez cette propriété optionnelle si nécessaire
+  alreadyDisliked?: boolean;
+}

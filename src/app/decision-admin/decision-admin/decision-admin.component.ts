@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DecisionService } from 'app/shared/API_service/decision.service';
 import { Decision } from 'app/shared/model/decision';
 import Swal from 'sweetalert2';
@@ -9,16 +9,18 @@ import { Like } from 'app/shared/model/like';
   templateUrl: './decision-admin.component.html',
   styleUrls: ['./decision-admin.component.css']
 })
-export class DecisionAdminComponent {
+export class DecisionAdminComponent implements OnInit {
   decisions: Decision[] = [];
-  like:Like[];
+  searchTerm: string = '';
 
-  constructor(private decisionService: DecisionService) { 
+  constructor(private decisionService: DecisionService) { }
+
+  ngOnInit(): void {
     this.getDecisions();
   }
 
   getDecisions() {
-    this.decisionService.getDecisions().subscribe(
+    this.decisionService.getDecisionsWithLikesAndDislikes().subscribe(
       (data: any) => {
         this.decisions = data.decisions;
       },
@@ -27,6 +29,7 @@ export class DecisionAdminComponent {
       }
     );
   }
+  
 
   ajouterDecision() {
     Swal.fire({
@@ -43,8 +46,11 @@ export class DecisionAdminComponent {
 
         if (titleInput && descriptionInput) {
           const newDecision: Decision = {
+            id: 0, // ou un identifiant approprié
             title: titleInput.value,
-            description: descriptionInput.value
+            description: descriptionInput.value,
+            likes_count: 0, // initialiser à zéro
+            dislikes_count: 0, // initialiser à zéro
           };
           
           // Appeler la méthode du service pour ajouter une décision
@@ -64,7 +70,9 @@ export class DecisionAdminComponent {
         }
       }
     });
-  }modifierDecision(decision: Decision) {
+  }
+
+modifierDecision(decision: Decision) {
     Swal.fire({
       title: 'Modifier la décision',
       html:
@@ -82,7 +90,8 @@ export class DecisionAdminComponent {
             id: decision.id,
             title: titleInput.value,
             description: descriptionInput.value,
-    
+            likes_count: decision.likes_count, // inclure les valeurs existantes
+            dislikes_count: decision.dislikes_count, // inclure les valeurs existantes
           };
   
           this.decisionService.updateDecision(decision.id, updatedDecision).subscribe(
@@ -99,6 +108,7 @@ export class DecisionAdminComponent {
       }
     });
   }
+
   supprimerDecision(decision: Decision) {
     Swal.fire({
       title: 'Êtes-vous sûr?',
@@ -128,35 +138,9 @@ export class DecisionAdminComponent {
       }
     });
   }
-
-    getLikesForDecision(decisionId: number): void {
-    this.decisionService.getLikesForDecision(decisionId).subscribe(
-      (likes: Like[]) => {
-        // Mettez à jour les likes pour la décision
-        const decision = this.decisions.find(dec => dec.id === decisionId);
-        if (decision) {
-          decision.likes = likes.length; // Utiliser la longueur du tableau de likes comme nombre de likes
-        }
-      },
-      (error: any) => {
-        console.error('Une erreur s\'est produite lors de la récupération des likes : ', error);
-      }
+  filteredDecisions(): Decision[] {
+    return this.decisions.filter((decision: Decision) =>
+      decision.title.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
-  getDislikesForDecision(decisionId: number): void {
-    this.decisionService.getDislikesForDecision(decisionId).subscribe(
-      (dislikes: Like[]) => {
-        // Mettez à jour les dislikes pour la décision
-        const decision = this.decisions.find(dec => dec.id === decisionId);
-        if (decision) {
-          decision.dislikes = dislikes.length; // Utiliser la longueur du tableau de dislikes comme nombre de dislikes
-        }
-      },
-      (error: any) => {
-        console.error('Une erreur s\'est produite lors de la récupération des dislikes : ', error);
-      }
-    );
-  }
-
-  
 }

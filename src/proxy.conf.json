@@ -4,9 +4,12 @@
       "secure": false
     },
     
-        "/storage": {
-          "target": "http://localhost:8000",
-          "secure": false
-        }
+    "/storage/profile_photos": {
+      "target": "http://localhost:8000",
+      "secure": false
+    }, "/storage": {
+      "target": "http://localhost:8000",
+      "secure": false
+    }
       }
   

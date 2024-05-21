@@ -1,0 +1,46 @@
+.profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom:8px;
+  }
+  
+  .profile-picture-placeholder {
+    width: 100px; /* Taille réduite */
+    height: 100px; /* Taille réduite */
+    border-radius: 80%;
+    border: 2px dashed #1f0d97;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    overflow: hidden;
+    margin-right: 12px;
+    position: relative;
+  }
+  
+  .profile-picture-placeholder::before {
+    content: 'Cliquer pour changer';
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: #666;
+    text-align: center;
+  }
+  
+  .profile-picture {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .profile-info {
+    flex: 1;
+  }
+  
+  .company-info {
+    margin-top: 10px;
+  }
+  

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { Decision } from '../model/decision';
-import { Like } from '../model/like'; // Importez l'interface Like ici
+import { Like } from '../model/like';
 
 @Injectable({
   providedIn: 'root'
@@ -38,11 +39,27 @@ export class DecisionService {
   }
 
   likeDecision(decisionId: number): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/${decisionId}/like`, {});
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token') // Assurez-vous de récupérer le token d'authentification correctement
+    });
+
+    return this.http.post<any>(`${this.baseUrl}/${decisionId}/like`, {}, { headers: headers })
+      .pipe(
+        catchError(this.handleError)
+      );
   }
 
   dislikeDecision(decisionId: number): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/${decisionId}/dislike`, {});
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token') // Assurez-vous de récupérer le token d'authentification correctement
+    });
+
+    return this.http.post<any>(`${this.baseUrl}/${decisionId}/dislike`, {}, { headers: headers })
+      .pipe(
+        catchError(this.handleError)
+      );
   }
 
   getLikesForDecision(decisionId: number): Observable<Like[]> {
@@ -52,7 +69,13 @@ export class DecisionService {
   getDislikesForDecision(decisionId: number): Observable<Like[]> {
     return this.http.get<Like[]>(`${this.baseUrl}/${decisionId}/dislikes`);
   }
+
   getAllLikes(): Observable<Like[]> {
     return this.http.get<Like[]>(`http://localhost:8000/api/likes`);
+  }
+
+  private handleError(error: any) {
+    console.error('An error occurred:', error);
+    return throwError(error);
   }
 }

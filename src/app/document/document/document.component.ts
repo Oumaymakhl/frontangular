@@ -10,7 +10,8 @@ import { Document } from 'app/shared/model/document';
 export class DocumentComponent implements OnInit {
   termeDeRecherche: string = '';
   documents: Document[] = [];
-  selectedDocumentId: number | null = null; // Pour stocker l'ID du document sélectionné
+  selectedDocumentId: number | null = null;
+  selectedSignature: File | null = null;
   
   constructor(private documentService: DocumentService) {}
 
@@ -22,19 +23,18 @@ export class DocumentComponent implements OnInit {
     this.documentService.showDocuments().subscribe(
       (response) => {
         this.documents = response;
-        console.log('Documents chargés avec succès :', this.documents);
       },
       (error) => {
         console.error('Erreur lors du chargement des documents :', error);
       }
     );
   }
+
   importerDocument(event: any) {
     const file = event.target.files[0];
     this.documentService.importDocument(file).subscribe(
       (response) => {
-        console.log('Document importé avec succès :', response);
-        this.chargerDocuments(); 
+        this.chargerDocuments();
       },
       (error) => {
         console.error('Erreur lors de l\'importation du document :', error);
@@ -42,31 +42,11 @@ export class DocumentComponent implements OnInit {
     );
   }
 
-  signAndDownload(documentId: number) {
-    this.documentService.signAndDownloadDocument(documentId).subscribe((data: Blob) => {
-      // Téléchargement du document signé
-      const blob = new Blob([data], { type: 'application/pdf' });
-      const url = window.URL.createObjectURL(blob);
-      window.open(url);
-    });
-  }
   importerDocumentAvecSign(event: any) {
-    const file = event.target.files[0];
-    this.documentService.signDocument(file).subscribe(
-      (response) => {
-        console.log('Document signé avec succès :', response);
-        // Gérer la réponse pour afficher un message ou effectuer d'autres actions
-      },
-      (error) => {
-        console.error('Erreur lors de la signature du document :', error);
-      }
-    );
+    this.selectedSignature = event.target.files[0];
   }
 
-
-
-
-
+  
   exporterDocument(documentId: number, documentName: string) {
     this.documentService.exportDocument(documentId).subscribe(
       (blob: Blob) => {
@@ -84,9 +64,32 @@ export class DocumentComponent implements OnInit {
     );
   }
 
+  exporterDocumentAvecSignature(documentId: number, documentName: string) {
+    if (!this.selectedSignature) {
+      console.error('Veuillez d\'abord importer une signature.');
+      return;
+    }
+
+    this.documentService.exportDocumentWithSign(documentId, this.selectedSignature).subscribe(
+      (blob: Blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `signed_${documentName}`;
+        document.body.appendChild(link);
+        link.click();
+        window.URL.revokeObjectURL(url);
+      },
+      (error) => {
+        console.error('Erreur lors de l\'exportation du document avec signature :', error);
+      }
+    );
+  }
+
   selectDocument(documentId: number) {
     this.selectedDocumentId = documentId;
   }
+
   documentsFiltered(): Document[] {
     return this.documents.filter((document: Document) =>
       document.name.toLowerCase().includes(this.termeDeRecherche.toLowerCase())

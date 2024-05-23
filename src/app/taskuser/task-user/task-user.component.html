@@ -1,22 +1,22 @@
-<!-- task-user.component.html -->
-
-<div class="kanban-board">
-  <div class="column" *ngFor="let column of columns">
-    <div class="container">
-      <h2>{{ column.title }}</h2>
-      <div
-        class="task-container"
-        cdkDropList
-        [cdkDropListData]="column.tasks"
-        (cdkDropListDropped)="onTaskDropped($event, column)"
-      >
-        <div class="task" *ngFor="let task of column.tasks" cdkDrag [cdkDragData]="task">
-          <p>{{ task.name }}</p>
-          <p>{{ task.description }}</p>
-          <p>Estimé: {{ task.estimated_time }} heures</p>
-        </div>
-        <div class="empty-task" *ngIf="column.tasks.length === 0">
-          Aucune tâche dans cette colonne
+<div cdkDropListGroup>
+  <div class="kanban-board">
+    <div class="column" *ngFor="let column of columns">
+      <div class="container">
+        <h2>{{ column.title }}</h2>
+        <div
+          class="task-container"
+          cdkDropList
+          [cdkDropListData]="column.tasks"
+          (cdkDropListDropped)="onTaskDropped($event, column)"
+        >
+          <div class="task" *ngFor="let task of column.tasks" cdkDrag [cdkDragData]="task">
+            <p>{{ task.name }}</p>
+            <p>{{ task.description }}</p>
+            <p>Estimé: {{ task.estimated_time }} heures</p>
+          </div>
+          <div class="empty-task" *ngIf="column.tasks.length === 0">
+            Aucune tâche dans cette colonne
+          </div>
         </div>
       </div>
     </div>

@@ -13,6 +13,7 @@ import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 import { AppRoutes } from './app.routing';
 import { LoginComponent } from './login/login.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 
@@ -23,7 +24,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
         RouterModule.forRoot(AppRoutes,{
           useHash: true,
         }),
-        NgbModule,
+        NgbModule,DragDropModule,
         SidebarModule,
         NavbarModule,
         FooterModule, FixedPluginModule,ReactiveFormsModule,

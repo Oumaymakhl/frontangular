@@ -13,6 +13,7 @@ import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 import { AppRoutes } from './app.routing';
 import { LoginComponent } from './login/login.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthInterceptor } from './shared/API_service/auth.interceptor';
 
 
 
@@ -35,7 +36,12 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
         AdminLayoutComponent,
         AuthLayoutComponent,
         LoginComponent,
-    ], providers: [],
+    ],providers: [
+        {
+          provide: HTTP_INTERCEPTORS,
+          useClass: AuthInterceptor,
+          multi: true
+        }],
 
     bootstrap:    [ AppComponent ]
 })

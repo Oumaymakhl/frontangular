@@ -31,7 +31,6 @@ export class AjoutAdminComponent implements OnInit {
       const file = (event.target as HTMLInputElement).files[0];
       this.signupForm.get('companyLogo')?.setValue(file);
     }
-  
     saveadmin() {
       const formData = new FormData();
       formData.append('nom', this.signupForm.get('nom')?.value);

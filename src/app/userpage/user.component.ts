@@ -40,7 +40,7 @@ export class UserComponent implements OnInit{
   }
 
   uploadProfilePicture(event: any) {
-    this.selectedFile = event.target.files.item(0); // Utiliser item(0) au lieu de [0]
+    this.selectedFile = event.target.files.item(0); 
     if (this.selectedFile) {
       this.authService.uploadProfilePhoto(this.selectedFile).subscribe(
         (data) => {
@@ -66,7 +66,7 @@ export class UserComponent implements OnInit{
     this.authService.updateProfile(profileData).subscribe({
       next: (response: any) => {
         console.log(response);
-        alert(response.message); // Afficher un message de succès à l'utilisateur
+        alert(response.message); 
       },
       error: (error: any) => {
         console.error('Error updating profile', error);

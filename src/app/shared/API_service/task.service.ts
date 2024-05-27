@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, map } from 'rxjs';
 import { Task } from '../model/task';
+import { User } from '../model/user';
 export interface listetask{
   status:number;
   tasks:Task[];
@@ -45,5 +46,21 @@ export class TaskService {
   updateTaskStatus(id: number, status: string): Observable<Task> {
     return this.http.patch<Task>(`${this.baseUrl}/tasks/${id}/status`, { status });
   }
-  
+  getUsersByAdminCompanyId(): Observable<User[]> {
+    // Get the authentication token from wherever you store it
+    const authToken = 'YOUR_AUTH_TOKEN_HERE';
+
+    // Set the headers with the authentication token
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('token') // Assurez-vous de récupérer le token d'authentification correctement
+      })
+    };
+
+    // Make the HTTP GET request with the headers
+    return this.http.get<{users: User[]}>(`${this.baseUrl}/admin/company/users`, httpOptions).pipe(
+      map(response => response.users)
+    );
+  }
 }

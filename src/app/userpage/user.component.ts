@@ -1,38 +1,36 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'app/shared/API_service/auth.service';
-import { TokenService } from 'app/shared/API_service/token.service';
 import { User } from 'app/shared/model/user';
 
 @Component({
-    moduleId: module.id,
-    selector: 'user-cmp',
-    templateUrl: 'user.component.html'
+  moduleId: module.id,
+  selector: 'user-cmp',
+  templateUrl: 'user.component.html',
+  styleUrls: ['./user.component.css']
 })
-
-export class UserComponent implements OnInit{ 
+export class UserComponent implements OnInit {
   userProfile: User;
   selectedFile: File;
 
   @ViewChild('profilePictureInput') profilePictureInput: ElementRef;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-      this.getProfile();
+    this.getProfile();
   }
 
   getProfile() {
-      this.authService.getProfile().subscribe(
-          (data) => {
-              this.userProfile = data.profile;
-              console.log(this.userProfile);
-          },
-          (error) => {
-              console.log('Error:', error);
-          }
-      );
+    this.authService.getProfile().subscribe(
+      (data) => {
+        this.userProfile = data.profile;
+        console.log(this.userProfile);
+      },
+      (error) => {
+        console.log('Error:', error);
+      }
+    );
   }
 
   selectProfilePicture() {
@@ -40,7 +38,7 @@ export class UserComponent implements OnInit{
   }
 
   uploadProfilePicture(event: any) {
-    this.selectedFile = event.target.files.item(0); 
+    this.selectedFile = event.target.files.item(0);
     if (this.selectedFile) {
       this.authService.uploadProfilePhoto(this.selectedFile).subscribe(
         (data) => {
@@ -55,6 +53,7 @@ export class UserComponent implements OnInit{
       );
     }
   }
+
   updateProfile() {
     const profileData = {
       nom: this.userProfile.nom,
@@ -62,15 +61,15 @@ export class UserComponent implements OnInit{
       login: this.userProfile.login,
       email: this.userProfile.email,
     };
-  
+
     this.authService.updateProfile(profileData).subscribe({
       next: (response: any) => {
         console.log(response);
-        alert(response.message); 
+        alert(response.message);
       },
       error: (error: any) => {
         console.error('Error updating profile', error);
-        
       }
     });
-  }}
+  }
+}

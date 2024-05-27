@@ -37,15 +37,20 @@ export class ChangePasswordComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit() {
-    this.authService.resetPassword(this.changePasswordForm.value).subscribe(
-      (result) => {
-        alert('Password has been updated');
-        this.changePasswordForm.reset();
-      },
-      (error) => {
-        this.handleError(error);
-      }
-    );
+    if (this.changePasswordForm.value.password !== this.changePasswordForm.value.password_confirmation) {
+      this.errors = 'Passwords do not match';
+    } else {
+      this.errors = null;
+      this.authService.resetPassword(this.changePasswordForm.value).subscribe(
+        (result) => {
+          alert('Password has been updated');
+          this.changePasswordForm.reset();
+        },
+        (error) => {
+          this.handleError(error);
+        }
+      );
+    }
   }
 
   handleError(error: any) {

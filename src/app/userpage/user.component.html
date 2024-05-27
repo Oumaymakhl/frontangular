@@ -3,11 +3,12 @@
     <div class="col-md-4">
       <div class="card card-user">
         <div class="author">
-          <div class="profile-picture-placeholder" (click)="selectProfilePicture()">
+          <div class="profile-picture-placeholder" (click)="selectProfilePicture()" style="margin-top: 80px;">
+            <img *ngIf="!userProfile?.profile_photo" src="./assets/img/avatar.png" alt="" class="avatar">
             <img *ngIf="userProfile?.profile_photo" [src]="userProfile.profile_photo" alt="Profile Picture" class="profile-picture">
             <input type="file" #profilePictureInput (change)="uploadProfilePicture($event)" accept="image/*" style="display: none;">
           </div>
-         
+          
           <h5 class="title">{{ userProfile?.nom }}</h5>
         </div>
       </div>
@@ -79,8 +80,6 @@
                 </div>
               </div>
             </div>
-          
-
             <button type="submit" class="btn btn-primary">Update Profile</button>
           </form>
         </div>

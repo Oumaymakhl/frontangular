@@ -69,16 +69,16 @@ export class TaskComponent implements OnInit {
         console.log('User options:', userOptions); // Diagnostic
     
         Swal.fire({
-            title: 'Ajouter une tâche',
-            html: `
-                <input type="text" id="nomTache" class="swal2-input" placeholder="Nom de la tâche">
-                <textarea id="descriptionTache" class="swal2-textarea" placeholder="Description"></textarea>
-                <input type="number" id="tempsEstime" class="swal2-input" placeholder="Temps estimé (en heures)">
-                <select id="participantSelect" class="swal2-select">
-                    <option value="" disabled selected>Choisissez un participant</option>
-                    ${userOptions}
-                </select>
-            `,
+                title: 'Ajouter une tâche',
+                html: `
+                    <input type="text" id="nomTache" class="swal2-input" placeholder="Nom de la tâche">
+                    <textarea id="descriptionTache" class="swal2-textarea" placeholder="Description"></textarea>
+                    <input type="number" id="tempsEstime" class="swal2-input" placeholder="Temps estimé (en heures)">
+                    <select id="participantSelect" class="swal2-select">
+                        <option value="" disabled selected>Choisissez un participant</option>
+                        ${userOptions} <!-- Utiliser la liste des utilisateurs ici -->
+                    </select>
+                `,
             showCancelButton: true,
             confirmButtonText: 'Ajouter',
             cancelButtonText: 'Annuler',

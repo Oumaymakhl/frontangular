@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { ListeAdminComponent } from './liste-admin/liste-admin.component';
 import { ModifAdminComponent } from './modif-admin/modif-admin.component';
 import { AjoutAdminComponent } from './ajout-admin/ajout-admin.component';
-import { SupprimerAdminComponent } from './supprimer-admin/supprimer-admin.component';
 
 const compteAdminRoutes: Routes = [
   {

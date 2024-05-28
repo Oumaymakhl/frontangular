@@ -1,8 +1,10 @@
 
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, catchError, from, tap, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Observable, catchError, from, map, tap, throwError } from 'rxjs';
 import { Reunion } from '../model/reunion';
 import { Injectable } from '@angular/core';
+import { User } from '../model/user';
+import { TokenService } from './token.service';
 export interface listereunion{
   status:number;
   reunions:Reunion[];
@@ -19,12 +21,17 @@ export interface reunionajout{
   providedIn: 'root'
 })
 export class ReunionService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private token: TokenService) { }
 
-  // Créer une réunion
-  createReunion(reunion: Reunion): Observable<Reunion> {
-    return this.http.post<Reunion>(`http://localhost:8000/api/reunions`, reunion);
+  createReunion(reunion: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.token.get()
+    });
+  console.log(reunion);
+    return this.http.post<any>(`http://localhost:8000/api/reunion`, reunion,{headers:headers});
   }
+  
 
   // Mettre à jour une réunion
   updateReunion(id: number, reunion: Reunion): Observable<any> {
@@ -61,4 +68,5 @@ export class ReunionService {
   inviteUsers(reunionId: number, userId: number): Observable<any> {
     return this.http.post<any>(`http://localhost:8000/api/reunions/invite-users`, { reunion_id: reunionId, user_id: userId });
   }
+  
 }

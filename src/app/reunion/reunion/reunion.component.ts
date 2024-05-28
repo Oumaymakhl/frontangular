@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { ReunionService, listereunion } from 'app/shared/API_service/reunion.service';
+import { ParticipantService } from 'app/shared/API_service/participant.service';
 import { Reunion } from 'app/shared/model/reunion';
+import { User } from 'app/shared/model/user';
 import { Router } from '@angular/router'; 
 
 declare var $: any;
@@ -14,11 +16,13 @@ declare var $: any;
 })
 export class ReunionComponent implements OnInit {
   reunions: Reunion[];
+  users: User[];
 
-  constructor(private reunionService: ReunionService, private router: Router) { }
+  constructor(private reunionService: ReunionService, private participantService: ParticipantService, private router: Router) { }
 
   ngOnInit() {
     this.loadReunions();
+    this.loadUsers();
     this.initializeCalendar();
   }
 
@@ -34,8 +38,21 @@ export class ReunionComponent implements OnInit {
     );
   }
 
+  loadUsers() {
+    this.participantService.getUsersByAdminCompanyId().subscribe(
+      (users) => {
+        this.users = users;
+      },
+      (error) => {
+        console.error('Erreur lors de la récupération des utilisateurs', error);
+      }
+    );
+  }
+
   initializeCalendar() {
     const $calendar = $('#fullCalendar');
+    const self = this; // Référence à l'instance de la classe pour accès dans les fonctions de rappel
+    
     $calendar.fullCalendar({
       viewRender: (view, element) => {
         if (view.name !== 'month') {
@@ -55,12 +72,13 @@ export class ReunionComponent implements OnInit {
         week: { titleFormat: 'MMMM D YYYY' },
         day: { titleFormat: 'D MMM, YYYY' }
       },
-      select: (start, end) => { this.createReunionDialog(start, end); },
+      select: (start) => { self.createReunionDialog(start); }, // Passer la date sélectionnée à la fonction createReunionDialog
       eventClick: (calEvent, jsEvent, view) => { this.updateOrDeleteReunionDialog(calEvent); },
       editable: true,
       eventLimit: true
     });
   }
+  
 
   renderCalendarEvents() {
     const events = this.reunions.map(reunion => ({
@@ -72,8 +90,9 @@ export class ReunionComponent implements OnInit {
 
     $('#fullCalendar').fullCalendar('renderEvents', events, true);
   }
-
-  createReunionDialog(start, end) {
+  createReunionDialog(start) {
+    const userOptions = this.users.map(user => `<option value="${user.id}">${user.nom} ${user.prenom}</option>`).join('');
+    
     Swal.fire({
       title: 'Créer une réunion',
       html: `
@@ -83,6 +102,17 @@ export class ReunionComponent implements OnInit {
         <div class="form-group">
           <textarea class="form-control" placeholder="Description" id="event-description"></textarea>
         </div>
+        <div class="form-group">
+          <label for="participants-select">Sélectionnez les participants:</label>
+          <select class="form-control" id="participants-select" multiple>
+            ${userOptions}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="event-start">Date et heure de début:</label>
+          <input type="text" class="form-control" id="event-start" value="${start}">
+        </div>
+      
       `,
       showCancelButton: true,
       confirmButtonText: 'Créer',
@@ -92,20 +122,24 @@ export class ReunionComponent implements OnInit {
       preConfirm: () => {
         const title = $('#event-title').val();
         const description = $('#event-description').val();
-
-        if (!title) {
-          Swal.showValidationMessage('Le titre est requis.');
+        const participantIds = $('#participants-select').val();
+        const startDate = $('#event-start').val();
+  console.log(participantIds);
+        if (!title || !participantIds.length) {
+          Swal.showValidationMessage('Le titre et au moins un participant sont requis.');
+          return false;
         }
-
-        return { title, description };
+  
+        return { title, description, participantIds, startDate };
       }
     }).then((result) => {
-      if (result.isConfirmed) {
-        const { title, description } = result.value;
-        const newReunion: Reunion = { titre: title, description, date: start, end };
-
+      if (result.isConfirmed && result.value) {
+        const { title, description, participantIds, startDate} = result.value;
+        const newReunion: Reunion = { titre: title, description, date: startDate,  participants: participantIds };
+  
         this.reunionService.createReunion(newReunion).subscribe(
-          () => {
+          (response) => {
+            console.log(response);
             this.loadReunions(); // Reload the reunions after creating a new one
             Swal.fire('Succès', 'Réunion créée avec succès', 'success');
           },
@@ -117,6 +151,8 @@ export class ReunionComponent implements OnInit {
       }
     });
   }
+  
+  
  updateOrDeleteReunionDialog(calEvent) {
     const { id, title, description, start } = calEvent;
 

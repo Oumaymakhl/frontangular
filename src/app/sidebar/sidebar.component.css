@@ -1,12 +1,96 @@
-.sidebar-navy {
-    background-color: #003366; /* Couleur bleu marine */
-}
+/* Bootstrap styles */
 .sidebar-wrapper.sidebar-navy {
-    height: 100vh; /* Définit la hauteur du sidebar à 100% de la hauteur de la fenêtre */
+    background-color: #003366;
+    color: #fff;
+    height: 100vh;
+    overflow-y: auto;
 }
-.nav li.active > a {
-    color: #0084ff; /* Définit la couleur du texte des éléments actifs en noir */
+
+.sidebar-wrapper.sidebar-navy .user {
+    padding: 20px;
+    border-bottom: 1px solid #fff;
+    cursor: pointer;
 }
-.nav li.active > a i {
-    color: #0084ff; /* Définit la couleur des icônes dans les éléments actifs en noir */
+
+.sidebar-wrapper.sidebar-navy .user .photo img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-wrapper.sidebar-navy .user .info {
+    margin-top: 10px;
+    transition: color 0.3s ease;
+}
+
+.sidebar-wrapper.sidebar-navy .user:hover .photo img {
+    transform: scale(1.1);
+}
+
+.sidebar-wrapper.sidebar-navy .user:hover .info {
+    color: #FFD700;
+}
+
+/* Custom styles */
+.logout-btn {
+    padding: 20px;
+}
+
+.logout-btn .btn-primary {
+    width: 100%;
+    background-color: #e74c3c;
+    border: none;
+    outline: none;
+    transition: background-color 0.3s, transform 0.3s ease;
+    border-radius: 10px;
+}
+
+.logout-btn .btn-primary:hover {
+    background-color: #c0392b;
+    transform: scale(1.1);
+}
+
+.logout-btn .btn-primary:focus {
+    box-shadow: 0 0 0 0.2rem rgba(231, 76, 60, 0.5);
+}
+
+/* Animation for sidebar links */
+.sidebar-wrapper.sidebar-navy .nav > li > a {
+    display: block;
+    padding: 15px 20px;
+    color: #fff;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.3s ease;
+}
+
+.sidebar-wrapper.sidebar-navy .nav > li > a:hover {
+    background-color: #004080;
+    transform: scale(1.05);
+}
+
+.sidebar-wrapper.sidebar-navy .nav .collapse .nav > li > a {
+    padding-left: 40px;
+}
+
+.sidebar-wrapper.sidebar-navy .nav .collapse .nav > li > a:hover {
+    background-color: #004080;
+    transform: scale(1.05);
+}
+
+/* Original and Animated Design */
+.user:hover .photo img {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+
+.logout-btn .btn-primary {
+    transform: scale(1);
+    transition: transform 0.3s ease;
+}
+
+.logout-btn .btn-primary:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
 }

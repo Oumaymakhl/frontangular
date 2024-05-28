@@ -1,183 +1,69 @@
-import { Component, OnInit, AfterViewInit, AfterViewChecked, AfterContentInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthStateService } from 'app/shared/API_service/auth-state.service';
+import { AuthService } from 'app/shared/API_service/auth.service';
+import { TokenService } from 'app/shared/API_service/token.service';
+import { User } from 'app/shared/model/user';
 
-//Metadata
 export interface RouteInfo {
     path: string;
     title: string;
     type: string;
     collapse?: string;
     icontype: string;
-    // icon: string;
     children?: ChildrenItems[];
 }
 
 export interface ChildrenItems {
     path: string;
     title: string;
-    ab: string;
+    ab?: string;
     type?: string;
+    icontype: string;
 }
 
-//Menu Items
-export const ROUTES: RouteInfo[] = [{
-        path: '/dashboard',
-        title: 'Dashboard',
+export const ROUTES: RouteInfo[] = [
+    { path: '/dashboard', title: 'Dashboard', type: 'link', icontype: 'nc-icon nc-bank' },
+  {
+        path: 'compte-admin',
+        title: 'Admins',
         type: 'link',
-        icontype: 'nc-icon nc-bank'
-    },
-    { path: '/compte-admin',
-     title: 'compte-admin',
-      type: 'link', 
-      icontype: 'nc-icon nc-single-02' },
-      { path: '/compte-participant',
-      title: 'compte-participant',
-       type: 'link', 
-       icontype: 'nc-icon nc-single-02' },
-       { path: '/companies/list',
-       title: 'companies',
-        type: 'link', 
-        icontype: 'nc-icon nc-single-02' },
- 
-        {
-            path: '/statistique',
-            title: 'statistique',
-            type: 'link',
-            icontype: 'nc-icon nc-chart-pie-36'
-    
-        }, {
-            path: '/en-ligne',
-            title: 'reunion en ligne',
-            type: 'link',
-            icontype: 'nc-icon nc-laptop'
-    
-        },
-        {
-            path: '/decision',
-            title: 'decision',
-            type: 'link',
-            icontype: 'nc-icon nc-box'
-    
-        },  {
-            path: '/decision-admin',
-            title: 'decision-admin',
-            type: 'link',
-            icontype: 'nc-icon nc-box'
-    
-        },  {
-        path: '/task',
-        title: 'task',
-        type: 'link',
-        icontype: 'nc-icon nc-chart-bar-32'
-
-    }, {
-        path: '/task-user',
-        title: 'taskuser',
-        type: 'link',
-        icontype: 'nc-icon nc-chart-bar-32'
-
+        icontype: 'nc-icon nc-single-02'
     },
     {
-        path: '/reunion',
-        title: 'reunion',
+        path: '/companies/list',
+        title: 'Companies',
         type: 'link',
-        icontype: 'nc-icon nc-calendar-60'
-
-    },{
-        path: '/document',
-        title: 'document',
-        type: 'link',
-        icontype: 'nc-icon nc-paper'
-
+        icontype: 'nc-icon nc-single-02'
     },
+    { path: '/compte-participant', title: 'Participants', type: 'link', icontype: 'nc-icon nc-single-02' },
+    { path: '/statistique', title: 'Statistics', type: 'link', icontype: 'nc-icon nc-chart-pie-36' },
+    { path: '/en-ligne', title: 'Online Meeting', type: 'link', icontype: 'nc-icon nc-laptop' },
+    { path: '/decision', title: 'Decision', type: 'link', icontype: 'nc-icon nc-box' },
+    { path: '/decision-admin', title: 'Decision Admin', type: 'link', icontype: 'nc-icon nc-box' },
+    { path: '/task', title: 'Task', type: 'link', icontype: 'nc-icon nc-chart-bar-32' },
+    { path: '/task-user', title: 'Task User', type: 'link', icontype: 'nc-icon nc-chart-bar-32' },
+    { path: '/reunion', title: 'Meeting', type: 'link', icontype: 'nc-icon nc-calendar-60' },
+    { path: '/document', title: 'Document', type: 'link', icontype: 'nc-icon nc-paper' },
     {
-        path: '/components',
-        title: 'Components',
-        type: 'sub',
-        collapse: 'components',
-        icontype: 'nc-icon nc-layout-11',
-        children: [
-            {path: 'buttons', title: 'Buttons', ab:'B'},
-            {path: 'grid', title: 'Grid System', ab:'GS'},
-            {path: 'panels', title: 'Panels', ab:'P'},
-            {path: 'sweet-alert', title: 'Sweet Alert', ab:'SA'},
-            {path: 'notifications', title: 'Notifications', ab:'N'},
-            {path: 'icons', title: 'Icons', ab:'I'},
-            {path: 'typography', title: 'Typography', ab:'T'}
-        ]
-    },{
-        path: '/forms',
-        title: 'Forms',
-        type: 'sub',
-        collapse: 'forms',
-        icontype: 'nc-icon nc-ruler-pencil',
-        children: [
-            {path: 'regular', title: 'Regular Forms', ab:'RF'},
-            {path: 'extended', title: 'Extended Forms', ab:'EF'},
-            {path: 'validation', title: 'Validation Forms', ab:'VF'},
-            {path: 'wizard', title: 'Wizard', ab:'W'}
-        ]
-    },{
-        path: '/tables',
-        title: 'Tables',
-        type: 'sub',
-        collapse: 'tables',
-        icontype: 'nc-icon nc-single-copy-04',
-        children: [
-            {path: 'regular', title: 'Regular Tables', ab:'RT'},
-            {path: 'extended', title: 'Extended Tables', ab:'ET'},
-            {path: 'datatables.net', title: 'Datatables.net', ab:'DT'}
-        ]
-    },{
-        path: '/maps',
-        title: 'Maps',
-        type: 'sub',
-        collapse: 'maps',
-        icontype: 'nc-icon nc-pin-3',
-        children: [
-            {path: 'google', title: 'Google Maps', ab:'GM'},
-            {path: 'fullscreen', title: 'Full Screen Map', ab:'FSM'},
-            {path: 'vector', title: 'Vector Map', ab:'VM'}
-        ]
-    },{
-        path: '/widgets',
-        title: 'Widgets',
-        type: 'link',
-        icontype: 'nc-icon nc-box'
-
-    },{
-        path: '/charts',
-        title: 'Charts',
-        type: 'link',
-        icontype: 'nc-icon nc-chart-bar-32'
-
-    },{
-        path: '/calendar',
-        title: 'Calendar',
-        type: 'link',
-        icontype: 'nc-icon nc-calendar-60'
-    },{
         path: '/pages',
         title: 'Pages',
         collapse: 'pages',
         type: 'sub',
         icontype: 'nc-icon nc-book-bookmark',
         children: [
-            {path: 'timeline', title: 'Timeline Page', ab:'T'},
-            {path: 'user', title: 'User Page', ab:'UP'},
-            {path: 'login', title: 'Login Page', ab:'LP'},
-            {path: 'register', title: 'Register Page', ab:'RP'},
-            {path: 'lock', title: 'Lock Screen Page', ab:'LSP'}
+            { path: 'user', title: 'User Page', ab: 'UP', icontype: '' },
         ]
-    },{
+    },
+    {
         path: '/auth',
-        title: 'auth',
+        title: 'Auth',
         type: 'sub',
         collapse: 'auth',
         icontype: 'nc-icon nc-layout-11',
         children: [
-            {path: 'reset', title: 'reset', ab:'R'},
-            {path: 'change', title: 'change', ab:'ch'},
-           
+            { path: 'reset', title: 'Reset', ab: 'R', icontype: '' },
+            { path: 'change', title: 'Change', ab: 'ch', icontype: '' },
         ]
     }
 ];
@@ -189,18 +75,44 @@ export const ROUTES: RouteInfo[] = [{
     styleUrls: ['sidebar.component.css']
 })
 
-export class SidebarComponent {
-    public menuItems: any[];
-    isNotMobileMenu(){
-        if( window.outerWidth > 991){
-            return false;
-        }
-        return true;
-    }
+export class SidebarComponent implements OnInit, AfterViewInit {
+    public menuItems: RouteInfo[];
+    userProfile: User;
+
+    constructor(private router: Router, private authService: AuthService, private auth: AuthStateService,
+        private tokenService: TokenService,) {}
 
     ngOnInit() {
         this.menuItems = ROUTES.filter(menuItem => menuItem);
+        this.getUserProfile();
     }
-    ngAfterViewInit(){
+
+    ngAfterViewInit() {}
+
+    redirectToProfile() {
+        this.router.navigate(['/profile']);
     }
+
+    redirectToUser() {
+        this.router.navigate(['/pages/user']);
+    }
+
+    getUserProfile() {
+        this.authService.getProfile().subscribe(
+            (data: any) => {
+                this.userProfile = data.profile;
+            },
+            (error: any) => {
+                console.error('Error fetching user profile:', error);
+            }
+        );
+        }
+        signOut() {
+            // Appel de la méthode setAuthState pour mettre à jour l'état d'authentification à false
+            this.auth.setAuthState(false);
+            // Suppression du token du service TokenService
+            this.tokenService.remove();
+            // Redirection vers la page de login
+            this.router.navigate(['login']);
+        } 
 }

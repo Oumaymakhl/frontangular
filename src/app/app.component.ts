@@ -36,4 +36,5 @@ export class AppComponent implements OnInit {
     this.tokenService.remove();
     this.router.navigate(['login']);
   }
+  
 }

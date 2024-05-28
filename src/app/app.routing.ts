@@ -67,9 +67,9 @@ export const AppRoutes: Routes = [{
           }, {
             path: 'compte-participant', // Chemin pour accéder au module du compte administrateur
             loadChildren: () => ComptePartcipantRoutingModule, // Utilisez le module de routage du compte admin
-          },{
-            path: 'companies', // Chemin pour accéder au module du compte administrateur
-            loadChildren: () => CompanyRoutingModule, // Utilisez le module de routage du compte admin
+          }, {
+            path: 'companies', // chemin pour accéder aux entreprises
+            loadChildren: () => CompanyRoutingModule // Utilisez le module de routage du module Company
           },{
             path: 'en-ligne',
             loadChildren:() => import( './reunion2/reunion2.module').then(x=>x.Reunion2Module)
@@ -102,5 +102,6 @@ export const AppRoutes: Routes = [{
             path: '**',
             redirectTo: '/login'
           }
+          
         
 ];

@@ -1,5 +1,75 @@
-.bg-custom-blue {
-    background-color: #003366; /* Couleur bleu foncé */
-    color: #fff; /* Couleur du texte en blanc */
+/* Styles pour la table */
+.table-responsive {
+    overflow-x: auto;
 }
 
+.table-wrapper {
+    margin-top: 20px;
+}
+
+.table-bordered {
+    border: 1px solid #003366; /* Couleur de bordure similaire à la barre latérale */
+}
+.custom-width {
+    width: 100%;
+}
+
+.table-title {
+    background-color: #003366; /* Couleur de fond similaire à la barre latérale */
+    color: #fff; /* Couleur de texte blanche */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.table-title h4 {
+    margin: 0;
+}
+
+.table-title input {
+    border: 1px solid #003366; /* Couleur de bordure similaire à la barre latérale */
+    border-radius: 5px;
+}
+
+.table-title button {
+    background-color: #0069d9; /* Couleur de fond similaire à la barre latérale */
+    color: #fff; /* Couleur de texte blanche */
+    border: none;
+    border-radius: 5px;
+}
+
+/* Styles pour les lignes et les cellules de la table */
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f5f5f5; /* Couleur de fond alternée similaire à la barre latérale */
+}
+
+.table-hover tbody tr:hover {
+    background-color: #e0e0e0; /* Couleur de fond au survol similaire à la barre latérale */
+}
+
+/* Styles pour les boutons de la table */
+.btn-table {
+    color: #fff; /* Couleur de texte blanche */
+    border: none;
+    border-radius: 5px;
+}
+
+.btn-table:hover {
+    opacity: 0.8;
+}
+.bouton {
+    display: inline-block; /* Pour aligner sur une seule ligne */
+    background-color: #719fee;
+    border-radius: 5px; /* Pour rendre les coins plus arrondis */
+    border: none; /* Supprimer le contour */
+    color: #ffffff;
+    text-align: center;
+    font-size: 16px; /* Réduire la taille de la police */
+    padding: 5px 10px; /* Réduire l'espace intérieur */
+    width: auto; /* Ajuster la largeur automatiquement au contenu */
+    cursor: pointer;
+}
+
+/* Si vous voulez ajouter une marge entre les boutons */
+.bouton + .bouton {
+    margin-left: 10px; /* Modifier la marge selon vos besoins */
+}

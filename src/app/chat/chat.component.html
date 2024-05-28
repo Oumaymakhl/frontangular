@@ -1,0 +1,58 @@
+<div class="main-content">
+    <div class="header text-center">
+      <h3 class="title">GroupChat</h3>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-timeline card-plain">
+          <div class="card-body">
+            <ul *ngFor="let message of messages" class="timeline">
+              <li  *ngIf="message.sender_id==my && message.email == email" class="timeline-inverted">
+                <div class="timeline-badge danger">
+                  <i class="nc-icon nc-single-copy-04"></i>
+                </div>
+                <div class="timeline-panel">
+                  <div class="timeline-heading">
+                    <span class="badge badge-pill badge-danger">{{ message.name }}</span>
+                  </div>
+                  <div class="timeline-body">
+                    <p>{{ message.message }}</p>
+                  </div>
+                  <h6>
+                    <i class="fa fa-clock-o"></i> {{ message.created_at.substr(0,10) }}
+                  </h6>
+                </div>
+              </li>
+              <li  *ngIf="message.sender_id!=my || message.email != email" >
+                <div class="timeline-badge success">
+                  <i class="nc-icon nc-sun-fog-29"></i>
+                </div>
+                <div class="timeline-panel">
+                  <div class="timeline-heading">
+                    <span class="badge badge-pill badge-success">{{ message.name }}</span>
+                  </div>
+                  <div class="timeline-body">
+                    <p>{{ message.message }}</p>
+                  </div>
+                  <h6>
+                    <i class="fa fa-clock-o"></i> {{ message.created_at.substr(0,10) }}
+                  </h6>
+                </div>
+              </li>
+
+            </ul>
+            <div class="row justify-content-end"> 
+               <div class="col-6">
+            <form class="form" [formGroup]="chatForm" (ngSubmit)="sendMessage()">
+<textarea  name="w3review" class="form-control" formControlName="message" rows="4" >
+  </textarea>
+        <button class="btn btn-primary m-3" type="submit"> SEND</button>
+</form>
+</div>
+</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  

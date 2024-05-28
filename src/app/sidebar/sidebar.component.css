@@ -1,96 +1,112 @@
-/* Bootstrap styles */
-.sidebar-wrapper.sidebar-navy {
+/* Supprime l'arrière-plan gris */
+.background-gray {
+    display: none;
+}
+
+/* Sidebar */
+.sidebar-wrapper {
     background-color: #003366;
-    color: #fff;
+    width: 256px;
+    border-radius: 16px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    overflow: hidden;
+    user-select: none;
     height: 100vh;
-    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }
 
-.sidebar-wrapper.sidebar-navy .user {
-    padding: 20px;
-    border-bottom: 1px solid #fff;
-    cursor: pointer;
-}
-
-.sidebar-wrapper.sidebar-navy .user .photo img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    transition: transform 0.3s ease;
-}
-
-.sidebar-wrapper.sidebar-navy .user .info {
-    margin-top: 10px;
-    transition: color 0.3s ease;
-}
-
-.sidebar-wrapper.sidebar-navy .user:hover .photo img {
-    transform: scale(1.1);
-}
-
-.sidebar-wrapper.sidebar-navy .user:hover .info {
-    color: #FFD700;
-}
-
-/* Custom styles */
-.logout-btn {
-    padding: 20px;
-}
-
-.logout-btn .btn-primary {
-    width: 100%;
-    background-color: #e74c3c;
-    border: none;
-    outline: none;
-    transition: background-color 0.3s, transform 0.3s ease;
-    border-radius: 10px;
-}
-
-.logout-btn .btn-primary:hover {
-    background-color: #c0392b;
-    transform: scale(1.1);
-}
-
-.logout-btn .btn-primary:focus {
-    box-shadow: 0 0 0 0.2rem rgba(231, 76, 60, 0.5);
-}
-
-/* Animation for sidebar links */
-.sidebar-wrapper.sidebar-navy .nav > li > a {
+/* Menu items */
+.nav a {
     display: block;
-    padding: 15px 20px;
-    color: #fff;
-    font-size: 16px;
+    padding: 12px 16px;
+    color: inherit;
     text-decoration: none;
-    transition: background-color 0.3s, transform 0.3s ease;
 }
 
-.sidebar-wrapper.sidebar-navy .nav > li > a:hover {
-    background-color: #004080;
-    transform: scale(1.05);
+/* Change la couleur de fond lorsqu'un élément est survolé */
+.nav a:hover {
+    background-color: #291dd196; /* Nouvelle couleur de fond lorsqu'un élément est survolé */
+    color: #5320b142; /* Nouvelle couleur du texte lorsqu'un élément est survolé */
 }
 
-.sidebar-wrapper.sidebar-navy .nav .collapse .nav > li > a {
-    padding-left: 40px;
+/* Change la couleur de fond lorsqu'un élément est actif */
+.nav .active a {
+    background-color: transparent; /* Retourne à la couleur de fond transparente */
+    color: inherit; /* Retourne à la couleur de texte par défaut */
 }
 
-.sidebar-wrapper.sidebar-navy .nav .collapse .nav > li > a:hover {
-    background-color: #004080;
-    transform: scale(1.05);
+/* Autres styles pour la sidebar */
+.user {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrer horizontalement */
+    justify-content: flex-start; /* Aligner en haut */
+    padding: 16px;
 }
 
-/* Original and Animated Design */
-.user:hover .photo img {
-    transform: scale(1.1);
-    transition: transform 0.3s ease;
+.user .photo {
+    margin-bottom: 12px; /* Ajouter un espacement entre la photo et le nom */
 }
 
-.logout-btn .btn-primary {
-    transform: scale(1);
-    transition: transform 0.3s ease;
+.user .photo img {
+    border-radius: 50%;
+    height: 32px;
+    width: 32px;
 }
 
-.logout-btn .btn-primary:hover {
-    transform: scale(1.1);
-    transition: transform 0.3s ease;
+.user .info span {
+    font-size: 1rem;
+}
+
+.nav {
+    padding: 0;
+    list-style-type: none;
+}
+
+.nav li {
+    position: relative;
+}
+
+.nav .caret {
+    float: right;
+    margin-left: auto;
+}
+
+.nav .collapse {
+    display: none;
+}
+
+.nav .collapse.show {
+    display: block;
+}
+
+.sidebar-mini-icon {
+    margin-right: 8px;
+}
+
+.logout-btn {
+    padding: 16px;
+}
+
+.logout-btn button {
+    width: 100%;
+}
+
+/* Styles supplémentaires pour la sidebar */
+.sidebar-navy {
+    color: #f5f6fa;
+}
+
+.sidebar-navy .nav a i {
+    color: inherit;
+}
+
+.sidebar-navy .nav a:hover i {
+    color: #9c88ff;
+}
+
+.sidebar-navy .nav a:hover {
+    background-color: #1a2f85a8;
 }

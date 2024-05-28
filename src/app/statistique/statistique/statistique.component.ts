@@ -45,7 +45,7 @@ export class StatistiqueComponent implements OnInit {
     new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Reunion', 'Task', 'Participant'],
+            labels: ['meet', 'Task', 'Participant'],
             datasets: [{
                 label: 'Totals',
                 data: [data.reunions_count, data.tasks_count, data.users_count],

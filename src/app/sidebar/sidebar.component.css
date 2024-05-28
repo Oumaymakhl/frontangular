@@ -10,3 +10,11 @@
 .nav li.active > a i {
     color: #0084ff; /* Définit la couleur des icônes dans les éléments actifs en noir */
 }
+mat-nav-list {
+    width: 200px;
+}
+@media (max-width: 768px) {
+    mat-nav-list {
+        width: 100%;
+    }
+}

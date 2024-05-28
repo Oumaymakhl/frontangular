@@ -43,10 +43,13 @@ export class ChangePasswordComponent implements OnInit {
       this.errors = null;
       this.authService.resetPassword(this.changePasswordForm.value).subscribe(
         (result) => {
-          alert('Password has been updated');
+          // Mettre à jour la variable errors avec un message de succès
+          this.errors = 'Password has been updated successfully.';
+          // Réinitialiser le formulaire
           this.changePasswordForm.reset();
         },
         (error) => {
+          // En cas d'erreur, appeler la fonction handleError pour afficher un message d'erreur
           this.handleError(error);
         }
       );
@@ -54,17 +57,6 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   handleError(error: any) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      // client-side error
-      errorMessage = `Error: ${error.error.message}`;
-    } else {
-      // server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-    console.log(errorMessage);
-    return throwError(() => {
-      errorMessage;
-    });
+    this.errors = 'An unexpected error occurred. Please try again later.';
   }
 }

@@ -34,6 +34,8 @@ resetPassword(data: any) {
   );
 }
 
+
+
 private apiUrl = 'http://localhost:8000/api';
 
 getProfile(): Observable<any> {

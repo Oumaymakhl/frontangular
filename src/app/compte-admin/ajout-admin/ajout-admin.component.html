@@ -1,46 +1,52 @@
 <div class="container-xl" style="margin-top: 80px; margin-bottom: 100px;">
   <div class="table-wrapper mt-5">
     <div class="card shadow">
+      <!-- Header Section -->
       <div class="table-title bg-custom-blue text-light p-4 rounded-top d-flex justify-content-between align-items-center">
         <div>
-          <h4 class="mb-0">add admin</h4>
+          <h4 class="mb-0">Add Admin</h4>
         </div>
         <div class="col-auto">
-          <button type="button" class="btn btn-secondary" routerLink="/compte-admin">Retour</button>
+          <button type="button" class="btn btn-secondary" routerLink="/admin-account">Back</button>
         </div>
       </div>
+      
+      <!-- Form Section -->
       <div class="card-body">
         <form [formGroup]="signupForm" (ngSubmit)="saveadmin()" class="form" #form="ngForm">
+          
+          <!-- User Information Section -->
+          <h3 class="form-top">User Information</h3>
           <div class="form-group p-10 row">
             <div class="col-sm-3">
-              <label class="p-t-b-10">Nom<span class="requiredStar">*</span></label>
+              <label class="p-t-b-10">Last Name<span class="requiredStar">*</span></label>
             </div>
             <div class="col-sm-9">
-              <input type="text" class="form-control" formControlName="nom" id="nom" placeholder="Nom">
+              <input type="text" class="form-control" formControlName="nom" id="nom" placeholder="Last Name">
             </div>
           </div>
           <div class="form-group p-10 row">
             <div class="col-sm-3">
-              <label class="p-t-b-10">Prénom<span class="requiredStar">*</span></label>
+              <label class="p-t-b-10">First Name<span class="requiredStar">*</span></label>
             </div>
             <div class="col-sm-9">
-              <input type="text" class="form-control" formControlName="prenom" id="prenom" placeholder="Prénom">
+              <input type="text" class="form-control" formControlName="prenom" id="prenom" placeholder="First Name">
             </div>
           </div>
           <div class="form-group p-10 row">
             <div class="col-sm-3">
-              <label class="p-t-b-10">Login<span class="requiredStar">*</span></label>
+              <label class="p-t-b-10">Username<span class="requiredStar">*</span></label>
             </div>
             <div class="col-sm-9">
-              <input type="text" class="form-control" formControlName="login" id="login" placeholder="Login">
+              <input type="text" class="form-control" formControlName="login" id="login" placeholder="Username">
             </div>
           </div>
           <div class="form-group p-10 row">
             <div class="col-sm-3">
-              <label class="p-t-b-10">Mot de passe<span class="requiredStar">*</span></label>
+              <label class="p-t-b-10">Password<span class="requiredStar">*</span></label>
             </div>
             <div class="col-sm-9">
-              <input type="password" class="form-control" formControlName="password" id="password" placeholder="Mot de passe">
+              <input type="password" class="form-control" formControlName="password" id="password" placeholder="Password">
             </div>
           </div>
           <div class="form-group p-10 row">
@@ -51,26 +57,28 @@
               <input type="email" class="form-control" formControlName="email" id="email" placeholder="Email">
             </div>
           </div>
-          <h3 class="form-top">Informations sur l'entreprise</h3>
+          
+          <!-- Company Information Section -->
+          <h3 class="form-top">Company Information</h3>
           <div class="form-group p-10 row">
             <div class="col-sm-3">
-              <label class="p-t-b-10">Nom de l'entreprise<span class="requiredStar">*</span></label>
+              <label class="p-t-b-10">Company Name<span class="requiredStar">*</span></label>
             </div>
             <div class="col-sm-9">
-              <input type="text" class="form-control" formControlName="companyNom" id="companyNom" placeholder="Nom de l'entreprise">
+              <input type="text" class="form-control" formControlName="companyNom" id="companyNom" placeholder="Company Name">
             </div>
           </div>
           <div class="form-group p-10 row">
             <div class="col-sm-3">
-              <label class="p-t-b-10">Sous-domaine de l'entreprise<span class="requiredStar">*</span></label>
+              <label class="p-t-b-10">Company Subdomain<span class="requiredStar">*</span></label>
             </div>
             <div class="col-sm-9">
-              <input type="text" class="form-control" formControlName="companySubdomaine" id="companySubdomaine" placeholder="Sous-domaine de l'entreprise">
+              <input type="text" class="form-control" formControlName="companySubdomaine" id="companySubdomaine" placeholder="Company Subdomain">
             </div>
           </div>
           <div class="form-group p-10 row">
             <div class="col-sm-3">
-              <label class="p-t-b-10">Logo de l'entreprise<span class="requiredStar">*</span></label>
+              <label class="p-t-b-10">Company Logo<span class="requiredStar">*</span></label>
             </div>
             <div class="col-sm-9">
               <input type="file" class="form-control" formControlName="companyLogo" id="companyLogo" (change)="onLogoChange($event)" accept="image/*" required>
@@ -78,15 +86,17 @@
           </div>
           <div class="form-group p-10 row">
             <div class="col-sm-3">
-              <label class="p-t-b-10">Adresse de l'entreprise<span class="requiredStar">*</span></label>
+              <label class="p-t-b-10">Company Address<span class="requiredStar">*</span></label>
             </div>
             <div class="col-sm-9">
-              <input type="text" class="form-control" formControlName="companyAdresse" id="companyAdresse" placeholder="Adresse de l'entreprise">
+              <input type="text" class="form-control" formControlName="companyAdresse" id="companyAdresse" placeholder="Company Address">
             </div>
           </div>
+          
+          <!-- Submit Button -->
           <div class="form-group p-10 row">
             <div class="col-sm-12 text-center">
-              <button type="submit" class="btn btn-success green-btn">add</button>
+              <button type="submit" class="btn btn-success green-btn">Add</button>
             </div>
           </div>
         </form>

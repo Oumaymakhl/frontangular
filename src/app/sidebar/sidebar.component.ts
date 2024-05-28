@@ -34,61 +34,9 @@ export const ROUTES: RouteInfo[] = [{
        type: 'link', 
        icontype: 'nc-icon nc-single-02' },
        { path: '/companies/list',
-       title: 'companies',
-        type: 'link', 
-        icontype: 'nc-icon nc-single-02' },
- 
-        {
-            path: '/statistique',
-            title: 'statistique',
-            type: 'link',
-            icontype: 'nc-icon nc-chart-pie-36'
-    
-        }, {
-            path: '/en-ligne',
-            title: 'reunion en ligne',
-            type: 'link',
-            icontype: 'nc-icon nc-laptop'
-    
-        },
-        {
-            path: '/decision',
-            title: 'decision',
-            type: 'link',
-            icontype: 'nc-icon nc-box'
-    
-        },  {
-            path: '/decision-admin',
-            title: 'decision-admin',
-            type: 'link',
-            icontype: 'nc-icon nc-box'
-    
-        },  {
-        path: '/task',
-        title: 'task',
-        type: 'link',
-        icontype: 'nc-icon nc-chart-bar-32'
-
-    }, {
-        path: '/task-user',
-        title: 'taskuser',
-        type: 'link',
-        icontype: 'nc-icon nc-chart-bar-32'
-
-    },
-    {
-        path: '/reunion',
-        title: 'reunion',
-        type: 'link',
-        icontype: 'nc-icon nc-calendar-60'
-
-    },{
-        path: '/document',
-        title: 'document',
-        type: 'link',
-        icontype: 'nc-icon nc-paper'
-
-    },
+      title: 'companies',
+       type: 'link', 
+       icontype: 'nc-icon nc-single-02' },
     {
         path: '/components',
         title: 'Components',
@@ -186,7 +134,6 @@ export const ROUTES: RouteInfo[] = [{
     moduleId: module.id,
     selector: 'sidebar-cmp',
     templateUrl: 'sidebar.component.html',
-    styleUrls: ['sidebar.component.css']
 })
 
 export class SidebarComponent {

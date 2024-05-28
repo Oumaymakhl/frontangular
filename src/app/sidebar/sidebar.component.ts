@@ -37,6 +37,7 @@ export const ROUTES: RouteInfo[] = [
         icontype: 'nc-icon nc-single-02'
     },
     { path: '/compte-participant', title: 'Participants', type: 'link', icontype: 'nc-icon nc-single-02' },
+    { path: '/chat', title: 'chat', type: 'link', icontype: 'nc-icon nc-single-02' },
     { path: '/statistique', title: 'Statistics', type: 'link', icontype: 'nc-icon nc-chart-pie-36' },
     { path: '/en-ligne', title: 'Online Meeting', type: 'link', icontype: 'nc-icon nc-laptop' },
     { path: '/decision', title: 'Decision', type: 'link', icontype: 'nc-icon nc-box' },

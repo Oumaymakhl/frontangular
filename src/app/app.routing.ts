@@ -7,6 +7,7 @@ import { ComptePartcipantRoutingModule } from './compte-participant/compte-partc
 import { LoginComponent } from './login/login.component';
 import { CompanyRoutingModule } from './company/company-routing.module';
 import { AuthRoutingModule } from './auth/auth-routing.module';
+import { ChatComponent } from './chat/chat.component';
 
 export const AppRoutes: Routes = [{
         path: '',
@@ -64,7 +65,11 @@ export const AppRoutes: Routes = [{
         },{
             path: 'compte-admin', // Chemin pour accéder au module du compte administrateur
             loadChildren: () => CompteAdminRoutingModule, // Utilisez le module de routage du compte admin
-          }, {
+          },
+          {
+            path: 'chat', // Chemin pour accéder au module du compte administrateur
+            component: ChatComponent, // Utilisez le module de routage du compte admin
+            }, {
             path: 'compte-participant', // Chemin pour accéder au module du compte administrateur
             loadChildren: () => ComptePartcipantRoutingModule, // Utilisez le module de routage du compte admin
           }, {

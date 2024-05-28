@@ -14,7 +14,7 @@ import { AppRoutes } from './app.routing';
 import { LoginComponent } from './login/login.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-
+import { ChatComponent } from './chat/chat.component';
 
 
 @NgModule({
@@ -36,6 +36,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
         AdminLayoutComponent,
         AuthLayoutComponent,
         LoginComponent,
+        ChatComponent,
     ], providers: [],
 
     bootstrap:    [ AppComponent ]

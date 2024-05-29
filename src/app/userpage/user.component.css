@@ -1,0 +1,58 @@
+.main-content {
+  padding: 20px;
+  background: linear-gradient(135deg, #e8eef1, #e2e2f0);
+}
+
+.card-user .author {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.profile-picture-placeholder {
+  width: 220px; /* Augmenter légèrement la taille de la photo de profil */
+  height: 220px; /* Augmenter légèrement la taille de la photo de profil */
+  border-radius: 50%;
+  border: 3px dashed #1f0d97; /* Augmenter l'épaisseur de la bordure */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  overflow: hidden;
+  margin-bottom: 20px; /* Augmenter l'espacement avec le titre */
+  margin-top: 40px; /* Augmenter l'espacement avec le haut */
+  position: relative;
+}
+
+.profile-picture-placeholder::before {
+  content: ''; /* Retirer le texte "Cliquer pour changer" */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14px; /* Augmenter légèrement la taille du texte */
+  color: #666;
+  text-align: center;
+}
+
+.avatar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.author .title {
+  margin-top: 30px; /* Augmenter l'espacement avec la photo de profil */
+  font-size: 28px; /* Augmenter légèrement la taille du titre */
+  color: #333;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1.5px; /* Augmenter légèrement l'espacement entre les lettres */
+  font-weight: bold;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+}

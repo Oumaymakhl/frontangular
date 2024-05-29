@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Chat</title>
+    <link rel="stylesheet" href="chat.component.css">
+</head>
+
+<body>
+    <div class="main-content">
+        <div class="header text-center">
+            <h3 class="title">GroupChat</h3>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-timeline card-plain">
+                    <div class="card-body" id="messageList">
+                        <ul *ngFor="let message of messages" class="timeline">
+                            <li *ngIf="message.sender_id == my && message.email == email" class="timeline-inverted sent">
+                                <div class="timeline-badge danger chat-img-left">
+                                    <i *ngIf="!message.photo_url" class="nc-icon nc-single-copy-04"></i>
+                                    <img *ngIf="message.photo_url" [src]="message.photo_url" alt="Profile Picture" class="profile-picture">
+                                </div>
+                                <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                        <span class="badge badge-pill badge-danger user-name">{{ message.name }}</span>
+                                    </div>
+                                    <div class="timeline-body">
+                                        <p>{{ message.message }}</p>
+                                    </div>
+                                    <h6>
+                                        <i class="fa fa-clock-o"></i> {{ message.created_at.substr(0, 10) }}
+                                    </h6>
+                                </div>
+                            </li>
+                            <li *ngIf="message.sender_id != my || message.email != email" class="received">
+                                <div class="timeline-badge success chat-img-right">
+                                    <i *ngIf="!message.photo_url" class="nc-icon nc-sun-fog-29"></i>
+                                    <img *ngIf="message.photo_url" [src]="message.photo_url" alt="Profile Picture" class="profile-picture">
+                                </div>
+                                <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                        <span class="badge badge-pill badge-success user-name">{{ message.name }}</span>
+                                    </div>
+                                    <div class="timeline-body">
+                                        <p>{{ message.message }}</p>
+                                    </div>
+                                    <h6>
+                                        <i class="fa fa-clock-o"></i> {{ message.created_at.substr(0, 10) }}
+                                    </h6>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="footer">
+                        <form class="form" [formGroup]="chatForm" (ngSubmit)="sendMessage()">
+                            <div class="input-group" style="display: flex; align-items: center;">
+                                <textarea name="w3review" class="form-control" formControlName="message" rows="1" style="border-radius: 10px; border: 1px solid #ced4da; padding: 5px; font-size: 0.9rem; height: 30px; margin-top: 10px; margin-bottom: 10px; resize: none; width: calc(100% - 60px);"></textarea>
+                                <button class="btn btn-primary" type="submit" (click)="sendMessage(); scrollToBottom()" style="border-radius: 10px; padding: 8px 12px; font-size: 0.9rem; transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease; height: 40px; margin-left: 10px;">SEND</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+
+</html>

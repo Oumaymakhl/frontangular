@@ -1,0 +1,258 @@
+/* Couleurs */
+body {
+    background-color: #f9f9f9; /* Fond de la page */
+    color: #333; /* Couleur du texte principal */
+}
+
+.main-content {
+    max-width: 600px; /* Réduire la largeur du conteneur */
+    height: 90vh; /* Hauteur du conteneur égale à la hauteur de la fenêtre */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    background-color: #ffffff;
+    padding: 30px;
+    margin-top: 20px;
+    margin-left: auto; /* Centrer horizontalement */
+    margin-right: auto; /* Centrer horizontalement */
+}
+
+.card-body {
+    max-height: 350px; /* Définir une hauteur maximale pour le cadre */
+    overflow-y: auto; /* Activer le défilement vertical */
+    border-bottom-left-radius: 20px; /* Bordure arrondie bas gauche */
+    border-bottom-right-radius: 20px; /* Bordure arrondie bas droit */
+}
+
+.title {
+    color: #003366; /* Bleu primaire */
+    margin-bottom: 30px;
+}
+
+/* Infos sur l'utilisateur */
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.user-name {
+    font-weight: bold;
+    margin-left: 10px;
+    color: #000000; /* Toujours noir */
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Boutons */
+.btn-primary {
+    background-color: #003366;
+    border-color: #003366;
+    border-radius: 10px;
+    padding: 5px 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.1rem rgba(0, 123, 255, 0.25);
+}
+
+/* Styles pour les photos de profil */
+.profile-picture {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Styles pour les photos de profil à gauche */
+.chat-img-left {
+    float: left; /* Alignement à gauche */
+    margin-right: 10px; /* Marge à droite pour séparer du contenu */
+}
+
+/* Styles pour les photos de profil à droite */
+.chat-img-right {
+    float: right; /* Alignement à droite */
+    margin-left: 10px; /* Marge à gauche pour séparer du contenu */
+}
+
+/* Styles pour les messages envoyés */
+.sent .timeline-panel {
+    background-color: #b8c0ccc9;
+    color: #000000; /* Texte toujours noir */
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    position: relative;
+}
+
+.sent .timeline-panel:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid #ffffff;
+    transform: translateY(-50%);
+}
+
+/* Styles pour les messages reçus */
+.received .timeline-panel {
+    background-color: #094ece65;
+    color: #000000; /* Texte toujours noir */
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    position: relative;
+}
+
+.received .timeline-panel:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #094eceaf;
+    transform: translateY(-50%);
+}
+
+.footer {
+    background-color: #ffffff; /* Couleur de fond */
+    color: #fff; /* Couleur du texte */
+    border-top: 1px solid #ddd; /* Bordure supérieure */
+    padding: 5px 10px; /* Espacement intérieur */
+    border-bottom-left-radius: 20px; /* Bordure arrondie bas gauche */
+    border-bottom-right-radius: 20px; /* Bordure arrondie bas droit */
+}
+
+/* Champ de saisie de message */
+.card-footer .form-control {
+    border-radius: 10px; /* Bordure arrondie */
+    border: 1px solid #ced4da; /* Bordure */
+    padding: 5px; /* Espacement intérieur */
+    font-size: 0.9rem; /* Taille de police légèrement réduite */
+    height: 5px; /* Hauteur de la boîte de saisie réduite */
+    resize: none; /* Empêcher le redimensionnement */
+    margin-top: 10px; /* Réduire la marge en haut */
+}
+
+/* Bouton "Send" */
+.card-footer .btn-primary {
+    border-radius: 10px; /* Bordure arrondie */
+    padding: 8px 12px; /* Ajuster le rembourrage pour réduire la taille */
+    font-size: 0.9rem; /* Taille de police légèrement réduite */
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease; /* Transition pour les effets */
+    height: 10px; /* Alignement avec la hauteur du champ de saisie */
+}
+
+/* Ajustement de l'icône du bouton "Send" */
+.card-footer .btn-primary:before {
+    content: "\f1d8"; /* Code de l'icône (à remplacer par le code de l'icône souhaitée) */
+    font-family: "Font Awesome"; /* Famille de police d'icônes */
+    font-size: 0.9rem; /* Taille de l'icône */
+    margin-right: 5px; /* Marge à droite pour espacement */
+}
+
+.card-footer .btn-primary:hover {
+    background-color: #0056b3; /* Couleur de fond au survol */
+    color: #fff; /* Couleur du texte au survol */
+    box-shadow: 0 4px 10px rgba(0, 91, 187, 0.2); /* Effet d'ombre portée */
+    transform: scale(1.05); /* Effet de zoom au survol */
+    height: 5px;
+}
+
+.custom-textarea {
+    border-radius: 10px; /* Bordure arrondie */
+    border: 1px solid #ced4da; /* Bordure */
+    padding: 5px; /* Ajuster le rembourrage */
+    font-size: 0.9rem; /* Taille de police légèrement réduite */
+    height: 30px; /* Hauteur de la boîte de saisie réduite */
+    resize: none; /* Empêcher le redimensionnement */
+    margin-top: 10px; /* Réduire la marge en haut */
+    margin-bottom: 10px; /* Réduire la marge en bas */
+    width: calc(100% - 60px); /* Ajuster la largeur */
+}
+
+/* Bouton "Send" */
+.custom-btn-primary {
+    border-radius: 10px; /* Bordure arrondie */
+    padding: 8px 12px; /* Ajuster le rembourrage pour réduire la taille */
+    font-size: 0.9rem; /* Taille de police légèrement réduite */
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease; /* Transition pour les effets */
+    height: 40px; /* Alignement avec la hauteur du champ de saisie */
+    margin-left: 10px; /* Ajouter une marge à gauche pour l'espacement */
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+}
+
+.input-group textarea {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.input-group button {
+    height: 40px;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+}
+
+/* Messages */
+.message-box {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.message-box:last-child {
+    margin-bottom: 0;
+}
+
+/* Infos sur l'utilisateur */
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.user-name {
+    font-weight: bold;
+    margin-left: 10px;
+    color: #000000; /* Toujours noir */
+}
+
+/* Modifier les couleurs des noms d'utilisateur */
+.badge-danger {
+    background-color: #b8c0ccc9; 
+    color: #ffffff; 
+}
+
+.badge-success {
+    background-color: #094ece65; 
+    color: #ffffff; 
+}
+
+.sent .user-name {
+    color: #000000; /* Toujours noir */
+}
+
+.received .user-name {
+    color: #000000; /* Toujours noir */
+}

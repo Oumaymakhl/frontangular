@@ -28,3 +28,29 @@
 .btn-primary:hover {
     background-color: #0056b3 !important; /* Couleur de survol du bouton Importer */
 }
+.bouton {
+    display: inline-block; /* Pour aligner sur une seule ligne */
+    background-color: #719fee;
+    border-radius: 5px; /* Pour rendre les coins plus arrondis */
+    border: none; /* Supprimer le contour */
+    color: #ffffff;
+    text-align: center;
+    font-size: 16px; /* Réduire la taille de la police */
+    padding: 5px 10px; /* Réduire l'espace intérieur */
+    width: auto; /* Ajuster la largeur automatiquement au contenu */
+    cursor: pointer;
+}
+.boutton {
+    display: inline-block; /* Pour aligner sur une seule ligne */
+    background-color: #719fee;
+    border-radius: 5px; /* Pour rendre les coins plus arrondis */
+    border: none; /* Supprimer le contour */
+    color: #ffffff;
+    text-align: center;
+    font-size: 16px; /* Réduire la taille de la police */
+    padding: 5px 10px; /* Réduire l'espace intérieur */
+    width: auto; /* Ajuster la largeur automatiquement au contenu */
+    cursor: pointer;
+    margin-top: 20px; /* Ajouter une marge en haut pour abaisser les boutons */
+}
+

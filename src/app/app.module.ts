@@ -15,6 +15,8 @@ import { LoginComponent } from './login/login.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './shared/API_service/auth.interceptor';
 
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ChatComponent } from './chat/chat.component';
 
 
 @NgModule({
@@ -24,7 +26,7 @@ import { AuthInterceptor } from './shared/API_service/auth.interceptor';
         RouterModule.forRoot(AppRoutes,{
           useHash: true,
         }),
-        NgbModule,
+        NgbModule,DragDropModule,
         SidebarModule,
         NavbarModule,
         FooterModule, FixedPluginModule,ReactiveFormsModule,
@@ -36,12 +38,15 @@ import { AuthInterceptor } from './shared/API_service/auth.interceptor';
         AdminLayoutComponent,
         AuthLayoutComponent,
         LoginComponent,
+
     ],providers: [
         {
           provide: HTTP_INTERCEPTORS,
           useClass: AuthInterceptor,
           multi: true
         }],
+        ChatComponent,
+    ], providers: [],
 
     bootstrap:    [ AppComponent ]
 })

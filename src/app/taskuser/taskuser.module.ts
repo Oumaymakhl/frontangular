@@ -4,8 +4,7 @@ import { TaskUserComponent } from './task-user/task-user.component';
 import { RouterModule } from '@angular/router';
 import { TaskUserRoutes } from './taskuser.routing';
 import { FormsModule } from '@angular/forms';
-import { DragDropModule } from '@angular/cdk/drag-drop';
-
+import { CdkDrag, CdkDropList, CdkDropListGroup, DragDropModule } from '@angular/cdk/drag-drop';
 
 
 @NgModule({
@@ -15,7 +14,10 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
   imports: [
     CommonModule,
     RouterModule.forChild(TaskUserRoutes),
-    FormsModule,DragDropModule
-  ],  exports: [TaskUserComponent]
+    FormsModule,
+    DragDropModule,
+  
+  ],
+  exports: [TaskUserComponent]
 })
 export class TaskuserModule { }

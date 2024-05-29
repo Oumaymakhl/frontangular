@@ -48,9 +48,32 @@ getProfile(): Observable<any> {
     );
 }
 
+uploadProfilePhoto(file: File): Observable<any> {
+  const formData: FormData = new FormData();
+  formData.append('profile_photo', file, file.name);
 
-  private handleError(error: any) {
-    console.error('An error occurred:', error);
-    return throwError(error);
-  }
+  const headers = new HttpHeaders({
+    'Authorization': 'Bearer ' + this.token.get()
+  });
+
+  return this.http.post<any>(`${this.apiUrl}/profile`, formData, { headers: headers })
+    .pipe(
+      catchError(this.handleError)
+    );
+}
+
+private handleError(error: any) {
+  console.error('An error occurred:', error);
+  return throwError(error);
+}
+updateProfile(profileData: any): Observable<any> {
+  const headers = new HttpHeaders({
+    'Authorization': 'Bearer ' + this.token.get()
+  });
+
+  return this.http.put<any>(`${this.apiUrl}/updateprofil`, profileData, { headers: headers })
+    .pipe(
+      catchError(this.handleError)
+    );
+}
 }

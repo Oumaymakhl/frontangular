@@ -1,0 +1,16 @@
+/* Custom CSS for navbar */
+
+  .custom-navbar {
+    margin: 0 auto; /* Centre la barre de navigation */
+    max-height: 10px; /* Réglez la largeur maximale selon vos besoins */
+
+}
+.custom-btn {
+    background-color: #0e0066; /* Couleur de fond des boutons */
+    color: #ffffff; /* Couleur du texte des boutons */
+  }
+  
+  .custom-btn:hover {
+    background-color: white; /* Couleur de fond des boutons au survol */
+  }
+  

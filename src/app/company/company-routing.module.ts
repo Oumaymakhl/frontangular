@@ -6,16 +6,9 @@ import { CompanyDetailsComponent } from './company-details/company-details.compo
 import { AuthGuard } from 'app/auth.guard';
 
 
-const listcompany: Routes = [ {
-  path: 'list',
-  component:CompanyListComponent, 
-},{
-  path: 'list/modif/:id',
-  component:ModifCompanyComponent,
-},   { path: 'details/:id', 
-component: CompanyDetailsComponent, 
-}
-
+const listcompany: Routes = [ { path: 'list', component: CompanyListComponent }, // Utilisez 'list' comme chemin ici
+{ path: 'list/modif/:id', component: ModifCompanyComponent },
+{ path: 'details/:id', component: CompanyDetailsComponent }
 ];
 
 @NgModule({

@@ -1,65 +1,66 @@
 <div class="container-xl" style="margin-top: 80px; margin-bottom: 100px;">
-  <div class="table-wrapper mt-5">
-      <div class="card shadow">
-          <div class="table-title bg-custom-blue text-light p-4 rounded-top d-flex justify-content-between align-items-center">
-              <div>
-                  <h4 class="mb-0">update Admin</h4>
-              </div>
-              <div class="col-auto">
-                <button type="button" class="btn btn-secondary" routerLink="/compte-admin">Retour</button>
-              </div>
-          </div>
-          <div class="card-body">
-              <form #f="ngForm" (ngSubmit)="updateAdmin()">
-                  <div *ngIf="admin">
-                      <div class="form-group p-10 row">
-                          <div class="col-sm-3">
-                              <label class="p-t-b-10">Nom<span class="requiredStar">*</span></label>
-                          </div>
-                          <div class="col-sm-9">
-                              <input type="text" class="form-control" name="nom" [(ngModel)]="admin.nom" required>
-                          </div>
-                      </div>
-                      <div class="form-group p-10 row">
-                          <div class="col-sm-3">
-                              <label class="p-t-b-10">Prénom<span class="requiredStar">*</span></label>
-                          </div>
-                          <div class="col-sm-9">
-                              <input type="text" class="form-control" name="prenom" [(ngModel)]="admin.prenom" required>
-                          </div>
-                      </div>
-                      <div class="form-group p-10 row">
-                          <div class="col-sm-3">
-                              <label class="p-t-b-10">Login<span class="requiredStar">*</span></label>
-                          </div>
-                          <div class="col-sm-9">
-                              <input type="text" class="form-control" name="login" [(ngModel)]="admin.login" required>
-                          </div>
-                      </div>
-                      <div class="form-group p-10 row">
-                          <div class="col-sm-3">
-                              <label class="p-t-b-10">Email Address<span class="requiredStar">*</span></label>
-                          </div>
-                          <div class="col-sm-9">
-                              <input type="email" class="form-control" name="email" [(ngModel)]="admin.email" required>
-                          </div>
-                      </div>
-                      <div class="form-group p-10 row">
-                          <div class="col-sm-3">
-                              <label class="p-t-b-10">Entreprise</label>
-                          </div>
-                          <div class="col-sm-9">
-                              <input type="text" class="form-control" name="companySelect" [(ngModel)]="admin.company_id">
-                          </div>
-                      </div>
-                  </div>
-                  <div class="form-group p-10 row">
-                      <div class="col-sm-12 text-center">
-                          <button type="submit" class="btn btn-success green-btn">Update</button>
-                      </div>
-                  </div>
-              </form>
-          </div>
-      </div>
+    <div class="table-wrapper mt-5">
+        <div class="card shadow">
+            <div class="table-title bg-custom-blue text-light p-4 rounded-top d-flex justify-content-between align-items-center">
+                <div>
+                    <h4 class="mb-0">Update Admin</h4>
+                </div>
+                <div class="col-auto">
+                  <button type="button" class="btn btn-secondary" routerLink="/compte-admin">Back</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <form #f="ngForm" (ngSubmit)="updateAdmin()">
+                    <div *ngIf="admin">
+                        <div class="form-group p-10 row">
+                            <div class="col-sm-3">
+                                <label class="p-t-b-10">Name<span class="requiredStar">*</span></label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="nom" [(ngModel)]="admin.nom" required>
+                            </div>
+                        </div>
+                        <div class="form-group p-10 row">
+                            <div class="col-sm-3">
+                                <label class="p-t-b-10">First Name<span class="requiredStar">*</span></label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="prenom" [(ngModel)]="admin.prenom" required>
+                            </div>
+                        </div>
+                        <div class="form-group p-10 row">
+                            <div class="col-sm-3">
+                                <label class="p-t-b-10">Login<span class="requiredStar">*</span></label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="login" [(ngModel)]="admin.login" required>
+                            </div>
+                        </div>
+                        <div class="form-group p-10 row">
+                            <div class="col-sm-3">
+                                <label class="p-t-b-10">Email Address<span class="requiredStar">*</span></label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="email" class="form-control" name="email" [(ngModel)]="admin.email" required>
+                            </div>
+                        </div>
+                        <div class="form-group p-10 row">
+                            <div class="col-sm-3">
+                                <label class="p-t-b-10">Company</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="companySelect" [(ngModel)]="admin.company_id">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group p-10 row">
+                        <div class="col-sm-12 text-center">
+                            <button type="submit" class="bouton">Update</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
   </div>
-</div>
+  

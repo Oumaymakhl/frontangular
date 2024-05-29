@@ -13,8 +13,6 @@ import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 import { AppRoutes } from './app.routing';
 import { LoginComponent } from './login/login.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { AuthInterceptor } from './shared/API_service/auth.interceptor';
-
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ChatComponent } from './chat/chat.component';
 
@@ -39,14 +37,7 @@ import { ChatComponent } from './chat/chat.component';
         AuthLayoutComponent,
         LoginComponent,
         ChatComponent,
-
-    ],providers: [
-        {
-          provide: HTTP_INTERCEPTORS,
-          useClass: AuthInterceptor,
-          multi: true
-        }],
-       
+    ], providers: [],
 
     bootstrap:    [ AppComponent ]
 })

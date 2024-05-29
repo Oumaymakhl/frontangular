@@ -19,7 +19,7 @@ export class ChatComponent implements OnInit {
   group: string;
   messages: Message[] = [];
   mes: Message;
-  email:string;
+  email: string;
 
   constructor(
     private chatService: ChatService,
@@ -47,8 +47,8 @@ export class ChatComponent implements OnInit {
 
         const channel = pusher.subscribe('groupChanel'.concat(response.group));
         channel.bind('my-event', (data) => {
-     
           this.messages.push(data);
+          this.scrollToBottom(); // Scroll to bottom when a new message is received
         });
       },
       error => {
@@ -58,16 +58,18 @@ export class ChatComponent implements OnInit {
   }
 
   sendMessage(): void {
-    this.chatService.sendMessage(this.chatForm.value).subscribe(
-      res => {
-        console.log(res);
-      },
-      error => {
-        console.error('Error sending message:', error);
-      }
-      
-    );
-    this.chatForm.reset();
+    if (this.chatForm.valid) {
+      this.chatService.sendMessage(this.chatForm.value).subscribe(
+        res => {
+          console.log(res);
+          this.scrollToBottom(); // Scroll to bottom when a new message is sent
+        },
+        error => {
+          console.error('Error sending message:', error);
+        }
+      );
+      this.chatForm.reset();
+    }
   }
 
   getMessages(): void {
@@ -76,11 +78,19 @@ export class ChatComponent implements OnInit {
         this.messages = response.message;
         this.my = response.my;
         this.group = response.group;
-        this.email=response.email;
+        this.email = response.email;
+        this.scrollToBottom(); // Scroll to bottom when messages are loaded
       },
       error => {
         console.error('Error fetching messages:', error);
       }
     );
+  }
+
+  scrollToBottom() {
+    const messageList = document.getElementById("messageList");
+    if (messageList) {
+      messageList.scrollTop = messageList.scrollHeight;
+    }
   }
 }

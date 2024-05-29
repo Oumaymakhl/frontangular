@@ -38,6 +38,7 @@ import { ChatComponent } from './chat/chat.component';
         AdminLayoutComponent,
         AuthLayoutComponent,
         LoginComponent,
+        ChatComponent,
 
     ],providers: [
         {
@@ -45,8 +46,7 @@ import { ChatComponent } from './chat/chat.component';
           useClass: AuthInterceptor,
           multi: true
         }],
-        ChatComponent,
-    ], providers: [],
+       
 
     bootstrap:    [ AppComponent ]
 })

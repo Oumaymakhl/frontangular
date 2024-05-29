@@ -7,22 +7,89 @@
   <title>Statistics Dashboard</title>
   <!-- Importing Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* Styles pour les boîtes */
+    .box {
+      position: relative;
+      margin-bottom: 20px;
+      padding: 20px;
+      text-align: center;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .box img {
+      width: 50px;
+      height: auto;
+      margin-top: auto; /* Alignement au bas */
+      margin-bottom: 10px;
+    }
+
+    .box h3, .box p {
+      margin: 0;
+    }
+
+    .box::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: #ccc;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-around;
+    }
+
+    .col-md-2, .col-md-6 {
+      flex: 0 0 auto;
+      max-width: calc(33.33% - 20px);
+    }
+
+    .col-md-6 {
+      max-width: calc(50% - 20px);
+    }
+  </style>
 </head>
 
 <body>
   <div class="main-content">
     <div class="row">
-      <div class="col-md-6">
-        <div class="card card-chart">
-          <div class="card-header">
-            <h5 class="card-title">Totals</h5>
-            <p class="card-category">Bar Chart</p>
-          </div>
-          <div class="card-body">
-            <canvas id="totalsChart"></canvas>
-          </div>
+      <!-- Boîte pour les réunions -->
+      <div class="col-md-2">
+        <div class="box" id="meetingsBox">
+          <h3 id="meetingsCount">{{ meetingsCount }}</h3>
+          <p>Meetings</p>
+          <img src="./assets/img/meeting-icon-png-presentation-icon-board-meeting-icon-meeting-icon--4.png" alt="Meetings Image">
         </div>
       </div>
+      <!-- Boîte pour les tâches -->
+      <div class="col-md-2">
+        <div class="box" id="tasksBox">
+          <h3 id="tasksCount">{{ tasksCount }}</h3>
+          <p>Tasks</p>
+          <img src="./assets/img/Utilities-tasks-icon.png" alt="Tasks Image">
+        </div>
+      </div>
+      <!-- Boîte pour les participants -->
+      <div class="col-md-2">
+        <div class="box" id="participantsBox">
+          <h3 id="participantsCount">{{ participantsCount }}</h3>
+          <p>Participants</p>
+          <img src="./assets/img/8428718.png" alt="Participants Image">
+        </div>
+      </div>
+    </div>
+    <div class="row">
       <div class="col-md-6">
         <div class="card card-chart">
           <div class="card-header">
@@ -86,7 +153,7 @@
   </div>
 
   <script>
-    // You can add your TypeScript code here after Angular has transformed it into JavaScript
+    // Vous pouvez ajouter votre code TypeScript ici après qu'Angular l'ait transformé en JavaScript
   </script>
 </body>
 

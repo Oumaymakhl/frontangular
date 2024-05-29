@@ -9,11 +9,21 @@ import { Statistics } from 'app/shared/model/Statistics'; // Assurez-vous que le
   styleUrls: ['./statistique.component.css']
 })
 export class StatistiqueComponent implements OnInit {
+    meetingsCount: number = 0;
+    tasksCount: number = 0;
+    participantsCount: number = 0;
+    meetingImagePath: string = './assets/img/meeting-icon-png-presentation-icon-board-meeting-icon-meeting-icon--4.png';
+  tasksImagePath: string = './assets/img/Utilities-tasks-icon.png';
+  participantsImagePath: string = './assets/img/8428718.png';
   constructor(private statisticsService: StatisticsService) { }
 
   ngOnInit(): void {
     this.statisticsService.getTotals().subscribe((totalsData: any) => {
       this.createTotalsChart(totalsData);
+      this.meetingsCount = totalsData.reunions_count;
+      this.tasksCount = totalsData.tasks_count;
+      this.participantsCount = totalsData.users_count;
+      this.updateTotalsChart();
     });
 
     this.statisticsService.getAverageReunionsPerUser().subscribe((averageReunionsData: any) => {
@@ -40,12 +50,43 @@ export class StatistiqueComponent implements OnInit {
 
     
   }
+  updateTotalsChart(): void {
+    // Mettre à jour les valeurs des boîtes de nombre
+    const meetingsCountElement = document.getElementById('meetingsCount');
+    const tasksCountElement = document.getElementById('tasksCount');
+    const participantsCountElement = document.getElementById('participantsCount');
+
+    // Vérifier si les éléments existent avant de mettre à jour leurs contenus
+    if (meetingsCountElement && tasksCountElement && participantsCountElement) {
+        meetingsCountElement.textContent = this.meetingsCount.toString();
+        tasksCountElement.textContent = this.tasksCount.toString();
+        participantsCountElement.textContent = this.participantsCount.toString();
+    }
+  }
+
   createTotalsChart(data: any): void {
+    // Mettre à jour les valeurs des boîtes de nombre
+    const meetingsBox = document.getElementById('meetingsBox');
+    if (meetingsBox) {
+        meetingsBox.innerHTML = `<h3>${data.reunions_count}</h3><p>Meetings</p>`;
+    }
+
+    const tasksBox = document.getElementById('tasksBox');
+    if (tasksBox) {
+        tasksBox.innerHTML = `<h3>${data.tasks_count}</h3><p>Tasks</p>`;
+    }
+
+    const participantsBox = document.getElementById('participantsBox');
+    if (participantsBox) {
+        participantsBox.innerHTML = `<h3>${data.users_count}</h3><p>Participants</p>`;
+    }
+
+    // Créer le graphique des totaux
     const ctx = document.getElementById('totalsChart') as HTMLCanvasElement;
     new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['meet', 'Task', 'Participant'],
+            labels: ['Meetings', 'Tasks', 'Participants'],
             datasets: [{
                 label: 'Totals',
                 data: [data.reunions_count, data.tasks_count, data.users_count],
@@ -73,7 +114,6 @@ export class StatistiqueComponent implements OnInit {
         }
     });
 }
-
 
 
 createAverageReunionsChart(data: any): void {

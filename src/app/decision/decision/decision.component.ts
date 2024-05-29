@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DecisionService } from 'app/shared/API_service/decision.service';
 import { Decision } from 'app/shared/model/decision';
+import { catchError, throwError } from 'rxjs';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -9,7 +10,8 @@ import Swal from 'sweetalert2';
   styleUrls: ['./decision.component.css']
 })
 export class DecisionComponent implements OnInit {
-  decisions: Decision[] = [];
+  decisions: Decision[] ;
+  loading = false;
 
   constructor(private decisionService: DecisionService) {}
 
@@ -18,39 +20,46 @@ export class DecisionComponent implements OnInit {
   }
 
   getDecisions(): void {
-    this.decisionService.getDecisions().subscribe(
+    this.loading = true;
+    this.decisionService.getDecisions().pipe(
+      catchError(error => {
+        Swal.fire('Error!', 'Failed to load decisions.', 'error');
+        return throwError(error);
+      })
+    ).subscribe(
       (data: any) => {
         this.decisions = data.decisions;
-      },
-      (error: any) => {
-        console.error('Une erreur s\'est produite lors de la récupération des décisions : ', error);
+        this.loading = false;
       }
     );
   }
 
   likeDecision(decision: Decision): void {
-    this.decisionService.likeDecision(decision.id).subscribe(
+    this.decisionService.likeDecision(decision.id).pipe(
+      catchError(error => {
+        Swal.fire('Error!', 'Failed to like decision.', 'error');
+        return throwError(error);
+      })
+    ).subscribe(
       () => {
         decision.likes_count++;
-        decision.alreadyLiked = true;
         Swal.fire('Liked!', decision.title, 'success');
-      },
-      (error: any) => {
-        console.error('Une erreur s\'est produite lors de l\'ajout du like : ', error);
       }
     );
   }
 
   dislikeDecision(decision: Decision): void {
-    this.decisionService.dislikeDecision(decision.id).subscribe(
+    this.decisionService.dislikeDecision(decision.id).pipe(
+      catchError(error => {
+        Swal.fire('Error!', 'Failed to dislike decision.', 'error');
+        return throwError(error);
+      })
+    ).subscribe(
       () => {
         decision.dislikes_count++;
-        decision.alreadyDisliked = true;
         Swal.fire('Disliked!', decision.title, 'error');
-      },
-      (error: any) => {
-        console.error('Une erreur s\'est produite lors de l\'ajout du dislike : ', error);
       }
     );
   }
+
 }

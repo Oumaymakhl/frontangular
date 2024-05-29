@@ -133,7 +133,7 @@ payload(token:any){
     }
     return false;
 }
-private getUserType(): string {
+ getUserType(): string {
   const token = localStorage.getItem('token');
   if (token) {
     const payload = this.decodePayload(token);

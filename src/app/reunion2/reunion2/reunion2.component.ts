@@ -2,7 +2,11 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import PerfectScrollbar from 'perfect-scrollbar';
-
+import { ReunionService, listereunion } from 'app/shared/API_service/reunion.service';
+import { Reunion } from 'app/shared/model/reunion';
+import { User } from 'app/shared/model/user';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ParticipantService } from 'app/shared/API_service/participant.service';
 declare var $: any;
 
 @Component({
@@ -11,231 +15,138 @@ declare var $: any;
   styleUrls: ['./reunion2.component.css']
 })
 export class Reunion2Component implements OnInit {
+  reunions: Reunion[];
+  userId: number;
+  status: boolean;
+  raison: string;
+  reunionId: number;
+
+  constructor(private route: ActivatedRoute, private reunionService: ReunionService, private router: Router) { }
+
   ngOnInit() {
-    const $calendar = $('#fullCalendar');
-    const today = new Date();
-    const y = today.getFullYear();
-    const m = today.getMonth();
-    const d = today.getDate();
-
-    // Configurer le calendrier FullCalendar
-    $calendar.fullCalendar({
-      viewRender: function(view, element) {
-        // Active le perfect scrollbar si la vue n'est pas en mode mois
-        if (view.name !== 'month') {
-          const elem = $(element).find('.fc-scroller')[0];
-          new PerfectScrollbar(elem);
-        }
-      },
-      header: {
-        left: 'title',
-        center: 'month,agendaWeek,agendaDay',
-        right: 'prev,next,today'
-      },
-      defaultDate: today,
-      selectable: true,
-      selectHelper: true,
-      views: {
-        month: {
-          titleFormat: 'MMMM YYYY'
-        },
-        week: {
-          titleFormat: 'MMMM D YYYY'
-        },
-        day: {
-          titleFormat: 'D MMM, YYYY'
-        }
-      },
-      select: function(start, end) {
-        // Afficher l'alerte SweetAlert2 avec les champs nécessaires pour créer un événement
-        Swal.fire({
-          title: 'Créer une réunion en ligne',
-          html: `
-            <div class="form-group">
-              <input class="form-control" placeholder="Titre" id="event-title">
-            </div>
-            <div class="form-group">
-              <textarea class="form-control" placeholder="Description" id="event-description"></textarea>
-            </div>
-          `,
-          showCancelButton: true,
-          confirmButtonText: 'Créer',
-          cancelButtonText: 'Annuler',
-          customClass: {
-            confirmButton: 'btn btn-success',
-            cancelButton: 'btn btn-danger',
-          },
-          buttonsStyling: false,
-          preConfirm: function() {
-            // Récupérer les valeurs saisies dans l'alerte
-            const titleElement = document.getElementById('event-title') as HTMLInputElement;
-            const descriptionElement = document.getElementById('event-description') as HTMLTextAreaElement;
-            const title = titleElement.value;
-            const description = descriptionElement.value;
-
-            // Valider les valeurs saisies
-            if (!title) {
-              Swal.showValidationMessage('Le titre est requis.');
-            }
-
-            // Retourner un objet contenant les valeurs
-            return {
-              title,
-              description
-            };
-          }
-        }).then((result) => {
-          if (result.isConfirmed) {
-            const { title, description } = result.value;
-
-            // Créer un nouvel événement avec le titre et la description
-            const eventData = {
-              title,
-              description,
-              start,
-              end
-            };
-
-            // Ajouter l'événement au calendrier
-            $calendar.fullCalendar('renderEvent', eventData, true);
-          }
-          // Désélectionner après l'ajout de l'événement
-          $calendar.fullCalendar('unselect');
-        });
-      },
-      eventClick: function(calEvent, jsEvent, view) {
-        // Afficher les détails de la réunion existante avec SweetAlert2
-        Swal.fire({
-            title: calEvent.title,
-            html: `
-                <div class="form-group">
-                    <strong>Description:</strong> ${calEvent.description || 'Aucune description'}
-                </div>
-                <div class="form-group">
-                    <strong>Date et heure:</strong> ${calEvent.start.format('DD/MM/YYYY HH:mm')} - ${calEvent.end ? calEvent.end.format('DD/MM/YYYY HH:mm') : 'Aucune heure de fin'}
-                </div>
-                <div class="form-group" id="reason-section">
-                    <input class="form-control" placeholder="Raison de non disponibilité" id="reason-text">
-                </div>
-            `,
-            showCancelButton: true,
-            confirmButtonText: 'Dispo',
-            cancelButtonText: 'Non dispo',
-            customClass: {
-                confirmButton: 'btn btn-success',
-                cancelButton: 'btn btn-danger',
-            },
-            buttonsStyling: false,
-            preConfirm: function() {
-                // Obtenir le champ d'entrée pour la raison de non disponibilité
-                const reasonElement = document.getElementById('reason-text') as HTMLInputElement;
-                // Obtenir la valeur de l'élément si elle existe
-                const reason = reasonElement ? reasonElement.value : '';
-                return { reason };
-            }
-        }).then((result) => {
-            // Si l'utilisateur a cliqué sur "Dispo"
-            if (result.isConfirmed) {
-                Swal.fire('Vous êtes disponible pour cette réunion.');
-            } else if (result.dismiss === Swal.DismissReason.cancel) {
-                // L'utilisateur a cliqué sur "Non dispo"
-                const reason = result.value.reason;
-                if (reason) {
-                    // Afficher une autre alerte avec la raison fournie
-                    Swal.fire({
-                        title: 'Non disponible',
-                        text: `Raison: ${reason}`,
-                        icon: 'info',
-                        confirmButtonText: 'Fermer'
-                    });
-                } else {
-                    // Si aucune raison n'est fournie, demander une raison
-                    Swal.fire({
-                        title: 'Veuillez fournir une raison pour votre non disponibilité',
-                        icon: 'warning',
-                        confirmButtonText: 'OK'
-                    });
-                }
-            }
-        });
-    }
-,    
-
-/*eventClick: function(calEvent, jsEvent, view) {
-        // Afficher les détails de la réunion existante avec SweetAlert2
-        Swal.fire({
-          title: calEvent.title,
-          html: `
-            <div class="form-group">
-              <strong>Description:</strong> ${calEvent.description || 'Aucune description'}
-            </div>
-            <div class="form-group">
-              <strong>Date et heure:</strong> ${calEvent.start.format('DD/MM/YYYY HH:mm')} - ${calEvent.end ? calEvent.end.format('DD/MM/YYYY HH:mm') : 'Aucune heure de fin'}
-            </div>
-          `,
-          confirmButtonText: 'Fermer',
-          customClass: {
-            confirmButton: 'btn btn-primary',
-          },
-          buttonsStyling: false
-        });
-      },*/
-      editable: true,
-      eventLimit: true, // Autorise le lien "plus" lorsqu'il y a trop d'événements
-      events: [
-        {
-          title: ' Event',
-          start: new Date(y, m, 4),
-          className: 'event-default'
-        },
-        {
-          id: 999,
-          title: 'Repeating Event',
-          start: new Date(y, m, d - 4, 8, 0),
-          allDay: false,
-          className: 'event-rose'
-        },
-        {
-          id: 999,
-          title: 'Repeating Event',
-          start: new Date(y, m, d + 3, 4, 0),
-          allDay: false,
-          className: 'event-rose'
-        },
-        {
-          title: 'Meeting',
-          start: new Date(y, m, d - 1, 10, 30),
-          allDay: false,
-          className: 'event-green'
-        },
-        {
-          title: 'Meeting',
-          start: new Date(y, m, d + 7, 12, 0),
-          end: new Date(y, m, d + 7, 14, 0),
-          allDay: false,
-          className: 'event-red'
-        },
-        {
-          title: 'Md-pro Launch',
-          start: new Date(y, m, d - 2, 12, 0),
-          allDay: true,
-          className: 'event-azure'
-        },
-        {
-          title: 'Birthday Party',
-          start: new Date(y, m, d + 1, 19, 0),
-          end: new Date(y, m, d + 1, 22, 30),
-          allDay: false,
-          className: 'event-azure'
-        },
-        {
-          title: 'Click for Creative Tim',
-          start: new Date(y, m, 21),
-          end: new Date(y, m, 22),
-          url: 'https://www.creative-tim.com/',
-          className: 'event-orange'
-        }
-      ]
+    this.route.queryParams.subscribe(params => {
+      this.reunionId = +params['reunionId'];
+      this.userId = +params['userId'];
+  
+      // Vérifier si les paramètres de requête contiennent les identifiants de réunion et d'utilisateur
+      if (this.reunionId && this.userId) {
+        // Charger les réunions et afficher la fenêtre modale de confirmation dans la logique de succès de loadReunions()
+        this.loadReunions();
+      } else {
+        // Charger les réunions si les paramètres de requête ne sont pas disponibles
+        this.loadReunions();
+      }
     });
+  }
+  
+  loadReunions() {
+    this.reunionService.getReunions().subscribe(
+      (response: any) => {
+        this.reunions = response.reunions;
+        this.renderCalendarEvents();
+        this.initializeCalendar(); // Initialise le calendrier après le rendu des événements
+        
+        // Vérifier si les paramètres de requête contiennent les identifiants de réunion et d'utilisateur
+        if (this.reunionId && this.userId) {
+          this.showConfirmationForm({ id: this.reunionId });
+        }
+      },
+      (error) => {
+        console.error('Erreur lors de la récupération des réunions', error);
+      }
+    );
+  }
+  
+  initializeCalendar() {
+    const $calendar = $('#fullCalendar');
+    const self = this;
+
+    $calendar.fullCalendar({
+      // Autres options du calendrier...
+
+      events: this.reunions.map(reunion => ({
+        id: reunion.id,
+        title: reunion.titre,
+        start: reunion.date,
+        description: reunion.description
+      })),
+      
+      eventClick: (calEvent, jsEvent, view) => {
+        // Vérifier si l'utilisateur a le droit de confirmer sa présence
+        if (this.canConfirmPresence(calEvent.id)) {
+          // Afficher la fenêtre modale de confirmation
+          this.showConfirmationForm(calEvent);
+        } else {
+          // Afficher un message indiquant que l'utilisateur n'a pas le droit de confirmer sa présence
+          Swal.fire('Accès refusé', 'Vous n\'avez pas le droit de confirmer votre présence à cette réunion.', 'error');
+        }
+      },
+      
+      // Autres options du calendrier...
+    });
+  }
+
+  renderCalendarEvents() {
+    const events = this.reunions.map(reunion => ({
+      id: reunion.id,
+      title: reunion.titre,
+      start: reunion.date,
+      description: reunion.description
+    }));
+
+    $('#fullCalendar').fullCalendar('renderEvents', events, true);
+  }
+
+  showConfirmationForm(calEvent): void {
+    const { id } = calEvent;
+
+    // Récupérer les détails de la réunion en utilisant l'ID de l'événement
+    const selectedReunion = this.reunions.find(reunion => reunion.id === id);
+
+    // Utiliser SweetAlert pour afficher le formulaire de confirmation
+    Swal.fire({
+      title: `${selectedReunion.titre || 'Titre non disponible'} - Détails de la réunion`,
+      html: `
+        <p><strong>Description:</strong> ${selectedReunion.description || 'Description non disponible'}</p>
+        <p><strong>Date:</strong> ${selectedReunion.date || 'Date non disponible'}</p>
+        <div class="form-group">
+          <label for="raison">Raison (facultatif):</label>
+          <input type="text" id="raison" class="form-control">
+        </div>
+      `,
+      showCancelButton: true,
+      confirmButtonText: 'Disponible',
+      cancelButtonText: 'Indisponible',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.status = true;
+        this.raison = (document.getElementById('raison') as HTMLInputElement).value;
+        this.sendConfirmation(id);
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        this.status = false;
+        this.raison = (document.getElementById('raison') as HTMLInputElement).value;
+        this.sendConfirmation(id);
+      }
+    });
+  }
+
+  // Vérifier si l'utilisateur peut confirmer sa présence à la réunion spécifiée
+  canConfirmPresence(reunionId: number): boolean {
+    // Comparer les IDs de la réunion dans l'URL avec l'ID de la réunion spécifiée
+    return this.reunionId === reunionId;
+  }
+
+  // Envoyer la confirmation au backend
+  sendConfirmation(reunionId): void {
+    this.reunionService.confirmParticipation(reunionId, this.userId, this.status, this.raison).subscribe(
+      response => {
+        console.log('Confirmation de participation envoyée avec succès !');
+        Swal.fire('Confirmation envoyée', '', 'success');
+      },
+      error => {
+        console.error('Erreur lors de la confirmation de participation :', error);
+        Swal.fire('Erreur', 'Une erreur s\'est produite lors de la confirmation de participation', 'error');
+      }
+    );
   }
 }

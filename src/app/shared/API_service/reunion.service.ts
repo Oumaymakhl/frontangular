@@ -5,6 +5,8 @@ import { Reunion } from '../model/reunion';
 import { Injectable } from '@angular/core';
 import { User } from '../model/user';
 import { TokenService } from './token.service';
+import { Presence } from '../model/presence';
+
 export interface listereunion{
   status:number;
   reunions:Reunion[];
@@ -21,6 +23,8 @@ export interface reunionajout{
   providedIn: 'root'
 })
 export class ReunionService {
+  private apiUrl = 'http://localhost:8000/api'; // URL de base de votre API Laravel
+
   constructor(private http: HttpClient, private token: TokenService) { }
 
   createReunion(reunion: any): Observable<any> {
@@ -58,7 +62,31 @@ export class ReunionService {
       })
     );
   }
+  getMeetingDetails(meetingId: number): Observable<Reunion> {
+    return this.http.get<{ reunion: Reunion }>(`http://localhost:8000/api/reunion/${meetingId}`)
+      .pipe(
+        map(response => response.reunion),
+        catchError(error => {
+          console.error('Erreur lors de la récupération des détails de la réunion:', error);
+          return throwError(error);
+        })
+      );
+  }
   
+  getParticipantsStatus(reunionId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/reunions/${reunionId}/participants-status`);
+  }
+  confirmParticipation(reunionId: number, userId: number, status: boolean, raison: string): Observable<any> {
+    const participationData = {
+        userId: userId,
+        status: status,
+        raison: raison
+    };
+
+    return this.http.post(`${this.apiUrl}/reunion/${reunionId}/confirm-participation`, participationData);
+  }
+
+
   // Récupérer les utilisateurs invités à une réunion spécifique
   getInvitedUsers(companyId: number, reunionId: number): Observable<any> {
     return this.http.get<any>(`http://localhost:8000/api/companies/${companyId}/reunions/${reunionId}/invited-users`);

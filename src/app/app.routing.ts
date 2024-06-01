@@ -19,7 +19,10 @@ export const AppRoutes: Routes = [{
         { 
             path: '',
             loadChildren: () => import('./dashboard/dashboard.module').then(x => x.DashboardModule)
-         },
+         }, {
+            path: 'en-ligne',
+            loadChildren: () => import('./reunion2/reunion2.module').then(x => x.Reunion2Module)
+        },
          
         {
             path: 'components',
@@ -71,9 +74,6 @@ export const AppRoutes: Routes = [{
             path: 'companies', // chemin pour accéder aux entreprises
             loadChildren: () => CompanyRoutingModule // Utilisez le module de routage du module Company
           },{
-            path: 'en-ligne',
-            loadChildren:() => import( './reunion2/reunion2.module').then(x=>x.Reunion2Module)
-        },{
             path: 'decision',
             loadChildren:() => import( './decision/decision.module').then(x=>x.DecisionModule)
         },{

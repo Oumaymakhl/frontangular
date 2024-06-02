@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Reunion2Component } from 'app/reunion2/reunion2/reunion2.component';
 import { AuthStateService } from 'app/shared/API_service/auth-state.service';
 import { AuthService } from 'app/shared/API_service/auth.service';
 import { TokenService } from 'app/shared/API_service/token.service';
@@ -36,6 +37,7 @@ export const ROUTES: RouteInfo[] = [
         type: 'link',
         icontype: 'nc-icon nc-single-02'
     },
+    ,
     { path: '/compte-participant', title: 'Participants', type: 'link', icontype: 'nc-icon nc-single-02' },
     { path: '/chat', title: 'chat', type: 'link', icontype: 'nc-icon nc-single-02' },
     { path: '/statistique', title: 'Statistics', type: 'link', icontype: 'nc-icon nc-chart-pie-36' },
@@ -48,6 +50,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/task-user', title: 'Task User', type: 'link', icontype: 'nc-icon nc-chart-bar-32' },
     { path: '/reunion', title: 'Meeting', type: 'link', icontype: 'nc-icon nc-calendar-60' },
     { path: '/document', title: 'Document', type: 'link', icontype: 'nc-icon nc-paper' },
+   
     {
         path: '/pages',
         title: 'Pages',

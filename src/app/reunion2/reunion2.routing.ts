@@ -2,10 +2,9 @@ import { Routes } from '@angular/router';
 
 import { Reunion2Component } from './reunion2/reunion2.component';
 
-export const Reunion2Routes: Routes = [{
-    path: '',
-    children: [{
+export const Reunion2Routes: Routes = [
+    {
         path: '',
-        component:  Reunion2Component
-    }]
-}];
+        component: Reunion2Component
+    }
+];

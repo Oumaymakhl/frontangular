@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthGuard } from 'app/auth.guard';
+import { Reunion2Component } from 'app/reunion2/reunion2/reunion2.component';
 import { AuthStateService } from 'app/shared/API_service/auth-state.service';
 import { AuthService } from 'app/shared/API_service/auth.service';
 import { TokenService } from 'app/shared/API_service/token.service';
@@ -39,8 +40,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/document', title: 'Document', type: 'link', icontype: 'nc-icon nc-paper' },
     { path: '/reunion', title: 'Meeting', type: 'link', icontype: 'nc-icon nc-calendar-60' },
     { path: '/statistique', title: 'Statistics', type: 'link', icontype: 'nc-icon nc-chart-pie-36' },
-
-    {
+  { path: '/meeting2', title: ' Meeting2', type: 'link', icontype: 'nc-icon nc-laptop' },  {
         path: '/pages',
         title: 'Pages',
         collapse: 'pages',

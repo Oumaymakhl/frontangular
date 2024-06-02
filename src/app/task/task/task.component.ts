@@ -69,37 +69,37 @@ export class TaskComponent implements OnInit {
         console.log('User options:', userOptions); // Diagnostic
     
         Swal.fire({
-                title: 'Ajouter une tâche',
-                html: `
-                    <input type="text" id="nomTache" class="swal2-input" placeholder="Nom de la tâche">
-                    <textarea id="descriptionTache" class="swal2-textarea" placeholder="Description"></textarea>
-                    <input type="number" id="tempsEstime" class="swal2-input" placeholder="Temps estimé (en heures)">
-                    <select id="participantSelect" class="swal2-select">
-                        <option value="" disabled selected>Choisissez un participant</option>
-                        ${userOptions} <!-- Utiliser la liste des utilisateurs ici -->
-                    </select>
-                `,
+            title: 'Add a Task',
+            html: `
+                <input type="text" id="taskName" class="swal2-input" placeholder="Task Name">
+                <textarea id="taskDescription" class="swal2-textarea" placeholder="Description"></textarea>
+                <input type="number" id="estimatedTime" class="swal2-input" placeholder="Estimated Time (in hours)">
+                <select id="participantSelect" class="swal2-select">
+                    <option value="" disabled selected>Choose a participant</option>
+                    ${userOptions} <!-- Use the list of users here -->
+                </select>
+            `,
             showCancelButton: true,
-            confirmButtonText: 'Ajouter',
-            cancelButtonText: 'Annuler',
+            confirmButtonText: 'Add',
+            cancelButtonText: 'Cancel',
             preConfirm: () => {
-                const nomTache = (document.getElementById('nomTache') as HTMLInputElement).value;
-                const descriptionTache = (document.getElementById('descriptionTache') as HTMLTextAreaElement).value;
-                const tempsEstime = parseFloat((document.getElementById('tempsEstime') as HTMLInputElement).value);
+                const taskName = (document.getElementById('taskName') as HTMLInputElement).value;
+                const taskDescription = (document.getElementById('taskDescription') as HTMLTextAreaElement).value;
+                const estimatedTime = parseFloat((document.getElementById('estimatedTime') as HTMLInputElement).value);
                 const participantId = parseInt((document.getElementById('participantSelect') as HTMLSelectElement).value, 10);
-    
-                if (!nomTache || !descriptionTache || isNaN(tempsEstime) || isNaN(participantId)) {
-                    Swal.showValidationMessage('Tous les champs sont obligatoires.');
+            
+                if (!taskName || !taskDescription || isNaN(estimatedTime) || isNaN(participantId)) {
+                    Swal.showValidationMessage('All fields are required.');
                     return false;
                 }
-    
+            
                 const newTask: Task = {
                     id: 0,
                     user_id: participantId,
-                    status: 'todo', // Définir le statut sur "à faire"
-                    estimated_time: tempsEstime,
-                    name: nomTache,
-                    description: descriptionTache
+                    status: 'todo', // Set status to "to do"
+                    estimated_time: estimatedTime,
+                    name: taskName,
+                    description: taskDescription
                 };
     
                 this.taskService.addTask(newTask).subscribe(
@@ -107,11 +107,11 @@ export class TaskComponent implements OnInit {
                         // Ajoutez simplement la nouvelle tâche à votre liste de tâches existante
                         this.tasks.push(response); // Ajouter la tâche nouvellement ajoutée
                         // Vous pouvez également afficher un message de réussite ou effectuer d'autres actions nécessaires
-                        Swal.fire('Succès', 'La tâche a été ajoutée avec succès.', 'success');
+                        Swal.fire('Success', 'The task has been successfully added.', 'success');
                     },
                     (error) => {
                         console.error('Error adding task:', error);
-                        Swal.fire('Erreur', 'Une erreur s\'est produite lors de l\'ajout de la tâche.', 'error');
+                        Swal.fire('Error', 'An error occurred while adding the task.', 'error');
                     }
                 );
             }
@@ -120,44 +120,45 @@ export class TaskComponent implements OnInit {
     
     editerTache(task: Task) {
         Swal.fire({
-            title: 'Modifier la tâche',
+            title: 'Edit Task',
             html: `
-                <input type="text" id="nomTache" class="swal2-input" placeholder="Nom de la tâche" value="${task.name}">
-                <textarea id="descriptionTache" class="swal2-textarea" placeholder="Description">${task.description}</textarea>
-                <input type="number" id="tempsEstime" class="swal2-input" placeholder="Temps estimé (en heures)" value="${task.estimated_time}">
+                <input type="text" id="taskName" class="swal2-input" placeholder="Task Name" value="${task.name}">
+                <textarea id="taskDescription" class="swal2-textarea" placeholder="Description">${task.description}</textarea>
+                <input type="number" id="estimatedTime" class="swal2-input" placeholder="Estimated Time (in hours)" value="${task.estimated_time}">
             `,
             showCancelButton: true,
-            confirmButtonText: 'Enregistrer',
-            cancelButtonText: 'Annuler',
+            confirmButtonText: 'Save',
+            cancelButtonText: 'Cancel',
             preConfirm: () => {
-                const nomTache = (document.getElementById('nomTache') as HTMLInputElement).value;
-                const descriptionTache = (document.getElementById('descriptionTache') as HTMLTextAreaElement).value;
-                const tempsEstime = parseFloat((document.getElementById('tempsEstime') as HTMLInputElement).value);
-
-                if (!nomTache || !descriptionTache || isNaN(tempsEstime)) {
-                    Swal.showValidationMessage('Tous les champs sont obligatoires.');
+                const taskName = (document.getElementById('taskName') as HTMLInputElement).value;
+                const taskDescription = (document.getElementById('taskDescription') as HTMLTextAreaElement).value;
+                const estimatedTime = parseFloat((document.getElementById('estimatedTime') as HTMLInputElement).value);
+            
+                if (!taskName || !taskDescription || isNaN(estimatedTime)) {
+                    Swal.showValidationMessage('All fields are required.');
                     return false;
                 }
-
-                task.name = nomTache;
-                task.description = descriptionTache;
-                task.estimated_time = tempsEstime;
-
+            
+                task.name = taskName;
+                task.description = taskDescription;
+                task.estimated_time = estimatedTime;
+            
                 this.taskService.updateTask(task.id, task).subscribe(() => {
                 });
             }
+            
         });
     }
 
     supprimerTache(id: number) {
         Swal.fire({
-            title: 'Êtes-vous sûr?',
-            text: "Vous ne pourrez pas revenir en arrière!",
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Oui, supprimez-le!'
+            confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
                 this.taskService.deleteTask(id).subscribe(() => {
@@ -166,6 +167,7 @@ export class TaskComponent implements OnInit {
             }
         });
     }
+    
 
     filteredTasks(): Task[] {
         return this.tasks.filter((task: Task) =>

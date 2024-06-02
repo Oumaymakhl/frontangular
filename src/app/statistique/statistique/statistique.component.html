@@ -1,149 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Statistics Dashboard</title>
   <!-- Importing Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <style>
-    /* Styles pour les boîtes */
-    .box {
-      position: relative;
-      margin-bottom: 20px;
-      padding: 20px;
-      text-align: center;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      background-color: #f9f9f9;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .box img {
-      width: 50px;
-      height: auto;
-      margin-top: auto; /* Alignement au bas */
-      margin-bottom: 10px;
-    }
-
-    .box h3, .box p {
+    /* Global Styles */
+    body {
+      font-family: Arial, sans-serif;
       margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
     }
-
-    .box::before {
-      content: '';
-      position: absolute;
-      top: -10px;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background-color: #ccc;
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 50px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
-
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
     .row {
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
-      justify-content: space-around;
+      margin-bottom: 40px; /* Ajoutez une marge inférieure pour augmenter l'espace vertical entre les lignes */
+    }
+    .col {
+      flex: 1;
+      min-width: 300px;
+      margin-bottom: 40px; 
     }
 
-    .col-md-2, .col-md-6 {
-      flex: 0 0 auto;
-      max-width: calc(33.33% - 20px);
+    .box {
+      width: 110px;
+      height: 170px; 
+      text-align: center;
+      padding: 30px;
+      border-radius: 10px;
+      background-color: #fff;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     }
 
-    .col-md-6 {
-      max-width: calc(50% - 20px);
+    .box img {
+      height: auto; 
+      margin-bottom: 10px;
+    }
+
+    .box h3 {
+      margin-bottom: 5px;
+      font-size: 24px;
+      color: #333;
+    }
+
+    .box p {
+      margin: 0;
+      color: #666;
+    }
+
+    /* Chart Styles */
+    canvas {
+      max-width: 100%;
+      height: auto;
     }
   </style>
 </head>
-
 <body>
-  <div class="main-content">
+  <div class="container">
+    <h1>Statistics Dashboard</h1>
     <div class="row">
-      <!-- Boîte pour les réunions -->
-      <div class="col-md-2">
-        <div class="box" id="meetingsBox">
-          <h3 id="meetingsCount">{{ meetingsCount }}</h3>
-          <p>Meetings</p>
-          <img src="./assets/img/meeting-icon-png-presentation-icon-board-meeting-icon-meeting-icon--4.png" alt="Meetings Image">
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <div class="box" id="meetingBox">
+              <h3 id="meetingsCount">0</h3>
+              <p>Meetings</p>
+              <img src="./assets/img/meeting-icon-png-presentation-icon-board-meeting-icon-meeting-icon--4.png" alt="Meetings Image">
+            </div>
+          </div>
         </div>
       </div>
-      <!-- Boîte pour les tâches -->
-      <div class="col-md-2">
-        <div class="box" id="tasksBox">
-          <h3 id="tasksCount">{{ tasksCount }}</h3>
-          <p>Tasks</p>
-          <img src="./assets/img/Utilities-tasks-icon.png" alt="Tasks Image">
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <div class="box" id="tasksBox">
+              <h3 id="tasksCount"></h3>
+              <p>Tasks</p>
+              <img src="./assets/img/Utilities-tasks-icon.png" alt="Tasks Image">
+            </div>
+          </div>
         </div>
       </div>
-      <!-- Boîte pour les participants -->
-      <div class="col-md-2">
-        <div class="box" id="participantsBox">
-          <h3 id="participantsCount">{{ participantsCount }}</h3>
-          <p>Participants</p>
-          <img src="./assets/img/8428718.png" alt="Participants Image">
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <div class="box" id="participantsBox">
+              <h3 id="participantsCount">0</h3>
+              <p>Participants</p>
+              <img src="./assets/img/8428718.png" alt="Participants Image">
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-6">
-        <div class="card card-chart">
-          <div class="card-header">
-            <h5 class="card-title">Average Meetings per User</h5>
-            <p class="card-category">Line Chart</p>
-          </div>
+      <div class="col">
+        <div class="card">
           <div class="card-body">
             <canvas id="averageReunionsChart"></canvas>
           </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="card card-chart">
-          <div class="card-header">
-            <h5 class="card-title">Tasks by Status</h5>
-            <p class="card-category">Pie Chart</p>
-          </div>
+      <div class="col">
+        <div class="card">
           <div class="card-body">
             <canvas id="tasksByStatusChart"></canvas>
           </div>
         </div>
       </div>
-      <div class="col-md-6">
-        <div class="card card-chart">
-          <div class="card-header">
-            <h5 class="card-title">Task Completion Rate</h5>
-            <p class="card-category">Doughnut Chart</p>
-          </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="card">
           <div class="card-body">
             <canvas id="taskCompletionRateChart"></canvas>
           </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="card card-chart">
-          <div class="card-header">
-            <h5 class="card-title">Average Tasks per User</h5>
-            <p class="card-category">Line Chart</p>
-          </div>
+      <div class="col">
+        <div class="card">
           <div class="card-body">
             <canvas id="averageTasksPerUserChart"></canvas>
           </div>
         </div>
       </div>
-      <div class="col-md-6">
-        <div class="card card-chart">
-          <div class="card-header">
-            <h5 class="card-title">Users by Company</h5>
-            <p class="card-category">Bar Chart</p>
-          </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="card">
           <div class="card-body">
             <canvas id="usersByCompanyChart"></canvas>
           </div>
@@ -151,10 +152,8 @@
       </div>
     </div>
   </div>
-
   <script>
-    // Vous pouvez ajouter votre code TypeScript ici après qu'Angular l'ait transformé en JavaScript
+    // JavaScript for Chart.js integration
   </script>
 </body>
-
 </html>

@@ -10,7 +10,7 @@
   }
 
   .decision-item {
-    width: 250px; /* Largeur */
+    width: 350px; /* Largeur */
     height: 180px; /* Hauteur */
     margin: 15px; /* Marge */
     border-radius: 15px;
@@ -52,15 +52,12 @@
   }
 
   .like-btn {
-    background-color: #07e23a; /* Vert pour le bouton Like */
+    background-color: #719fee; /* Bleu pour le bouton Like */
     color: white;
   }
-
+  
   .dislike-btn {
-    background-color: #f31c32; /* Rouge pour le bouton Dislike */
+    background-color: #8c46ce; /* Rouge pour le bouton Dislike */
     color: white;
   }
-
-  .like-btn:hover, .dislike-btn:hover {
-    background-color: darken(#28a745, 10%);
-  }
+  

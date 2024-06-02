@@ -1,49 +1,135 @@
-<div class="wrapper wrapper-full-page">
-    <div class="full-page section-image" filter-color="black" data-image="./assets/img/bg/login.jpg">
-      <div class="content">
-        <div class="container">
-          <div class="col-lg-4 col-md-6 ml-auto mr-auto">
-            <form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-            
-              <div class="card card-login">
-                <div class="card-header bg-info text-white">
-                  <h3 class="header text-center">Login</h3>
-                </div>
-                <div class="card-body">
-                  <div *ngIf="loginForm.get('login')?.errors?.required && loginForm.get('login')?.touched" class="alert alert-danger mt-3">
-                    The login field is required.
-                  </div>
-                  <div *ngIf="loginForm.get('password')?.errors?.required && loginForm.get('password')?.touched" class="alert alert-danger mt-3">
-                    The password field is required.
-                  </div>
-                  <div *ngIf="errors?.message" class="alert alert-danger mt-3">
-                    {{ errors?.message }}
-                  </div>
-                  <div class="input-group mb-3" [ngClass]="{'input-group-focus': focus === true}">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text bg-info text-white">
-                        <i class="nc-icon nc-single-02"></i>
-                      </span>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Login..." formControlName="login" (focus)="focus=true" (blur)="focus=false">
-                </div>
-                  <div class="input-group mb-3" [ngClass]="{'input-group-focus': focus1 === true}">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text bg-info text-white">
-                        <i class="nc-icon nc-key-25"></i>
-                      </span>
-                    </div>
-                    <input type="password" placeholder="Password" class="form-control" formControlName="password" (focus)="focus1=true" (blur)="focus1=false">
-                </div>
-                </div>
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-info btn-round btn-block mb-3">Log in</button>
-                    <a routerLink="/auth/reset" class="btn btn-link btn-block">Forgot password ?</a>
-                  </div>
-                </div>
-              </form>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    body, html {
+      height: 100%;
+      background: #f8f9fa;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .container {
+      max-width: 1100px;
+    }
+
+    .img-fluid {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .card {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border: none;
+      border-radius: 15px;
+    }
+
+    .card-body {
+      padding: 2.5rem;
+    }
+
+    .form-control {
+      border-radius: 10px;
+      border: 1px solid #ced4da;
+      padding: 1rem;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+      border-radius: 10px;
+      padding: 0.75rem 1.25rem;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+      border-color: #004085;
+    }
+
+    .form-check-input {
+      margin-top: 0.3rem;
+    }
+
+    .form-check-label {
+      margin-bottom: 0;
+    }
+
+    .text-muted {
+      font-size: 0.9rem;
+    }
+
+    .alert {
+      border-radius: 10px;
+    }
+
+    .vh-100 {
+      min-height: 100vh;
+    }
+
+    .login-header {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .login-subtitle {
+      font-size: 1rem;
+      color: #6c757d;
+    }
+
+    .input-group-focus .form-control {
+      border-color: #007bff;
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+  </style>
+</head>
+<body>
+  <div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="row">
+      <div class="col-md-6 d-none d-md-block">
+        <img src=".\assets\img\login.png" class="img-fluid" alt="Illustration">
+      </div>
+      <div class="col-md-6">
+        <form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div class="card">
+            <div class="card-body">
+              <h3 class="text-center login-header mb-3">Sign In</h3>
+              <p class="text-center login-subtitle mb-4">Welcome to Meetly</p>
+              <div *ngIf="loginForm.get('login')?.errors?.required && loginForm.get('login')?.touched" class="alert alert-danger">
+                The login field is required.
+              </div>
+              <div *ngIf="loginForm.get('password')?.errors?.required && loginForm.get('password')?.touched" class="alert alert-danger">
+                The password field is required.
+              </div>
+              <div *ngIf="errors?.message" class="alert alert-danger">
+                {{ errors?.message }}
+              </div>
+              <div class="form-group" [ngClass]="{'input-group-focus': focus}">
+                <label for="username">Username</label>
+                <input type="text" id="username" class="form-control" placeholder="Username" formControlName="login" (focus)="focus = true" (blur)="focus = false">
+              </div>
+              <div class="form-group" [ngClass]="{'input-group-focus': focus1}">
+                <label for="password">Password</label>
+                <input type="password" id="password" class="form-control" placeholder="Password" formControlName="password" (focus)="focus1 = true" (blur)="focus1 = false">
+              </div>
+              <div class="form-check mb-3">
+                <input type="checkbox" class="form-check-input" id="rememberMe">         
+                       <a routerLink="/auth/reset" class="float-right">Forgot Password?</a>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">Log In</button>
+              <hr>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

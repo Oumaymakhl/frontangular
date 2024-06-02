@@ -60,6 +60,14 @@ export const AppRoutes: Routes = [{
             loadChildren:() => import( './reunion/reunion.module').then(x=>x.ReunionModule)
         },
         {
+            path: 'meeting',
+            loadChildren:() => import( './meeting/meeting.module').then(x=>x.MeetingModule)
+        },
+        {
+            path: 'meeting2',
+            loadChildren:() => import( './meeting2/meeting2.module').then(x=>x.Meeting2Module)
+        },
+        {
             path: 'document',
             loadChildren:() => import( './document/document.module').then(x=>x.DocumentModule)
         },{

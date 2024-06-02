@@ -9,8 +9,8 @@
                                 <h4 class="m-0"><b>Tasks</b></h4>
                                 <div class="d-flex align-items-center">
                                     <input type="text" class="form-control w-50 mr-2" placeholder="Search by title" [(ngModel)]="searchTerm">
-                                    <button class="btn btn-success" (click)="ajouterTache()">
-                                        <i class="fas fa-plus-circle"></i><span class="ml-2">Add Task</span>
+                                    <button class="bouton" (click)="ajouterTache()">
+                                        <i class="bouton"></i><span class="ml-2">Add Task</span>
                                     </button>
                                 </div>
                             </div>
@@ -36,12 +36,13 @@
                                         <td>{{ task.description }}</td>
                                         <td>{{ task.estimated_time }}</td>
                                         <td>{{ task.status }}</td>
-                                        <td class="td-actions text-right">
-                                            <button type="button" class="btn btn-warning btn-icon btn-sm mr-2" title="Edit Task">
-                                                <i class="fa fa-edit" ></i>
+                                     <td class="text-right">
+                                    
+                                            <button class="bouton" (click)="editerTache(task)">
+                                                <i class="fa fa-edit"></i>
                                             </button>
-                                            <button type="button" class="btn btn-danger btn-icon btn-sm" title="Remove">
-                                                <i class="fa fa-times" ></i>
+                                            <button class="bouton" (click)="supprimerTache(task.id)">
+                                                <i class="fa fa-times"></i>
                                             </button>
                                         </td>
                                     </tr>

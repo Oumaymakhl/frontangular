@@ -40,6 +40,8 @@ export const ROUTES: RouteInfo[] = [
     { path: '/chat', title: 'chat', type: 'link', icontype: 'nc-icon nc-single-02' },
     { path: '/statistique', title: 'Statistics', type: 'link', icontype: 'nc-icon nc-chart-pie-36' },
     { path: '/en-ligne', title: 'Online Meeting', type: 'link', icontype: 'nc-icon nc-laptop' },
+    { path: '/meeting', title: ' Meeting1', type: 'link', icontype: 'nc-icon nc-laptop' },
+    { path: '/meeting2', title: ' Meeting2', type: 'link', icontype: 'nc-icon nc-laptop' },
     { path: '/decision', title: 'Decision', type: 'link', icontype: 'nc-icon nc-box' },
     { path: '/decision-admin', title: 'Decision Admin', type: 'link', icontype: 'nc-icon nc-box' },
     { path: '/task', title: 'Task', type: 'link', icontype: 'nc-icon nc-chart-bar-32' },

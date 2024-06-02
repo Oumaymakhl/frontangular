@@ -63,22 +63,30 @@ export class StatistiqueComponent implements OnInit {
         participantsCountElement.textContent = this.participantsCount.toString();
     }
   }
-
   createTotalsChart(data: any): void {
     // Mettre à jour les valeurs des boîtes de nombre
-    const meetingsBox = document.getElementById('meetingsBox');
+    const meetingsBox = document.getElementById('meetingBox'); // Changer 'meetingsBox' en 'meetingBox'
     if (meetingsBox) {
-        meetingsBox.innerHTML = `<h3>${data.reunions_count}</h3><p>Meetings</p>`;
+        meetingsBox.innerHTML = `
+            <h3>${data.reunions_count}</h3>
+            <p>Meetings</p>
+            <img src="./assets/img/meeting-icon-png-presentation-icon-board-meeting-icon-meeting-icon--4.png" alt="Meetings Image">`; // Ajouter l'image ici
     }
 
     const tasksBox = document.getElementById('tasksBox');
     if (tasksBox) {
-        tasksBox.innerHTML = `<h3>${data.tasks_count}</h3><p>Tasks</p>`;
+        tasksBox.innerHTML = `
+            <h3>${data.tasks_count}</h3>
+            <p>Tasks</p>
+            <img src="./assets/img/Utilities-tasks-icon.png" alt="Tasks Image">`; // Ajouter l'image ici
     }
 
     const participantsBox = document.getElementById('participantsBox');
     if (participantsBox) {
-        participantsBox.innerHTML = `<h3>${data.users_count}</h3><p>Participants</p>`;
+        participantsBox.innerHTML = `
+            <h3>${data.users_count}</h3>
+            <p>Participants</p>
+            <img src="./assets/img/8428718.png" alt="Participants Image">`; // Ajouter l'image ici
     }
 
     // Créer le graphique des totaux

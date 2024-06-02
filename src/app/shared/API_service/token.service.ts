@@ -5,65 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class TokenService {
-/*
- handle(token:any){
-    this.set(token);
-  }*/
 
- /* set(token:any){
-    return localStorage.setItem('token',token);
-  }
-
-  get(){
-    return localStorage.getItem('token');
-  }
-
-  remove(){
-    return localStorage.removeItem('token');
-  }
-
-  /*isValid(){
-    const token = this.get();
-    if(token){
-      const payload = this.payload(token);
-      if(payload){
-        return (payload.iss==="http://localhost:8000/api/admin/login")?true:false;
-      }
-    }
-    return false;
-  }*/
-  /*isValid(){
-    const token = this.get();
-    if(token){
-      const payload = this.payload(token);
-      if(payload){
-        return (payload.iss === "http://localhost:8000/api/admin/login" && payload.company_id)? true : false;
-      }
-    }
-    return false;
-  }
-
-payload(token:any){
-    const payload = token.split('.')[1];
-    return payload;
-    
-  }
-
-
-  loggedIn(){
-    const token = this.get();
-    console.log("Token from local storage:", token);
-    if(token){
-      const payload = this.payload(token);
-      console.log("Token payload:", payload);
-      if(payload && payload.company_id){
-        return (payload.iss === "http://localhost:8000/api/admin/login") ? true : false;
-      }
-    }
-    return false;
-  }
-  */
-  
   private auth_token: string | null = localStorage.getItem('token');
   private tokenChange = new BehaviorSubject<string | null>(this.auth_token);
   tokenChange$: Observable<string | null> = this.tokenChange.asObservable();

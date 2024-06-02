@@ -25,7 +25,6 @@ import { WizardComponent } from './wizard/wizard.component';
         NgbModule
     ],
     declarations: [
-        ExtendedFormsComponent,
         RegularFormsComponent,
         ValidationFormsComponent,
         WizardComponent,

@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ListeAdminComponent } from './liste-admin/liste-admin.component';
 import { ModifAdminComponent } from './modif-admin/modif-admin.component';
 import { AjoutAdminComponent } from './ajout-admin/ajout-admin.component';
-import { SupprimerAdminComponent } from './supprimer-admin/supprimer-admin.component';
 import { RouterModule } from '@angular/router';
 import { FormRoutes } from 'app/form/form.routing';
 import { FormsModule } from '@angular/forms';
@@ -13,6 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AdminService } from 'app/shared/API_service/admin.service';
 import { AppComponent } from 'app/app.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CompteAdminRoutingModule } from './compte-admin.routing';
 
 
 
@@ -21,7 +21,6 @@ import { HttpClientModule } from '@angular/common/http';
     ListeAdminComponent,
     ModifAdminComponent,
     AjoutAdminComponent,
-    SupprimerAdminComponent
   ],
   imports: [
     CommonModule,
@@ -29,8 +28,8 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     TagInputModule,
     NgbModule,
-    ReactiveFormsModule,HttpClientModule
-  ],providers: [AdminService], 
+    ReactiveFormsModule,HttpClientModule,CompteAdminRoutingModule
+  ],providers: [AdminService,CompteAdminRoutingModule], 
   bootstrap: [AppComponent]
 })
 export class CompteAdminModule { }

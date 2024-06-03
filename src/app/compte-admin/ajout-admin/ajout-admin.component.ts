@@ -10,20 +10,24 @@ import { AdminService } from 'app/shared/API_service/admin.service';
 export class AjoutAdminComponent implements OnInit {
     signupForm: FormGroup;
     errors: any;
+    submitted: boolean = false;
+    passwordVisible: boolean = false;
+    message: string | null = null;
+    messageType: 'success' | 'danger' | null = null;
   
     constructor(private formBuilder: FormBuilder, private signupService: AdminService) {}
   
     ngOnInit(): void {
       this.signupForm = this.formBuilder.group({
-        nom: [''],
-        prenom: [''],
-        login: [''],
-        password: [''],
-        email: [''],
-        companyNom: [''],
-        companySubdomaine: [''],
-        companyLogo: [''],
-        companyAdresse: ['']
+        nom: ['', Validators.required],
+        prenom: ['', Validators.required],
+        login: ['', Validators.required],
+        password: ['', [Validators.required, Validators.minLength(8)]],
+        email: ['', [Validators.required, Validators.email]],
+        companyNom: ['', Validators.required],
+        companySubdomaine: ['', Validators.required],
+        companyLogo: ['', Validators.required],
+        companyAdresse: ['', Validators.required]
       });
     }
   
@@ -32,6 +36,11 @@ export class AjoutAdminComponent implements OnInit {
       this.signupForm.get('companyLogo')?.setValue(file);
     }
     saveadmin() {
+      this.submitted = true;
+      if (this.signupForm.invalid) {
+        return;
+      }
+      
       const formData = new FormData();
       formData.append('nom', this.signupForm.get('nom')?.value);
       formData.append('prenom', this.signupForm.get('prenom')?.value);
@@ -46,12 +55,24 @@ export class AjoutAdminComponent implements OnInit {
       this.signupService.saveadmin(formData).subscribe(
         (res: any) => {
           console.log(res, 'response');
-          alert(res.message);
+          this.message = 'Admin added successfully!';
+          this.messageType = 'success';
+          this.signupForm.reset();
+          this.submitted = false;
         },
         (err: any) => {
           this.errors = err.error.errors;
           console.log(err.error.errors, 'errors');
+          if (err.error.error === 'Email already exists' || err.error.error === 'Company already exists') {
+            this.message = err.error.error;
+          } else {
+            this.message = 'Failed to add admin. Please check the form and try again.';
+          }
+          this.messageType = 'danger';
         }
       );
+    }
+    togglePasswordVisibility() {
+      this.passwordVisible = !this.passwordVisible; // Inverse l'état de visibilité du mot de passe
     }
   }

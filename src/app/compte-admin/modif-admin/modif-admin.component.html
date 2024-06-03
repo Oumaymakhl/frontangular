@@ -11,6 +11,8 @@
             </div>
             <div class="card-body">
                 <form #f="ngForm" (ngSubmit)="updateAdmin()">
+                    <div *ngIf="message" [ngClass]="{'alert alert-success': messageType === 'success', 'alert alert-danger': messageType === 'danger'}">{{ message }}</div>
+
                     <div *ngIf="admin">
                         <div class="form-group p-10 row">
                             <div class="col-sm-3">

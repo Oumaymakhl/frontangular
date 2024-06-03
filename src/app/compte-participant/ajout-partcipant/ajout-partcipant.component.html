@@ -12,6 +12,9 @@
         </div>
         <div class="card-body">
           <form [formGroup]="participantForm" (ngSubmit)="saveParticipant()" class="form" #form="ngForm">
+            <div *ngIf="message" class="alert" [ngClass]="{'alert-success': messageType === 'success', 'alert-danger': messageType === 'danger'}">
+            {{ message }}
+          </div>
             <div class="form-group p-10 row">
               <div class="col-sm-3">
                 <label for="nom" class="p-t-b-10">Last Name:</label>
@@ -40,8 +43,15 @@
               <div class="col-sm-3">
                 <label for="password" class="p-t-b-10">Password:</label>
               </div>
-              <div class="col-sm-9">
-                <input type="password" formControlName="password" id="password" placeholder="Password" class="form-control">
+              <div class="col-sm-9 input-group">
+                <input type="password" formControlName="password" id="password" placeholder="Password" class="form-control" minlength="8">
+                <div class="input-group-append">
+                  <span class="input-group-text" (click)="togglePasswordVisibility()">
+                    <i [ngClass]="passwordVisible ? 'fa fa-eye' : 'fa fa-eye-slash'" aria-hidden="true"></i>
+                  </span>
+                </div>
+                <div *ngIf="submitted && participantForm.controls.password.errors?.required" class="text-danger">Password is required</div>
+                <div *ngIf="submitted && participantForm.controls.password.errors?.minlength" class="text-danger">Password must be at least 8 characters</div>
               </div>
             </div>
             <div class="form-group p-10 row">
@@ -50,6 +60,8 @@
               </div>
               <div class="col-sm-9">
                 <input type="email" formControlName="email" id="email" placeholder="Email" class="form-control">
+                <div *ngIf="submitted && participantForm.controls.email.errors?.required" class="text-danger">Email is required</div>
+                <div *ngIf="submitted && participantForm.controls.email.errors?.email" class="text-danger">Please enter a valid email address</div>
               </div>
             </div>
             <div class="form-group p-10 row">

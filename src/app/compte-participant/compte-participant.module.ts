@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ListeParticipantComponent } from './liste-participant/liste-participant.component';
 import { AjoutPartcipantComponent } from './ajout-partcipant/ajout-partcipant.component';
 import { ModifPartcipantComponent } from './modif-partcipant/modif-partcipant.component';
-import { SupprimerPartcipantComponent } from './supprimer-partcipant/supprimer-partcipant.component';
 import { RouterModule } from '@angular/router';
 import { FormRoutes } from 'app/form/form.routing';
 import { TagInputModule } from 'ngx-chips';
@@ -23,7 +22,6 @@ import { CompanyService } from 'app/shared/API_service/company.service';
     ListeParticipantComponent,
     AjoutPartcipantComponent,
     ModifPartcipantComponent,
-    SupprimerPartcipantComponent
   ],
   imports: [
     CommonModule,

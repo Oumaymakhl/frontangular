@@ -12,6 +12,9 @@
           </div>
           <div class="card-body">
             <form #f="ngForm" (ngSubmit)="updateParticipant()" class="form">
+              <div *ngIf="message" [ngClass]="{'alert alert-success': messageType === 'success', 'alert alert-danger': messageType === 'danger'}">
+                {{ message }}
+              </div>
               <div class="form-group p-10 row">
                 <div class="col-sm-3">
                   <label class="p-t-b-10">Last Name<span class="requiredStar">*</span></label>

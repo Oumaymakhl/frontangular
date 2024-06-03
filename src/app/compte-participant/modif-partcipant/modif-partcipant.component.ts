@@ -18,6 +18,8 @@ export class ModifPartcipantComponent implements OnInit {
   participant: any = {}; 
   participantId: any;
   loading: boolean = true;
+  message: string | null = null;
+  messageType: 'success' | 'danger' | null = null;
 
   ngOnInit() {
     this.participantId = this.route.snapshot.paramMap.get('id');
@@ -42,7 +44,23 @@ export class ModifPartcipantComponent implements OnInit {
     this.participantservice.updateparticipant(inputData, this.participantId).subscribe({
       next: (res: any) => {
         console.log(res);
-        alert(res.message);
+        this.message = res.message;
+        this.messageType = 'success';
+      },
+      error: (err: any) => {
+        console.error(err);
+        if (err.status === 404) {
+          this.message = 'User not found';
+        } else if (err.status === 422) {
+          if (err.error.message === 'User already exists') {
+            this.message = 'User already exists';
+          } else if (err.error.message === 'Email or login already exists in other roles') {
+            this.message = 'Email or login already exists in other roles';
+          }
+        } else {
+          this.message = 'Failed to update participant. Please try again.';
+        }
+        this.messageType = 'danger';
       }
     });
   }

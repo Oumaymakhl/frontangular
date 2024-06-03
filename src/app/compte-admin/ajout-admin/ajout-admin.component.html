@@ -1,5 +1,5 @@
 <div class="container-xl" style="margin-top: 80px; margin-bottom: 100px;">
-  <div class="table-wrapper mt-5">
+  <div class="table-wrapper mt-6">
     <div class="card shadow">
       <div class="table-title bg-custom-blue text-light p-4 rounded-top d-flex justify-content-between align-items-center">
         <div>
@@ -11,12 +11,16 @@
       </div>
       <div class="card-body">
         <form [formGroup]="signupForm" (ngSubmit)="saveadmin()" class="form" #form="ngForm">
+          <div *ngIf="message" class="alert" [ngClass]="{'alert-success': messageType === 'success', 'alert-danger': messageType === 'danger'}">
+            {{ message }}
+          </div>
           <div class="form-group p-10 row">
             <div class="col-sm-3">
               <label class="p-t-b-10">Name<span class="requiredStar">*</span></label>
             </div>
             <div class="col-sm-9">
               <input type="text" class="form-control" formControlName="nom" id="nom" placeholder="Name">
+             
             </div>
           </div>
           <div class="form-group p-10 row">
@@ -25,6 +29,7 @@
             </div>
             <div class="col-sm-9">
               <input type="text" class="form-control" formControlName="prenom" id="prenom" placeholder="First Name">
+              
             </div>
           </div>
           <div class="form-group p-10 row">
@@ -33,14 +38,26 @@
             </div>
             <div class="col-sm-9">
               <input type="text" class="form-control" formControlName="login" id="login" placeholder="Login">
+             
             </div>
           </div>
           <div class="form-group p-10 row">
             <div class="col-sm-3">
               <label class="p-t-b-10">Password<span class="requiredStar">*</span></label>
             </div>
-            <div class="col-sm-9">
-              <input type="password" class="form-control" formControlName="password" id="password" placeholder="Password">
+            <div class="col-sm-9 input-group">
+              <input [type]="passwordVisible ? 'text' : 'password'" formControlName="password" id="password" placeholder="Password" class="form-control" minlength="8">
+              <div class="input-group-append">
+                <span class="input-group-text" (click)="togglePasswordVisibility()">
+                  <i [ngClass]="passwordVisible ? 'fa fa-eye' : 'fa fa-eye-slash'" aria-hidden="true"></i>
+                </span>
+              </div>
+            </div>
+            <div class="col-sm-9 offset-sm-3">
+              <div *ngIf="signupForm.get('password').invalid && (signupForm.get('password').dirty || signupForm.get('password').touched)" class="text-danger">
+                <div *ngIf="signupForm.get('password').errors?.required">Password is required</div>
+                <div *ngIf="signupForm.get('password').errors?.minlength">Password must be at least 8 characters</div>
+              </div>
             </div>
           </div>
           <div class="form-group p-10 row">
@@ -48,16 +65,20 @@
               <label class="p-t-b-10">Email<span class="requiredStar">*</span></label>
             </div>
             <div class="col-sm-9">
-              <input type="email" class="form-control" formControlName="email" id="email" placeholder="Email">
+              <input type="email" formControlName="email" id="email" placeholder="Email" class="form-control">
+              <div *ngIf="signupForm.get('email').invalid && (signupForm.get('email').dirty || signupForm.get('email').touched)" class="text-danger">
+                <div *ngIf="signupForm.get('email').errors?.required">Email is required</div>
+                <div *ngIf="signupForm.get('email').errors?.email">Please enter a valid email address</div>
+              </div>
             </div>
           </div>
-          <h3 class="form-top">Company Information</h3>
           <div class="form-group p-10 row">
             <div class="col-sm-3">
               <label class="p-t-b-10">Company Name<span class="requiredStar">*</span></label>
             </div>
             <div class="col-sm-9">
               <input type="text" class="form-control" formControlName="companyNom" id="companyNom" placeholder="Company Name">
+              
             </div>
           </div>
           <div class="form-group p-10 row">
@@ -66,6 +87,7 @@
             </div>
             <div class="col-sm-9">
               <input type="text" class="form-control" formControlName="companySubdomaine" id="companySubdomaine" placeholder="Company Subdomain">
+              
             </div>
           </div>
           <div class="form-group p-10 row">
@@ -73,7 +95,8 @@
               <label class="p-t-b-10">Company Logo<span class="requiredStar">*</span></label>
             </div>
             <div class="col-sm-9">
-              <input type="file" class="form-control" formControlName="companyLogo" id="companyLogo" (change)="onLogoChange($event)" accept="image/*" required>
+              <input type="file" class="form-control" formControlName="companyLogo" id="companyLogo" (change)="onLogoChange($event)" accept="image/*">
+              
             </div>
           </div>
           <div class="form-group p-10 row">

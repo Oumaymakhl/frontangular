@@ -8,8 +8,6 @@ import { NguiMapModule} from '@ngui/map';
 import { MapsRoutes } from './maps.routing';
 
 import { FullScreenMapsComponent } from './fullscreenmap/fullscreenmap.component';
-import { GoogleMapsComponent } from './googlemaps/googlemaps.component';
-import { VectorMapsComponent } from './vectormaps/vectormaps.component';
 
 
 @NgModule({
@@ -17,12 +15,11 @@ import { VectorMapsComponent } from './vectormaps/vectormaps.component';
         CommonModule,
         RouterModule.forChild(MapsRoutes),
         FormsModule,
-        NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=YOUR_KEY_HERE'})
+        NguiMapModule.forRoot()
     ],
     declarations: [
         FullScreenMapsComponent,
-        GoogleMapsComponent,
-        VectorMapsComponent
+   
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

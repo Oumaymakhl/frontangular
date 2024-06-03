@@ -40,7 +40,8 @@ export const ROUTES: RouteInfo[] = [
     { path: '/document', title: 'Document', type: 'link', icontype: 'nc-icon nc-paper' },
     { path: '/reunion', title: 'Meeting', type: 'link', icontype: 'nc-icon nc-calendar-60' },
     { path: '/statistique', title: 'Statistics', type: 'link', icontype: 'nc-icon nc-chart-pie-36' },
-  { path: '/meeting2', title: ' Meeting2', type: 'link', icontype: 'nc-icon nc-laptop' },  {
+  { path: '/meeting2', title: '  online Meeting', type: 'link', icontype: 'nc-icon nc-laptop' },
+  { path: '/meeting', title: 'online Meeting', type: 'link', icontype: 'nc-icon nc-laptop' },  {
         path: '/pages',
         title: 'Pages',
         collapse: 'pages',
@@ -87,11 +88,11 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     setMenuItemsBasedOnUserType() {
         if (this.userType === 'admin') {
             this.menuItems = ROUTES.filter(menuItem => [
-                '/compte-participant', '/decision-admin', '/task', '/reunion','/document', '/statistique','/chat'
+                '/compte-participant', '/decision-admin', '/task', '/reunion','/document', '/statistique','/chat','/meeting',
             ].includes(menuItem.path));
         } else if (this.userType === 'user') {
             this.menuItems = ROUTES.filter(menuItem => [
-                '/en-ligne', '/decision','/document' ,'/task-user'
+                '/en-ligne', '/decision','/document' ,'/task-user','/chat','/meeting2',
             ].includes(menuItem.path));
         } else if (this.userType === 'superadmin') {
             this.menuItems = ROUTES.filter(menuItem => [

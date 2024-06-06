@@ -41,7 +41,7 @@ export class Meeting2Component implements OnInit {
         });
       },
       (error) => {
-        console.error('Erreur lors de la récupération des réunions', error);
+        console.error('Error fetching meetings', error);
       }
     );
   }
@@ -85,12 +85,12 @@ export class Meeting2Component implements OnInit {
     const { title, description, link, start } = calEvent;
 
     Swal.fire({
-      title: 'Détails de la réunion',
+      title: 'Meeting Details',
       html: `
-        <p><strong>Titre:</strong> ${title}</p>
+        <p><strong>Title:</strong> ${title}</p>
         <p><strong>Description:</strong> ${description}</p>
         <p><strong>Date:</strong> ${start}</p>
-        ${link ? `<p><strong>Lien:</strong> <a href="${link}" target="_blank">Rejoindre la réunion</a></p>` : ''}
+        ${link ? `<p><strong>Link:</strong> <a href="${link}" target="_blank">Rejoindre la réunion</a></p>` : ''}
       `,
       icon: 'info',
       confirmButtonText: 'OK'
@@ -109,7 +109,7 @@ export class Meeting2Component implements OnInit {
         start: meeting.date
       });
     } else {
-      console.error('Réunion non trouvée');
+      console.error('Meeting not found');
     }
   }
 }

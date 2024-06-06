@@ -34,7 +34,7 @@ export class MeetingComponent implements OnInit {
         this.renderCalendarEvents();
       },
       (error) => {
-        console.error('Erreur lors de la récupération des réunions', error);
+        console.error('Error retrieving meetings', error);
       }
     );
   }
@@ -45,7 +45,7 @@ export class MeetingComponent implements OnInit {
         this.users = users;
       },
       (error) => {
-        console.error('Erreur lors de la récupération des utilisateurs', error);
+        console.error('Error retrieving users', error);
       }
     );
   }
@@ -96,32 +96,33 @@ export class MeetingComponent implements OnInit {
     const userOptions = this.users.map(user => `<option value="${user.id}">${user.nom} ${user.prenom}</option>`).join('');
     
     Swal.fire({
-      title: 'Créer une réunion',
+      title: 'Create a Meeting',
       html: `
         <div class="form-group">
-          <input class="form-control" placeholder="Titre" id="event-title">
+          <input class="form-control" placeholder="Title" id="event-title">
         </div>
         <div class="form-group">
           <textarea class="form-control" placeholder="Description" id="event-description"></textarea>
         </div>
         <div class="form-group">
-          <label for="participants-select">Sélectionnez les participants:</label>
+          <label for="participants-select">Select Participants:</label>
           <select class="form-control" id="participants-select" multiple>
             ${userOptions}
           </select>
         </div>
         <div class="form-group">
-          <label for="event-start">Date et heure de début:</label>
+          <label for="event-start">Start Date and Time:</label>
           <input type="text" class="form-control" id="event-start" value="${start}">
         </div>
         <div class="form-group">
-          <input class="form-control" placeholder="Lien de réunion (facultatif)" id="event-link">
+          <input class="form-control" placeholder="Meeting Link (optional)" id="event-link">
         </div>
       `,
       showCancelButton: true,
-      confirmButtonText: 'Créer',
-      cancelButtonText: 'Annuler',
-      customClass: { confirmButton: 'btn btn-success', cancelButton: 'btn btn-danger' },
+      confirmButtonText: 'Create',
+      cancelButtonText: 'Cancel',
+      cancelButtonColor: '#d33',
+      customClass: { confirmButton: 'btn btn-primary', cancelButton: 'btn btn-danger' },
       buttonsStyling: false,
       preConfirm: () => {
         const title = $('#event-title').val();
@@ -131,7 +132,7 @@ export class MeetingComponent implements OnInit {
         const link = $('#event-link').val() || ''; // Récupérer la valeur du lien ou laisser vide si aucun lien n'est saisi
   
         if (!title || !participantIds.length) {
-          Swal.showValidationMessage('Le titre et au moins un participant sont requis.');
+          Swal.showValidationMessage('Title and at least one participant are required.');
           return false;
         }
   
@@ -146,11 +147,11 @@ export class MeetingComponent implements OnInit {
           (response) => {
             console.log(response);
             this.loadReunions(); // Recharger les réunions après en avoir créé une nouvelle
-            Swal.fire('Succès', 'Réunion créée avec succès', 'success');
+            Swal.fire('Success', 'Meeting created successfully', 'success');
           },
           (error) => {
-            console.error('Erreur lors de la création de la réunion', error);
-            Swal.fire('Erreur', 'Une erreur est survenue lors de la création de la réunion. Veuillez réessayer.', 'error');
+            console.error('Error creating meeting', error);
+            Swal.fire('Error', 'An error occurred while creating the meeting. Please try again.', 'error');
           }
         );
       }
@@ -162,39 +163,39 @@ export class MeetingComponent implements OnInit {
     const { id, title, description, link, start } = calEvent;
   
     Swal.fire({
-      title: 'Détails de la réunion',
+      title: 'Meeting Details',
       html: `
-        <p><strong>Titre:</strong> ${title}</p>
+        <p><strong>Title:</strong> ${title}</p>
         <p><strong>Description:</strong> ${description}</p>
-        ${link ? `<p><strong>Lien:</strong> ${link}</p>` : ''}
+        ${link ? `<p><strong>Link:</strong> ${link}</p>` : ''}
       `,
       showCloseButton: true,
       showCancelButton: true,
       showConfirmButton: true,
-      cancelButtonText: 'Supprimer',
+      cancelButtonText: 'Delete',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Modifier',
+      confirmButtonText: 'Edit',
       customClass: { confirmButton: 'btn btn-primary', cancelButton: 'btn btn-danger' },
       buttonsStyling: false
     }).then((result) => {
       if (result.isConfirmed) {
         // Logique pour la modification de la réunion
         Swal.fire({
-          title: 'Modifier la réunion',
+          title: 'Edit Meeting',
           html: `
             <div class="form-group">
-              <input class="form-control" placeholder="Titre" id="updated-event-title" value="${title}">
+              <input class="form-control" placeholder="Title" id="updated-event-title" value="${title}">
             </div>
             <div class="form-group">
               <textarea class="form-control" placeholder="Description" id="updated-event-description">${description}</textarea>
             </div>
             <div class="form-group">
-              <input class="form-control" placeholder="Lien de réunion" id="updated-event-link" value="${link || ''}">
+              <input class="form-control" placeholder="Meeting Link" id="updated-event-link" value="${link || ''}">
             </div>
           `,
           showCancelButton: true,
-          confirmButtonText: 'Enregistrer',
-          cancelButtonText: 'Annuler',
+          confirmButtonText: 'Save',
+          cancelButtonText: 'Cancel',
           customClass: { confirmButton: 'btn btn-success', cancelButton: 'btn btn-danger' },
           buttonsStyling: false,
           preConfirm: () => {
@@ -203,7 +204,7 @@ export class MeetingComponent implements OnInit {
             const updatedLink = $('#updated-event-link').val();
   
             if (!updatedTitle) {
-              Swal.showValidationMessage('Le titre est requis.');
+              Swal.showValidationMessage('Title is required.');
             }
             
             return { updatedTitle, updatedDescription, updatedLink }; // Retourner également le lien mis à jour
@@ -223,11 +224,11 @@ export class MeetingComponent implements OnInit {
                   updatedEvent.title = updatedTitle;
                   $('#fullCalendar').fullCalendar('updateEvent', updatedEvent);
                 }
-                Swal.fire('Succès', 'Réunion mise à jour avec succès', 'success');
+                Swal.fire('Success', 'Meeting updated successfully', 'success');
               },
               (error) => {
-                console.error('Erreur lors de la mise à jour de la réunion', error);
-                Swal.fire('Erreur', 'Une erreur est survenue lors de la mise à jour de la réunion. Veuillez réessayer.', 'error');
+                console.error('Error updating meeting', error);
+                Swal.fire('Error', 'An error occurred while updating the meeting. Please try again.', 'error');
               }
             );
           }
@@ -239,15 +240,15 @@ export class MeetingComponent implements OnInit {
             () => {
               // Supprimer l'événement du calendrier
               $('#fullCalendar').fullCalendar('removeEvents', id);
-              Swal.fire('Succès', 'Réunion supprimée avec succès', 'success');
+              Swal.fire('Success', 'Meeting deleted successfully', 'success');
             },
             (error) => {
-              console.error('Erreur lors de la suppression de la réunion', error);
-              Swal.fire('Erreur', 'Une erreur est survenue lors de la suppression de la réunion. Veuillez réessayer.', 'error');
+              console.error('Error deleting meeting', error);
+              Swal.fire('Error', 'An error occurred while deleting the meeting. Please try again.', 'error');
             }
           );
         } else {
-          console.error('L\'ID de la réunion est indéfini');
+          console.error('Meeting ID is undefined');
         }
       }
     });

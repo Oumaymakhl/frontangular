@@ -29,7 +29,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/compte-admin', title: 'Admins', type: 'link', icontype: 'nc-icon nc-single-02' },
     { path: '/companies/list', title: 'Companies', type: 'link', icontype: 'nc-icon nc-single-02' },
     { path: '/compte-participant', title: 'Participants', type: 'link', icontype: 'nc-icon nc-single-02' },
-    { path: '/decision-admin', title: 'Decision Admin', type: 'link', icontype: 'nc-icon nc-box' },
+    { path: '/decision-admin', title: 'Decision ', type: 'link', icontype: 'nc-icon nc-box' },
 
     { path: '/chat', title: 'Chat', type: 'link', icontype: 'nc-icon nc-single-02' },
     { path: '/task-user', title: 'Task', type: 'link', icontype: 'nc-icon nc-chart-bar-32' },

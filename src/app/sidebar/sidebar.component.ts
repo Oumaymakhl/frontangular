@@ -32,9 +32,9 @@ export const ROUTES: RouteInfo[] = [
     { path: '/decision-admin', title: 'Decision Admin', type: 'link', icontype: 'nc-icon nc-box' },
 
     { path: '/chat', title: 'Chat', type: 'link', icontype: 'nc-icon nc-single-02' },
-    { path: '/task-user', title: 'Task User', type: 'link', icontype: 'nc-icon nc-chart-bar-32' },
+    { path: '/task-user', title: 'Task', type: 'link', icontype: 'nc-icon nc-chart-bar-32' },
 
-    { path: '/en-ligne', title: 'Meeting RSVP', type: 'link', icontype: 'nc-icon nc-laptop' },
+    { path: '/en-ligne', title: 'Meeting', type: 'link', icontype: 'nc-icon nc-laptop' },
     { path: '/decision', title: 'Decision', type: 'link', icontype: 'nc-icon nc-box' },
     { path: '/task', title: 'Task', type: 'link', icontype: 'nc-icon nc-chart-bar-32' },
     { path: '/document', title: 'Document', type: 'link', icontype: 'nc-icon nc-paper' },

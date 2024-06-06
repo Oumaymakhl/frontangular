@@ -6,8 +6,8 @@
       <p>{{ decision.description }}</p>
       <div class="decision-info">
         <div class="like-info">
-          <i class="fas fa-thumbs-up"></i> {{ decision.likes_count }} <!-- Affichez le nombre de likes -->
-          <i class="fas fa-thumbs-down"></i> {{ decision.dislikes_count }} <!-- Affichez le nombre de dislikes -->
+          <i class="fas fa-thumbs-up"></i> {{ decision.likes_count }}
+          <i class="fas fa-thumbs-down"></i> {{ decision.dislikes_count }} 
         </div>
         <div class="decision-btns">
           <button (click)="likeDecision(decision)" class="decision-btn like-btn">

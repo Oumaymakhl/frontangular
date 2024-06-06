@@ -56,7 +56,6 @@ export class StatistiqueComponent implements OnInit {
     const tasksCountElement = document.getElementById('tasksCount');
     const participantsCountElement = document.getElementById('participantsCount');
 
-    // Vérifier si les éléments existent avant de mettre à jour leurs contenus
     if (meetingsCountElement && tasksCountElement && participantsCountElement) {
         meetingsCountElement.textContent = this.meetingsCount.toString();
         tasksCountElement.textContent = this.tasksCount.toString();
@@ -64,7 +63,6 @@ export class StatistiqueComponent implements OnInit {
     }
   }
   createTotalsChart(data: any): void {
-    // Mettre à jour les valeurs des boîtes de nombre
     const meetingsBox = document.getElementById('meetingBox'); // Changer 'meetingsBox' en 'meetingBox'
     if (meetingsBox) {
         meetingsBox.innerHTML = `
@@ -89,7 +87,6 @@ export class StatistiqueComponent implements OnInit {
             <img src="./assets/img/8428718.png" alt="Participants Image">`; // Ajouter l'image ici
     }
 
-    // Créer le graphique des totaux
     const ctx = document.getElementById('totalsChart') as HTMLCanvasElement;
     new Chart(ctx, {
         type: 'bar',
@@ -127,7 +124,6 @@ export class StatistiqueComponent implements OnInit {
 createAverageReunionsChart(data: any): void {
   const ctx = document.getElementById('averageReunionsChart') as HTMLCanvasElement;
   
-  // Extraire les données
   const averageReunionsPerUser = data.average_reunions_per_user;
 
   new Chart(ctx, {
@@ -288,7 +284,7 @@ createUsersByCompanyChart(data: any): void {
       data: {
           labels: data.map((item: any) => `Company ${item.company_id}`),
           datasets: [{
-              label: 'Utilisateurs par société',
+              label: 'Users by Company',
               data: data.map((item: any) => item.count),
               backgroundColor: 'rgba(75, 192, 192, 0.2)',
               borderColor: 'rgba(75, 192, 192, 1)',

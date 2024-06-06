@@ -104,9 +104,7 @@ export class TaskComponent implements OnInit {
     
                 this.taskService.addTask(newTask).subscribe(
                     (response) => {
-                        // Ajoutez simplement la nouvelle tâche à votre liste de tâches existante
                         this.tasks.push(response); // Ajouter la tâche nouvellement ajoutée
-                        // Vous pouvez également afficher un message de réussite ou effectuer d'autres actions nécessaires
                         Swal.fire('Success', 'The task has been successfully added.', 'success');
                     },
                     (error) => {

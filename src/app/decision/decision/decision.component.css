@@ -10,15 +10,15 @@
   }
 
   .decision-item {
-    width: 350px; /* Largeur */
-    height: 180px; /* Hauteur */
-    margin: 15px; /* Marge */
+    width: 350px; 
+    height: 180px; 
+    margin: 15px; 
     border-radius: 15px;
     overflow: hidden;
-    background-color: rgba(0, 51, 102, 0.9); /* Bleu marine transparent */
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Ombre portée */
+    background-color: rgba(0, 51, 102, 0.9); 
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); 
     transition: transform 0.3s ease;
-    display: inline-block; /* Afficher en ligne */
+    display: inline-block;
     position: relative; /* Position relative pour positionner les boutons */
   }
 
@@ -57,7 +57,7 @@
   }
   
   .dislike-btn {
-    background-color: #8c46ce; /* Rouge pour le bouton Dislike */
+    background-color: #8c46ce;
     color: white;
   }
   

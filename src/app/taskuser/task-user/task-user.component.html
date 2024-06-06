@@ -12,11 +12,10 @@
           <div class="task" *ngFor="let task of column.tasks" cdkDrag [cdkDragData]="task">
             <p>{{ task.name }}</p>
             <p>{{ task.description }}</p>
-            <p>Estimé: {{ task.estimated_time }} heures</p>
+            <p>Estimated: {{ task.estimated_time }} hours</p>
           </div>
           <div class="empty-task" *ngIf="column.tasks.length === 0">
-            Aucune tâche dans cette colonne
-          </div>
+            No tasks in this column          </div>
         </div>
       </div>
     </div>

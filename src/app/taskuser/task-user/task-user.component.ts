@@ -61,7 +61,6 @@ export class TaskUserComponent implements OnInit {
         },
         (error) => {
           console.error('Error updating task status:', error);
-          // Revert the change if the update fails
           transferArrayItem(
             event.container.data,
             event.previousContainer.data,

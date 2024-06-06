@@ -28,12 +28,9 @@ export class Reunion2Component implements OnInit {
       this.reunionId = +params['reunionId'];
       this.userId = +params['userId'];
   
-      // Vérifier si les paramètres de requête contiennent les identifiants de réunion et d'utilisateur
       if (this.reunionId && this.userId) {
-        // Charger les réunions et afficher la fenêtre modale de confirmation dans la logique de succès de loadReunions()
         this.loadReunions();
       } else {
-        // Charger les réunions si les paramètres de requête ne sont pas disponibles
         this.loadReunions();
       }
     });
@@ -44,15 +41,14 @@ export class Reunion2Component implements OnInit {
       (response: any) => {
         this.reunions = response.reunions;
         this.renderCalendarEvents();
-        this.initializeCalendar(); // Initialise le calendrier après le rendu des événements
+        this.initializeCalendar(); 
         
-        // Vérifier si les paramètres de requête contiennent les identifiants de réunion et d'utilisateur
         if (this.reunionId && this.userId) {
           this.showConfirmationForm({ id: this.reunionId });
         }
       },
       (error) => {
-        console.error('Erreur lors de la récupération des réunions', error);
+        console.error('Error retrieving meetings', error);
       }
     );
   }
@@ -62,7 +58,6 @@ export class Reunion2Component implements OnInit {
     const self = this;
 
     $calendar.fullCalendar({
-      // Autres options du calendrier...
 
       events: this.reunions.map(reunion => ({
         id: reunion.id,
@@ -72,18 +67,14 @@ export class Reunion2Component implements OnInit {
       })),
       
       eventClick: (calEvent, jsEvent, view) => {
-        // Vérifier si l'utilisateur a le droit de confirmer sa présence
         if (this.canConfirmPresence(calEvent.id)) {
-          // Afficher la fenêtre modale de confirmation
           this.showConfirmationForm(calEvent);
         } else {
-          // Afficher un message indiquant que l'utilisateur n'a pas le droit de confirmer sa présence
-          Swal.fire('Accès refusé', 'Vous n\'avez pas le droit de confirmer votre présence à cette réunion.', 'error');
+          Swal.fire('Access Denied', 'You do not have permission to confirm your attendance to this meeting', 'error');
         }
       },
       
-      // Autres options du calendrier...
-    });
+$    });
   }
 
   renderCalendarEvents() {
@@ -100,23 +91,21 @@ export class Reunion2Component implements OnInit {
   showConfirmationForm(calEvent): void {
     const { id } = calEvent;
 
-    // Récupérer les détails de la réunion en utilisant l'ID de l'événement
     const selectedReunion = this.reunions.find(reunion => reunion.id === id);
 
-    // Utiliser SweetAlert pour afficher le formulaire de confirmation
     Swal.fire({
-      title: `${selectedReunion.titre || 'Titre non disponible'} - Détails de la réunion`,
+      title: `${selectedReunion.titre || 'Title Not Available'} - Meeting Details`,
       html: `
-        <p><strong>Description:</strong> ${selectedReunion.description || 'Description non disponible'}</p>
-        <p><strong>Date:</strong> ${selectedReunion.date || 'Date non disponible'}</p>
+        <p><strong>Description:</strong> ${selectedReunion.description || 'Description not available'}</p>
+        <p><strong>Date:</strong> ${selectedReunion.date || 'Date not available'}</p>
         <div class="form-group">
-          <label for="raison">Raison (facultatif):</label>
+          <label for="raison">Reason (optional):</label>
           <input type="text" id="raison" class="form-control">
         </div>
       `,
       showCancelButton: true,
-      confirmButtonText: 'Disponible',
-      cancelButtonText: 'Indisponible',
+      confirmButtonText: 'Available',
+      cancelButtonText: 'Unavailable',
     }).then((result) => {
       if (result.isConfirmed) {
         this.status = true;
@@ -130,22 +119,20 @@ export class Reunion2Component implements OnInit {
     });
   }
 
-  // Vérifier si l'utilisateur peut confirmer sa présence à la réunion spécifiée
   canConfirmPresence(reunionId: number): boolean {
-    // Comparer les IDs de la réunion dans l'URL avec l'ID de la réunion spécifiée
     return this.reunionId === reunionId;
   }
 
-  // Envoyer la confirmation au backend
   sendConfirmation(reunionId): void {
     this.reunionService.confirmParticipation(reunionId, this.userId, this.status, this.raison).subscribe(
       response => {
-        console.log('Confirmation de participation envoyée avec succès !');
-        Swal.fire('Confirmation envoyée', '', 'success');
+        Swal.fire('Confirmation sent', '', 'success');
+
+
+
       },
       error => {
-        console.error('Erreur lors de la confirmation de participation :', error);
-        Swal.fire('Erreur', 'Une erreur s\'est produite lors de la confirmation de participation', 'error');
+        Swal.fire('Error', 'An error occurred while confirming attendance', 'error');
       }
     );
   }

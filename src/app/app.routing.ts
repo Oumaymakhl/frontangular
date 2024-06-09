@@ -31,6 +31,7 @@ export const AppRoutes: Routes = [
       { path: 'decision', loadChildren: () => import('./decision/decision.module').then(m => m.DecisionModule) },
       { path: 'decision-admin', loadChildren: () => import('./decision-admin/decision-admin.module').then(m => m.DecisionAdminModule) },
       { path: 'statistique', loadChildren: () => import('./statistique/statistique.module').then(m => m.StatistiqueModule) },
+      { path: 'statistique1', loadChildren: () => import('./statistique1/statistique1.module').then(m => m.Statistique1Module) },
       { path: '', loadChildren: () => import('./task/task.module').then(m => m.TaskModule) },
       { path: '', loadChildren: () => import('./taskuser/taskuser.module').then(m => m.TaskuserModule) },
       {

@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Statistics } from '../model/Statistics';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StatisticsService {
   private apiUrl = 'http://localhost:8000/api/statistics/';
-
   constructor(private http: HttpClient) { }
+// Fonction pour ajouter un en-tête d'autorisation à chaque requête
+
 
   getTotals(): Observable<Statistics> {
     return this.http.get<Statistics>(this.apiUrl + 'totals');
@@ -45,5 +47,36 @@ export class StatisticsService {
 
   getCompletedTasksPerUser(): Observable<Statistics> {
     return this.http.get<Statistics>(this.apiUrl + 'completed-tasks-per-user');
+  }
+  getAdminCount(): Observable<Statistics> {
+    return this.http.get<Statistics>(this.apiUrl + 'admin-count');
+  }
+
+  getDocumentCount(): Observable<Statistics> {
+    return this.http.get<Statistics>(this.apiUrl + 'document-count');
+  }
+
+  getDecisionCount(): Observable<Statistics> {
+    return this.http.get<Statistics>(this.apiUrl + 'decision-count');
+  }
+
+  getLikeDislikeComparison(): Observable<Statistics> {
+    return this.http.get<Statistics>(this.apiUrl + 'like-dislike-comparison');
+  }
+
+  getDecisionCountAdmin(): Observable<Statistics> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    });
+    return this.http.get<Statistics>(this.apiUrl + 'decision-countAdmin', { headers: headers });
+  }
+
+  getTaskCountAdmin(): Observable<Statistics> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    });
+    return this.http.get<Statistics>(this.apiUrl + 'task-countAdmin', { headers: headers });
   }
 }

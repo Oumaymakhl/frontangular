@@ -46,7 +46,30 @@ export class StatistiqueComponent implements OnInit {
       this.createUsersByCompanyChart(usersByCompanyData);
     });
 
+    this.statisticsService.getAdminCount().subscribe((adminCountData: any) => {
+        this.createAdminCountChart(adminCountData);
+      });
   
+      this.statisticsService.getDocumentCount().subscribe((documentCountData: any) => {
+        this.createDocumentCountChart(documentCountData);
+      });
+  
+      this.statisticsService.getDecisionCount().subscribe((decisionCountData: any) => {
+        this.createDecisionCountChart(decisionCountData);
+      });
+  
+      this.statisticsService.getLikeDislikeComparison().subscribe((likeDislikeComparisonData: any) => {
+        this.createLikeDislikeComparisonChart(likeDislikeComparisonData);
+      });
+  
+      this.statisticsService.getDecisionCountAdmin().subscribe((decisionCountAdminData: any) => {
+        this.createDecisionCountAdminChart(decisionCountAdminData);
+      });
+  
+      this.statisticsService.getTaskCountAdmin().subscribe((taskCountAdminData: any) => {
+        this.createTaskCountAdminChart(taskCountAdminData);
+      });
+ 
 
     
   }
@@ -300,6 +323,153 @@ createUsersByCompanyChart(data: any): void {
       }
   });
 }
-
-
+createAdminCountChart(data: any): void {
+    const ctx = document.getElementById('adminCountChart') as HTMLCanvasElement;
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Admin Count'],
+        datasets: [{
+          label: 'Admin Count',
+          data: [data.admin_count],
+          backgroundColor: 'rgba(75, 192, 192, 0.5)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
+  createDocumentCountChart(data: any): void {
+    const ctx = document.getElementById('documentCountChart') as HTMLCanvasElement;
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Document Count'],
+        datasets: [{
+          label: 'Document Count',
+          data: [data.document_count],
+          backgroundColor: 'rgba(255, 159, 64, 0.5)',
+          borderColor: 'rgba(255, 159, 64, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
+  
+  createDecisionCountChart(data: any): void {
+    const ctx = document.getElementById('decisionCountChart') as HTMLCanvasElement;
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Decision Count'],
+        datasets: [{
+          label: 'Decision Count',
+          data: [data.decision_count],
+          backgroundColor: 'rgba(153, 102, 255, 0.5)',
+          borderColor: 'rgba(153, 102, 255, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
+  
+  createLikeDislikeComparisonChart(data: any): void {
+    const ctx = document.getElementById('likeDislikeComparisonChart') as HTMLCanvasElement;
+    new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: ['Likes', 'Dislikes'],
+        datasets: [{
+          label: 'Like vs Dislike',
+          data: [data.like_count, data.dislike_count],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.5)',
+            'rgba(54, 162, 235, 0.5)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
+  
+  createDecisionCountAdminChart(data: any): void {
+    const ctx = document.getElementById('decisionCountAdminChart') as HTMLCanvasElement;
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Decision Count '],
+        datasets: [{
+          label: 'Decision Count',
+          data: [data.decision_count],
+          backgroundColor: 'rgba(75, 192, 192, 0.5)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
+  
+  createTaskCountAdminChart(data: any): void {
+    const ctx = document.getElementById('taskCountAdminChart') as HTMLCanvasElement;
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Task Count'],
+        datasets: [{
+          label: 'Task Count ',
+          data: [data.total_tasks_by_admin],
+          backgroundColor: 'rgba(255, 205, 86, 0.5)',
+          borderColor: 'rgba(255, 205, 86, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
+  
 }

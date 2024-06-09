@@ -76,4 +76,10 @@ updateProfile(profileData: any): Observable<any> {
       catchError(this.handleError)
     );
 }
+
+registerSadmin(sadminData: any): Observable<any> {
+  return this.http.post('http://localhost:8000/api/signup', sadminData).pipe(
+    catchError(this.handleError)
+  );
+}
 }

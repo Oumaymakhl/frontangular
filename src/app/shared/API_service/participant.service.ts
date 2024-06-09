@@ -3,10 +3,15 @@ import { Participant } from '../model/participant';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, catchError, map, of } from 'rxjs';
 import { User } from '../model/user';
+import { Company } from '../model/company';
 
 export interface listeparticipant{
   status:number;
   particpants:Participant[];
+}
+export interface listecompany{
+  status:number;
+  companies:Company[];
 }
 export interface participantEdit{
   status:number;
@@ -48,10 +53,7 @@ export class ParticipantService {
     );
   }
   getUsersByAdminCompanyId(): Observable<User[]> {
-    // Get the authentication token from wherever you store it
-    const authToken = 'YOUR_AUTH_TOKEN_HERE';
 
-    // Set the headers with the authentication token
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -59,9 +61,14 @@ export class ParticipantService {
       })
     };
 
-    // Make the HTTP GET request with the headers
     return this.http.get<{users: User[]}>(`http://localhost:8000/api/admin/company/users`, httpOptions).pipe(
       map(response => response.users)
     );
   }
+ 
+  getCompanies(){
+  
+      return this.http.get<listecompany>(`http://localhost:8000/api/companies/index`);
+    }
+
 }

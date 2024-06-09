@@ -13,6 +13,10 @@
 .custom-width {
   width: 100%;
 }
+.small-dialog {
+  width: 700px; 
+  height: 500px;/* Définissez la largeur de la boîte de dialogue selon vos besoins */
+}
 
 .table-title {
   background-color: #003366; /* Couleur de fond similaire à la barre latérale */

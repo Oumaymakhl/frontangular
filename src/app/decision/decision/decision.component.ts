@@ -17,7 +17,29 @@ export class DecisionComponent implements OnInit {
 
   ngOnInit(): void {
     this.getDecisions();
+    this.getDecisionsWithLikesAndDislikes(); // Utiliser la nouvelle méthode pour récupérer les décisions avec les likes et dislikes
   }
+
+  getDecisionsWithLikesAndDislikes(): void {
+    this.loading = true;
+    this.decisionService.getDecisionsWithLikesAndDislikes().pipe(
+        catchError(error => {
+            Swal.fire('Error!', 'Failed to load decisions.', 'error');
+            return throwError(error);
+        })
+    ).subscribe(
+        (data: any) => {
+            this.decisions = data.decisions.map((decision: Decision) => {
+                decision.likes_count = decision.likes_count;
+                decision.dislikes_count = decision.dislikes_count;
+                return decision;
+            });
+            this.loading = false;
+        }
+    );
+}
+
+
 
   getDecisions(): void {
     this.loading = true;
@@ -34,6 +56,7 @@ export class DecisionComponent implements OnInit {
     );
   }
 
+ 
   likeDecision(decision: Decision): void {
     this.decisionService.likeDecision(decision.id).pipe(
       catchError(error => {
@@ -41,8 +64,9 @@ export class DecisionComponent implements OnInit {
         return throwError(error);
       })
     ).subscribe(
-      () => {
-        decision.likes_count++;
+      (data: any) => {
+        decision.likes_count = data.likes_count; 
+        decision.dislikes_count = data.dislikes_count; 
         Swal.fire('Liked!', decision.title, 'success');
       }
     );
@@ -55,11 +79,11 @@ export class DecisionComponent implements OnInit {
         return throwError(error);
       })
     ).subscribe(
-      () => {
-        decision.dislikes_count++;
+      (data: any) => {
+        decision.likes_count = data.likes_count; // Mettre à jour le compteur de likes avec la valeur renvoyée par le serveur
+        decision.dislikes_count = data.dislikes_count; // Mettre à jour le compteur de dislikes avec la valeur renvoyée par le serveur
         Swal.fire('Disliked!', decision.title, 'error');
       }
     );
   }
-
 }

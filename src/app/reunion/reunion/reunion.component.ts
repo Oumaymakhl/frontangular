@@ -140,7 +140,6 @@ ${userCheckboxes}
         const { title, description, selectedParticipants, startDate} = result.value;
         const newReunion: Reunion = { titre: title, description, date: startDate,  participants: selectedParticipants };
   
-        console.log("Title and at least one participant are required");
   
         this.reunionService.createReunion(newReunion).subscribe(
           (response) => {

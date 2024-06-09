@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { PasswordValidation } from './password-validator.component';
 import { ParticipantService } from 'app/shared/API_service/participant.service';
+import { Company } from 'app/shared/model/company';
 
 
 @Component({
@@ -18,6 +19,8 @@ export class AjoutPartcipantComponent{
     submitted: boolean = false;
     message: string | null = null;
     messageType: 'success' | 'danger' | null = null;
+    companies: Company[] = [];
+
     constructor(private formBuilder: FormBuilder, private userService: ParticipantService) {}
   
     ngOnInit(): void {
@@ -29,6 +32,14 @@ export class AjoutPartcipantComponent{
         email: ['', [Validators.required,Validators.email]],
         company_id: ['', Validators.required]
       });
+      this.userService.getCompanies().subscribe(
+        (res: any) => {
+            this.companies = res.companies;
+        },
+        (err: any) => {
+            console.error('Error fetching companies:', err);
+        }
+    );
     }
   
     saveParticipant() {
@@ -80,5 +91,6 @@ export class AjoutPartcipantComponent{
     
     
     }
+    
 
   }

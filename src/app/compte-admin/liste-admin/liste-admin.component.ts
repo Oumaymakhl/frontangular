@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AdminService } from 'app/shared/API_service/admin.service';
 import { Admin } from 'app/shared/model/admin';
+import Swal from 'sweetalert2';
 
 @Component({
   moduleId: module.id,
@@ -36,14 +37,34 @@ export class ListeAdminComponent implements OnInit {
   }
 
   delete(event: any, id: number): void {
-    if (confirm('Are you sure?')) {
-      event.target.innerText = 'deleting';
-      this.adminService.delete(id).subscribe(() => {
-        this.loadAdmins();
-      });
-    }
+    Swal.fire({
+      title: 'Confirmation',
+      text: 'Are you sure you want to delete this admin?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel',
+      width: '350px', 
+      heightAuto: false, 
+      customClass: {
+        container: 'custom-swal-container', 
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        event.target.innerText = 'Deleting';
+        this.adminService.delete(id).subscribe(() => {
+          this.loadAdmins();
+          Swal.fire(
+            'Deleted!',
+            'Your item has been deleted.',
+            'success'
+          );
+        });
+      }
+    });
   }
-
   filteredAdmins(): Admin[] {
     return this.admins.filter((admin: Admin) =>
       admin.nom.toLowerCase().includes(this.searchTerm.toLowerCase()) ||

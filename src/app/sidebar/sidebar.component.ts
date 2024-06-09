@@ -40,6 +40,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/document', title: 'Document', type: 'link', icontype: 'nc-icon nc-paper' },
     { path: '/reunion', title: 'Meeting', type: 'link', icontype: 'nc-icon nc-calendar-60' },
     { path: '/statistique', title: 'Statistics', type: 'link', icontype: 'nc-icon nc-chart-pie-36' },
+    { path: '/statistique1', title: 'Statistics', type: 'link', icontype: 'nc-icon nc-chart-pie-36' },
   { path: '/meeting2', title: '  online Meeting', type: 'link', icontype: 'nc-icon nc-laptop' },
   { path: '/meeting', title: 'online Meeting', type: 'link', icontype: 'nc-icon nc-laptop' },  {
         path: '/pages',
@@ -96,7 +97,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
             ].includes(menuItem.path));
         } else if (this.userType === 'superadmin') {
             this.menuItems = ROUTES.filter(menuItem => [
-                '/companies/list', '/compte-admin','/statistique',
+                '/companies/list', '/compte-admin','/statistique1',
             ].includes(menuItem.path));
         } else {
             this.menuItems = ROUTES.filter(menuItem => menuItem.path !== '/compte-admin' && menuItem.path !== '/companies/list');

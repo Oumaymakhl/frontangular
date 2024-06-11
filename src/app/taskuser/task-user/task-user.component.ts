@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TaskService } from 'app/shared/API_service/task.service';
 import { Task } from 'app/shared/model/task';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { TokenService } from 'app/shared/API_service/token.service';
 
 @Component({
   selector: 'app-task-user',
@@ -14,26 +15,30 @@ export class TaskUserComponent implements OnInit {
     { title: 'completed', tasks: [] }
   ];
 
-  constructor(private taskService: TaskService) {}
+  constructor(private taskService: TaskService, private tokenService: TokenService) {}
 
   ngOnInit() {
     this.loadTasks();
   }
 
   loadTasks(): void {
-    this.taskService.getTasks().subscribe(
-      (response) => {
-        console.log('Loaded tasks:', response.tasks);
-        this.columns[0].tasks = response.tasks.filter(task => task.status !== 'completed');
-        this.columns[1].tasks = response.tasks.filter(task => task.status === 'completed');
-        console.log('To-Do tasks:', this.columns[0].tasks);
-        console.log('Completed tasks:', this.columns[1].tasks);
-      },
-      (error) => {
-        console.error('Error loading tasks:', error);
-      }
-    );
+    const loggedInUserId = this.tokenService.getUserId(); // Récupère l'ID de l'utilisateur connecté à partir du token
+    if (loggedInUserId) {
+      this.taskService.getTasks().subscribe(
+        (response) => {
+          const userTasks = response.tasks.filter(task => task.user_id === loggedInUserId);
+          this.columns[0].tasks = userTasks.filter(task => task.status !== 'completed');
+          this.columns[1].tasks = userTasks.filter(task => task.status === 'completed');
+        },
+        (error) => {
+          console.error('Error loading tasks:', error);
+        }
+      );
+    } else {
+      console.error('No logged-in user found.'); // Gérer le cas où aucun utilisateur n'est connecté
+    }
   }
+
 
   onTaskDropped(event: CdkDragDrop<Task[]>, column: any) {
     console.log('Task dropped:', event);

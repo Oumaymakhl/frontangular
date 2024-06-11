@@ -65,13 +65,13 @@ export class LoginComponent implements OnInit{
       const userType = data.type;
       switch (userType) {
         case 'admin':
-          this.router.navigate(['/compte-admin']);
+          this.router.navigate(['/statistique']);
           break;
         case 'superadmin':
-          this.router.navigate(['/compte-participant']);
+          this.router.navigate(['/statistique1']);
           break;
         case 'user':
-          this.router.navigate(['/compte-participant']);
+          this.router.navigate(['/reunion']);
           break;
         default:
           this.router.navigate(['/']);

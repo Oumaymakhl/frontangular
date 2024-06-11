@@ -12,7 +12,6 @@ import { catchError } from 'rxjs/operators';
 })
 export class AuthService {
 
- 
   constructor(private http: HttpClient, private token: TokenService,private router:Router,private companyservice:CompanyService ) {}
  
   login(user: any): Observable<any> {

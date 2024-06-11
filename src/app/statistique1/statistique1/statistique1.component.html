@@ -78,52 +78,60 @@
       <div class="col">
         <div class="card">
           <div class="card-body">
-            <canvas id="averageReunionsChart"></canvas>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <div class="card-body">
-            <canvas id="taskCompletionRateChart"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <div class="card">
-          <div class="card-body">
-            <canvas id="averageTasksPerUserChart"></canvas>
-          </div>
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="card">
-          <div class="card-body">
-            <canvas id="likeDislikeComparisonChart"></canvas>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <div class="card-body">
-            <canvas id="decisionCountAdminChart"></canvas>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="card">
-            <div class="card-body">
-              <canvas id="taskCountAdminChart" width="200" height="150"></canvas>
+            <div class="box" id="meetingBox">
+              <h3 id="meetingsCount">0</h3>
+              <p>Meetings</p>
+              <img src="./assets/img/meeting-icon-png-presentation-icon-board-meeting-icon-meeting-icon--4.png" alt="Meetings Image">
             </div>
           </div>
         </div>
       </div>
-      
-      <!-- Ajouter d'autres éléments de tableau de bord ici -->
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <div class="box" id="tasksBox">
+              <h3 id="tasksCount"></h3>
+              <p>Tasks</p>
+              <img src="./assets/img/Utilities-tasks-icon.png" alt="Tasks Image">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <div class="box" id="participantsBox">
+              <h3 id="participantsCount">0</h3>
+              <p>Participants</p>
+              <img src="./assets/img/8428718.png" alt="Participants Image">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <canvas id="adminCountChart" width="200" height="150"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <canvas id="documentCountChart" width="200" height="150"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <canvas id="decisionCountChart" width="200" height="150"></canvas>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </body>

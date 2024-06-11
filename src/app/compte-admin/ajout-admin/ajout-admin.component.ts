@@ -14,7 +14,10 @@ export class AjoutAdminComponent implements OnInit {
     passwordVisible: boolean = false;
     message: string | null = null;
     messageType: 'success' | 'danger' | null = null;
-  
+    selectedFile: File | null = null;
+    selectedLogoUrl: string | null = null;
+
+    selectedLogo: string | null = null; // Déclaration de la propriété selectedLogo
     constructor(private formBuilder: FormBuilder, private signupService: AdminService) {}
   
     ngOnInit(): void {
@@ -30,13 +33,21 @@ export class AjoutAdminComponent implements OnInit {
         companyAdresse: ['', Validators.required]
       });
     }
-  
     onLogoChange(event: any) {
       const file = (event.target as HTMLInputElement).files[0];
       this.signupForm.get('companyLogo')?.setValue(file);
+      this.selectedFile = file;
+      
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.selectedLogoUrl = e.target.result;
+      };
+      reader.readAsDataURL(file);
     }
+  
     saveadmin() {
       this.submitted = true;
+      
       if (this.signupForm.invalid) {
         return;
       }
@@ -55,10 +66,12 @@ export class AjoutAdminComponent implements OnInit {
       this.signupService.saveadmin(formData).subscribe(
         (res: any) => {
           console.log(res, 'response');
-          this.message = 'Admin added successfully!';
+          this.message = 'Admin and company added successfully!';
           this.messageType = 'success';
           this.signupForm.reset();
+          this.selectedLogoUrl = res.imageUrl;
           this.submitted = false;
+
         },
         (err: any) => {
           this.errors = err.error.errors;

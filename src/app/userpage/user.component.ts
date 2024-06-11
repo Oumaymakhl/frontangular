@@ -12,6 +12,8 @@ import { User } from 'app/shared/model/user';
 export class UserComponent implements OnInit {
   userProfile: User;
   selectedFile: File;
+  message: string = '';
+  messageType: string = '';
 
   @ViewChild('profilePictureInput') profilePictureInput: ElementRef;
 
@@ -61,15 +63,17 @@ export class UserComponent implements OnInit {
       login: this.userProfile.login,
       email: this.userProfile.email,
     };
-
-    this.authService.updateProfile(profileData).subscribe({
-      next: (response: any) => {
-        console.log(response);
-        alert(response.message);
-      },
-      error: (error: any) => {
-        console.error('Error updating profile', error);
-      }
-    });
+      this.authService.updateProfile(profileData).subscribe({
+        next: (response: any) => {
+          console.log(response);
+          this.message = response.message; // Récupérer le message depuis la réponse
+          this.messageType = 'success';
+        },
+        error: (error: any) => {
+          console.error(error);
+          this.message = error.error.message; // Récupérer le message d'erreur depuis l'erreur renvoyée
+          this.messageType = 'danger';
+        }
+      });
+    }
   }
-}

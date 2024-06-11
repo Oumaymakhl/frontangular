@@ -17,7 +17,8 @@ export class ModifCompanyComponent implements OnInit {
   selectedFile: File | null = null;
   isAdmin: boolean = false;
 
- 
+     message: string | null = null;
+    messageType: 'success' | 'danger' | null = null;
 
   ngOnInit() {
     this.companyId = this.route.snapshot.paramMap.get('id');
@@ -54,12 +55,23 @@ export class ModifCompanyComponent implements OnInit {
 
     }
 
-    this.companyService.updatecompany(inputData, this.companyId).subscribe({
-      next:(res:any) => {
-        console.log(res);
-        alert(res.message);
+    this.companyService.updatecompany(inputData, this.companyId).subscribe(
+      (res: any) => {
+        console.log(res, 'response');
+        this.message = res.message || 'Company updated successfully!';
+        this.messageType = 'success';
+      },
+      (err: any) => {
+        console.log(err.error.errors, 'errors');
+        if (err.error.message) {
+          this.message = err.error.message;
+        } else {
+          this.message = 'Failed to update company. Please check the form and try again.';
+        }
+        this.messageType = 'danger';
       }
-    })
-     }
+    );
+    
     }
     
+  }

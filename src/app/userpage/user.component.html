@@ -3,6 +3,8 @@
     <div class="col-md-4">
       <div class="card card-user">
         <div class="author">
+        
+          
           <div class="profile-picture-placeholder" (click)="selectProfilePicture()" style="margin-top: 80px;">
             <img *ngIf="!userProfile?.profile_photo" src="./assets/img/avatar.png" alt="" class="avatar">
             <img *ngIf="userProfile?.profile_photo" [src]="userProfile.profile_photo" alt="Profile Picture" class="profile-picture">
@@ -19,6 +21,9 @@
           <h5 class="title">Edit Profile</h5>
         </div>
         <div class="card-body">
+          <div *ngIf="message" class="alert" [ngClass]="{'alert-success': messageType === 'success', 'alert-danger': messageType === 'danger'}">
+            {{ message }}
+          </div>
           <form (ngSubmit)="updateProfile()" #profileForm="ngForm">
             <div class="row">
               <div class="col-md-6 pr-1">

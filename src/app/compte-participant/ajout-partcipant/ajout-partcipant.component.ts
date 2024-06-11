@@ -61,7 +61,7 @@ export class AjoutPartcipantComponent{
         (res: any) => {
 
         console.log(res, 'response');
-        this.message = 'Participant added successfully!';
+        this.message = 'User added successfully!';
         this.messageType = 'success';
         this.participantForm.reset();
         this.submitted = false;
@@ -74,7 +74,7 @@ export class AjoutPartcipantComponent{
         } else if (err.error.message === 'Email or login already exists in other roles') {
           this.message = 'Email or login already exists in other roles';
         } else {
-          this.message = 'Failed to add participant. Please check the form and try again.';
+          this.message = 'Failed to add user. Please check the form and try again.';
         }
         this.messageType = 'danger';
       }

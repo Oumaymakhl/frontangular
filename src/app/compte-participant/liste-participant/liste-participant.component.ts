@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ParticipantService } from 'app/shared/API_service/participant.service';
 import { Participant } from 'app/shared/model/participant';
+import { User } from 'app/shared/model/user';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -11,14 +12,28 @@ import Swal from 'sweetalert2';
 })
 
 export class ListeParticipantComponent implements OnInit {
-
   participants: Participant[];
   searchTerm: string = '';
 
   constructor(private participantService: ParticipantService, private router: Router) { }
 
   ngOnInit(): void {
-    this.loadParticipants();
+    this.participantService.getUsersByAdminCompanyId().subscribe(
+      (users: any) => {
+        this.participants = users.map((user: any) => ({
+          id: user.id,
+          nom: user.nom,
+          login:user.login,
+          prenom: user.prenom,
+          email: user.email,
+          // Ajoutez d'autres propriétés de Participant ici si nécessaire
+        }));
+        console.log(this.participants);
+      },
+      (error) => {
+        console.error('Error loading participants:', error);
+      }
+    );
   }
 
   loadParticipants(): void {

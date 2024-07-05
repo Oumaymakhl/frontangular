@@ -170,26 +170,26 @@ ${userCheckboxes}
   
   updateOrDeleteReunionDialog(calEvent) {
     const { id, title, description, start } = calEvent;
-  
+
     this.reunionService.getParticipantsStatus(id).subscribe(
       (response) => {
         const participants = response.users.map(user => {
           let statusText = "";
           if (user.status === 1) {
             statusText = "Available";
-        } else if (user.status === 0) {
-          statusText = `Unavailable - Reason: ${user.reason}`;
-        }
+          } else if (user.status === 0) {
+            statusText = `Unavailable - Reason: ${user.raison || 'Reason not provided'}`;
+          }
           return `<p>${user.nom} ${user.prenom} - ${statusText}</p>`;
         }).join('');
-  
+
         Swal.fire({
           title: 'Meeting Details',
-        html: `
-          <p><strong>Title:</strong> ${title}</p>
-          <p><strong>Description:</strong> ${description}</p>
-          <p><strong>Participants:</strong></p>
-          ${participants}
+          html: `
+            <p><strong>Title:</strong> ${title}</p>
+            <p><strong>Description:</strong> ${description}</p>
+            <p><strong>Participants:</strong></p>
+            ${participants}
           `,
           showCloseButton: true,
           showCancelButton: true,

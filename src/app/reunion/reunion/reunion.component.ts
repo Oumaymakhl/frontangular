@@ -120,7 +120,8 @@ ${userCheckboxes}
       showCancelButton: true,
       confirmButtonText: 'Create',
       cancelButtonText: 'Cancel',
-      customClass: { confirmButton: 'renion-btn', cancelButton: 'renion2-btn ' },
+      cancelButtonColor: '#d33',
+      customClass: { confirmButton: 'btn btn-primary', cancelButton: 'btn btn-danger' },
       buttonsStyling: false,
       preConfirm: () => {
         const title = $('#event-title').val();
@@ -196,7 +197,7 @@ ${userCheckboxes}
           cancelButtonText: 'Delete',
           cancelButtonColor: '#d33',
           confirmButtonText: 'update',
-          customClass: { confirmButton: 'bouton', cancelButton: 'btn btn-danger' },
+          customClass: { confirmButton: 'btn btn-primary', cancelButton: 'btn btn-danger' },
           buttonsStyling: false
         }).then((result) => {
           if (result.isConfirmed) {

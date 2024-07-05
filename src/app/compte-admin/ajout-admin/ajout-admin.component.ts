@@ -86,6 +86,6 @@ export class AjoutAdminComponent implements OnInit {
       );
     }
     togglePasswordVisibility() {
-      this.passwordVisible = !this.passwordVisible; // Inverse l'état de visibilité du mot de passe
+      this.passwordVisible = !this.passwordVisible; 
     }
   }
